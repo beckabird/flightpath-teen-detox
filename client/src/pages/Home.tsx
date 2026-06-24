@@ -1,14 +1,81 @@
 /**
- * FLIGHTPATH Teen Detox — Home Page
- * Design: Cockpit at Golden Hour
- * Colors: Stratosphere Navy (#0A1628), Horizon Orange (#E8622A), Instrument Gold (#C9A84C), Cloud White (#F8F6F0)
- * Fonts: Barlow Condensed (display), DM Sans (body), Space Mono (technical)
- * Core metaphor: A flightpath is the route a pilot charts and follows.
- *   Recovery is navigation — teens chart their own course and follow it, one leg at a time.
+ * FLIGHTPATH TEEN DETOX — Home Page
+ * Design: Sunrise over Twilight Sky
+ * Colors: Tangerine #FF8A4C · Coral #E0561F · Ember #C2421F · Ink #142028 · Teal #2FB6A6 · Paper #FCFBF8
+ * Type: Instrument Serif (display) · Bricolage Grotesque (UI/eyebrows) · Hanken Grotesk (body)
+ * Metaphor: Recovery as a guided flight path — departure, climb, destination.
  */
 
-import { useState, useEffect } from "react";
-import { Phone, ChevronDown, Menu, X, ArrowRight, Shield, Award, Clock, CheckCircle, ChevronRight } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Phone, Menu, X, ChevronDown, ArrowRight, CheckCircle } from "lucide-react";
+
+// ─── Delta Mark SVG (dimensional faceted) ─────────────────────────────────────
+function DeltaMark({ size = 32, className = "", style }: { size?: number; className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 80 80"
+      fill="none"
+      aria-hidden="true"
+      className={className}
+      style={style}
+    >
+      <defs>
+        <linearGradient id="dTL" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#FFD36B" />
+          <stop offset="100%" stopColor="#FF8A4C" />
+        </linearGradient>
+        <linearGradient id="dTR" x1="1" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#FFB259" />
+          <stop offset="100%" stopColor="#E0561F" />
+        </linearGradient>
+        <linearGradient id="dBL" x1="0" y1="1" x2="1" y2="0">
+          <stop offset="0%" stopColor="#C2421F" />
+          <stop offset="100%" stopColor="#E0561F" />
+        </linearGradient>
+        <linearGradient id="dBR" x1="1" y1="1" x2="0" y2="0">
+          <stop offset="0%" stopColor="#8B2A0F" />
+          <stop offset="100%" stopColor="#C2421F" />
+        </linearGradient>
+      </defs>
+      <polygon points="40,6 6,68 40,50" fill="url(#dTL)" />
+      <polygon points="40,6 74,68 40,50" fill="url(#dTR)" />
+      <polygon points="40,50 6,68 26,74" fill="url(#dBL)" />
+      <polygon points="40,50 74,68 54,74" fill="url(#dBR)" />
+      <line x1="40" y1="6" x2="40" y2="50" stroke="#FFC65C" strokeWidth="1.2" opacity="0.55" />
+    </svg>
+  );
+}
+
+// Flat silhouette for footer/favicon
+function DeltaFlat({ size = 22, opacity = 0.6 }: { size?: number; opacity?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 80 80" fill="none" aria-hidden="true">
+      <polygon points="40,6 6,72 40,54 74,72" fill={`rgba(255,138,76,${opacity})`} />
+    </svg>
+  );
+}
+
+// ─── Eyebrow Bar ──────────────────────────────────────────────────────────────
+function EyebrowBar() {
+  return (
+    <div className="bg-[#142028] border-b border-white/5 py-1.5 text-center">
+      <span
+        style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "0.62rem", letterSpacing: "0.22em" }}
+        className="text-white/35 uppercase font-semibold tracking-widest"
+      >
+        Orange County, CA
+        <span className="text-[#2FB6A6] mx-2">·</span>
+        Adolescent Detox
+        <span className="text-[#2FB6A6] mx-2">·</span>
+        24/7 Admissions
+        <span className="text-[#2FB6A6] mx-2">·</span>
+        HDG 015
+      </span>
+    </div>
+  );
+}
 
 // ─── Navigation ───────────────────────────────────────────────────────────────
 function Nav() {
@@ -16,99 +83,93 @@ function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const navLinks = [
+    { label: "The Program", href: "#program" },
+    { label: "Our Approach", href: "#approach" },
+    { label: "Admissions", href: "#admissions" },
+    { label: "Contact", href: "#contact" },
+  ];
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-[#0A1628]/95 backdrop-blur-xl shadow-lg" : "bg-transparent"
-      }`}
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled ? "bg-[#142028]/96 backdrop-blur-xl shadow-lg" : "bg-[#142028]/90 backdrop-blur-md"
+      } border-b border-white/[0.07]`}
     >
-      <div className="container flex items-center justify-between h-16 md:h-20">
-        <a href="/" className="flex items-center gap-3">
-          <img
-            src="https://d2xsxph8kpxj0f.cloudfront.net/310519663488423210/SUVBoqZCLc2b3z93g2JT8w/flightpath_logo_primary-cYHnZzGGD35gzCzLovnE69.webp"
-            alt="Flightpath Teen Detox"
-            className="h-10 md:h-12 w-auto brightness-0 invert"
-          />
+      <div className="container flex items-center justify-between h-16">
+        <a href="/" className="flex items-center gap-2.5 no-underline">
+          <DeltaMark size={30} />
+          <span
+            style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
+            className="text-[#FCFBF8] font-bold text-[1.05rem] tracking-tight"
+          >
+            Flightpath <span className="text-[#FF8A4C]">Teen Detox</span>
+          </span>
         </a>
 
-        <nav className="hidden md:flex items-center gap-8">
-          {[
-            { label: "Programs", href: "#programs" },
-            { label: "The Flightpath", href: "#syllabus" },
-            { label: "For Families", href: "#families" },
-            { label: "About", href: "#about" },
-          ].map((item) => (
+        <nav className="hidden md:flex items-center gap-7">
+          {navLinks.map((l) => (
             <a
-              key={item.label}
-              href={item.href}
-              className="font-body text-sm font-medium text-white/80 hover:text-[#E8622A] transition-colors duration-200 tracking-wide"
+              key={l.label}
+              href={l.href}
+              style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
+              className="text-white/60 hover:text-white text-[0.8rem] font-medium tracking-wide transition-colors no-underline"
             >
-              {item.label}
+              {l.label}
             </a>
           ))}
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
           <a
-            href="tel:+18669693686"
-            className="flex items-center gap-2 font-technical text-xs text-white/70 hover:text-white transition-colors"
+            href="tel:+18009999999"
+            style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
+            className="text-white/35 hover:text-white text-xs tracking-wider transition-colors no-underline"
           >
-            <Phone size={14} />
-            866-969-3686
+            800-999-9999
           </a>
           <a
             href="#contact"
-            className="btn-beacon bg-[#E8622A] text-white font-display font-bold text-sm tracking-widest uppercase px-5 py-2.5 rounded hover:bg-[#d4561f] transition-colors duration-200"
+            className="btn-sunrise text-sm"
           >
-            Talk to a Navigator
+            Verify your benefits
           </a>
         </div>
 
         <button
-          className="md:hidden text-white p-2"
+          className="md:hidden text-white p-1.5"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
         >
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          {menuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
       {menuOpen && (
-        <div className="md:hidden bg-[#0A1628]/98 backdrop-blur-xl border-t border-white/10">
-          <div className="container py-6 flex flex-col gap-4">
-            {[
-              { label: "Programs", href: "#programs" },
-              { label: "The Flightpath", href: "#syllabus" },
-              { label: "For Families", href: "#families" },
-              { label: "About", href: "#about" },
-            ].map((item) => (
+        <div className="md:hidden bg-[#142028] border-t border-white/[0.07]">
+          <div className="container py-5 flex flex-col gap-1">
+            {navLinks.map((l) => (
               <a
-                key={item.label}
-                href={item.href}
+                key={l.label}
+                href={l.href}
                 onClick={() => setMenuOpen(false)}
-                className="font-body text-base font-medium text-white/80 hover:text-[#E8622A] transition-colors py-2 border-b border-white/10"
+                style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
+                className="text-white/65 hover:text-[#FF8A4C] text-[0.9rem] font-medium py-2.5 border-b border-white/[0.06] transition-colors no-underline"
               >
-                {item.label}
+                {l.label}
               </a>
             ))}
             <a
-              href="tel:+18669693686"
-              className="flex items-center gap-2 font-technical text-sm text-white/70 mt-2"
-            >
-              <Phone size={14} />
-              866-969-3686
-            </a>
-            <a
               href="#contact"
               onClick={() => setMenuOpen(false)}
-              className="btn-beacon bg-[#E8622A] text-white font-display font-bold text-sm tracking-widest uppercase px-5 py-3 rounded text-center mt-2"
+              className="btn-sunrise justify-center mt-3"
             >
-              Talk to a Navigator
+              Verify your benefits
             </a>
           </div>
         </div>
@@ -117,115 +178,194 @@ function Nav() {
   );
 }
 
-// ─── ATIS Ticker ──────────────────────────────────────────────────────────────
-function AtisTicker() {
-  const msg = "FLIGHTPATH · TEEN DETOX · ORANGE COUNTY, CA · ADMISSIONS OPEN 24/7 · CONFIDENTIAL · NO JUDGMENT · NO PRESSURE · INSURANCE ACCEPTED · TEEN PROGRAM AGES 13–17 · LICENSED CLINICIANS · CALL 866-969-3686 · YOUR FLIGHTPATH STARTS HERE · ";
-  const doubled = msg + msg;
+// ─── Hero ─────────────────────────────────────────────────────────────────────
+function Hero() {
   return (
-    <div className="bg-[#E8622A] overflow-hidden py-2">
-      <div className="ticker-track flex whitespace-nowrap">
-        <span className="font-technical text-xs text-white tracking-widest">{doubled}</span>
+    <section
+      id="hero"
+      className="relative bg-[#142028] min-h-[92vh] flex items-center overflow-hidden py-24"
+    >
+      {/* Coral glow */}
+      <div
+        className="absolute right-[-5%] top-[10%] w-[55%] h-[80%] pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse at 70% 40%, rgba(224,86,31,0.2) 0%, rgba(255,138,76,0.07) 45%, transparent 70%)",
+        }}
+        aria-hidden="true"
+      />
+
+      <div className="container relative z-10">
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Text */}
+          <div>
+            <p className="eyebrow-label mb-5">Orange County, California · Ages 13–17</p>
+            <h1
+              className="display-serif text-[#FCFBF8] mb-5"
+              style={{ fontSize: "clamp(2.8rem, 6vw, 5.5rem)" }}
+            >
+              A safe place<br />
+              to <em style={{ color: "#FFD36B" }}>land.</em>
+            </h1>
+            <p
+              style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
+              className="text-white/60 text-[1.05rem] leading-relaxed mb-8 max-w-md font-light"
+            >
+              Medically supervised adolescent detox and stabilization. Genuinely human care for teens and the families who love them.
+            </p>
+            <div className="flex flex-wrap gap-3 mb-6">
+              <a href="#contact" className="btn-sunrise">Talk to our team</a>
+              <a
+                href="#program"
+                style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
+                className="inline-flex items-center gap-2 text-white/70 hover:text-white border border-white/25 hover:border-white/50 rounded-full px-6 py-3 text-sm font-semibold tracking-wide transition-all no-underline"
+              >
+                How it works
+              </a>
+            </div>
+            <p
+              style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
+              className="text-white/25 text-xs tracking-widest"
+            >
+              24/7 ADMISSIONS:{" "}
+              <a href="tel:+18009999999" className="text-white/40 hover:text-[#FF8A4C] transition-colors no-underline">
+                800-999-9999
+              </a>
+            </p>
+          </div>
+
+          {/* Delta mark with compass ring */}
+          <div className="flex items-center justify-center relative" aria-hidden="true">
+            {/* Compass ring */}
+            <div
+              className="absolute rounded-full border border-white/[0.06]"
+              style={{ width: 300, height: 300 }}
+            />
+            <div
+              className="absolute rounded-full border border-dashed border-white/[0.04]"
+              style={{ width: 268, height: 268 }}
+            />
+            {/* Cardinal marks */}
+            <svg className="absolute" width="300" height="300" viewBox="0 0 300 300">
+              <g stroke="rgba(255,255,255,0.08)" strokeWidth="1">
+                <line x1="150" y1="6" x2="150" y2="18" />
+                <line x1="150" y1="282" x2="150" y2="294" />
+                <line x1="6" y1="150" x2="18" y2="150" />
+                <line x1="282" y1="150" x2="294" y2="150" />
+              </g>
+              <g fill="rgba(255,255,255,0.1)" fontFamily="'Bricolage Grotesque', sans-serif" fontSize="8" fontWeight="600" letterSpacing="0.1em" textAnchor="middle">
+                <text x="150" y="5">N</text>
+                <text x="150" y="300">S</text>
+                <text x="4" y="154">W</text>
+                <text x="296" y="154">E</text>
+              </g>
+              <text x="150" y="280" fill="rgba(255,138,76,0.45)" fontFamily="'Bricolage Grotesque', sans-serif" fontSize="7" fontWeight="700" letterSpacing="0.2em" textAnchor="middle">HDG 015</text>
+            </svg>
+            {/* Delta */}
+            <DeltaMark
+              size={160}
+              className="relative z-10"
+              style={{ filter: "drop-shadow(0 8px 40px rgba(224,86,31,0.35)) drop-shadow(0 2px 8px rgba(255,138,76,0.2))" } as React.CSSProperties}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 animate-bounce" aria-hidden="true">
+        <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/25 text-[0.6rem] tracking-widest uppercase">Scroll</span>
+        <ChevronDown size={14} className="text-white/25" />
+      </div>
+    </section>
+  );
+}
+
+// ─── Reassurance Strip ────────────────────────────────────────────────────────
+function ReassuranceStrip() {
+  const items = [
+    "Medically supervised",
+    "Licensed clinicians",
+    "Family-centered care",
+    "Most insurance accepted",
+  ];
+  return (
+    <div className="bg-[#FCFBF8] border-b border-[#EAE5DB] py-4">
+      <div className="container">
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+          {items.map((item, i) => (
+            <div key={item} className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded-full bg-[#2FB6A6] flex items-center justify-center flex-shrink-0">
+                <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
+                  <polyline points="1.5,4 3.2,5.8 6.5,2" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+              <span style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D] text-sm font-medium">
+                {item}
+              </span>
+              {i < items.length - 1 && <span className="text-[#EAE5DB] ml-3 hidden sm:inline">·</span>}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
 
-// ─── Hero Section ─────────────────────────────────────────────────────────────
-function Hero() {
-  return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/manus-storage/solo_hero_bg_3eb63abf.png')" }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#0A1628]/90 via-[#0A1628]/60 to-[#0A1628]/20" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/60 via-transparent to-[#0A1628]/30" />
-
-      <div className="relative z-10 container pt-24 pb-16">
-        <div className="max-w-2xl">
-          <div className="flex items-center gap-2 mb-6">
-            <div className="h-px w-8 bg-[#E8622A]" />
-            <span className="font-technical text-xs text-[#E8622A] tracking-[0.2em] uppercase">
-              Orange County · Santa Ana, CA
-            </span>
-          </div>
-
-          <h1 className="font-display font-black text-white leading-none mb-4">
-            <span className="block text-6xl md:text-8xl lg:text-9xl tracking-tight">YOUR LIFE</span>
-            <span className="block text-6xl md:text-8xl lg:text-9xl tracking-tight">HAS A</span>
-            <span className="block text-5xl md:text-7xl lg:text-8xl tracking-tight text-[#E8622A]">
-              FLIGHTPATH.
-            </span>
-          </h1>
-
-          <div className="my-6 h-px w-64 bg-gradient-to-r from-[#E8622A] to-transparent" />
-
-          <p className="font-body text-lg md:text-xl text-white/80 leading-relaxed mb-8 max-w-lg">
-            Teen detox and residential recovery in Orange County, designed for ages 13–17.
-            We don't pick your destination. We help you chart the route to get there.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            <a
-              href="#contact"
-              className="btn-beacon bg-[#E8622A] text-white font-display font-bold text-base tracking-widest uppercase px-8 py-4 rounded hover:bg-[#d4561f] transition-colors duration-200 text-center"
-            >
-              Chart Your Flightpath
-            </a>
-            <a
-              href="#syllabus"
-              className="border-2 border-white/40 text-white font-display font-bold text-base tracking-widest uppercase px-8 py-4 rounded hover:border-white hover:bg-white/10 transition-all duration-200 text-center"
-            >
-              View the Route
-            </a>
-          </div>
-
-          <div className="flex flex-wrap gap-4">
-            {[
-              { icon: <Shield size={14} />, text: "State Licensed · DHCS" },
-              { icon: <Award size={14} />, text: "Joint Commission Accredited" },
-              { icon: <Clock size={14} />, text: "Admissions Open 24/7" },
-            ].map((badge) => (
-              <div key={badge.text} className="flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5">
-                <span className="text-[#E8622A]">{badge.icon}</span>
-                <span className="font-technical text-xs text-white/80 tracking-wide">{badge.text}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
-        <span className="font-technical text-xs text-white/40 tracking-widest">SCROLL</span>
-        <ChevronDown size={16} className="text-white/40" />
-      </div>
-    </section>
-  );
-}
-
-// ─── Pre-Flight Briefing Bar ───────────────────────────────────────────────────
-function PreFlightBriefing() {
-  const stats = [
-    { code: "FP-001", label: "Ages Served", value: "13–17" },
-    { code: "FP-002", label: "Clinical Monitoring", value: "24/7" },
-    { code: "FP-003", label: "Program Phases", value: "3" },
-    { code: "FP-004", label: "Insurance Networks", value: "4+" },
+// ─── The Program ──────────────────────────────────────────────────────────────
+function TheProgram() {
+  const cards = [
+    {
+      phase: "Phase 01 · Departure",
+      title: "Assessment & Intake",
+      body: "From the moment you arrive, a clinical team is ready. A licensed clinician conducts a comprehensive assessment — medical, psychological, and social — so your teen's care is built around them, not a template. No waiting rooms. No judgment. Just a warm, structured welcome.",
+    },
+    {
+      phase: "Phase 02 · Climb",
+      title: "Medically Supervised Detox",
+      body: "Withdrawal is managed safely, with 24/7 nursing oversight and physician-directed comfort care. Your teen is never alone in this process. The goal is a stable, dignified transition — not just getting through it, but arriving on the other side ready for what comes next.",
+    },
+    {
+      phase: "Phase 03 · Cruise",
+      title: "Stabilization & Transition",
+      body: "Detox is a beginning, not an end. Before discharge, the clinical team works with your family to build a clear transition plan. Your teen leaves with a flightpath, not just a goodbye.",
+    },
   ];
 
   return (
-    <section className="bg-[#0A1628] border-y border-[#E8622A]/30">
-      <div className="container py-6">
-        <div className="flex items-center gap-3 mb-4">
-          <span className="font-technical text-xs text-[#E8622A] tracking-[0.2em] uppercase">Pre-Flight Briefing</span>
-          <div className="h-px flex-1 bg-[#E8622A]/20" />
-          <span className="font-technical text-xs text-white/30">SYS · OK</span>
+    <section id="program" className="bg-[#F4F0E7] py-20 md:py-28">
+      <div className="container">
+        <div className="mb-12">
+          <p className="eyebrow-label mb-3">The Program</p>
+          <h2
+            className="display-serif text-[#142028]"
+            style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}
+          >
+            What a stay at Flightpath<br />
+            actually <em style={{ color: "#E0561F" }}>looks like.</em>
+          </h2>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {stats.map((stat) => (
-            <div key={stat.code} className="border-l-2 border-[#E8622A]/40 pl-4">
-              <div className="font-technical text-xs text-[#E8622A]/60 tracking-widest mb-1">{stat.code}</div>
-              <div className="font-display font-black text-3xl text-white leading-none mb-1">{stat.value}</div>
-              <div className="font-body text-xs text-white/50 tracking-wide">{stat.label}</div>
+        <div className="grid md:grid-cols-3 gap-5">
+          {cards.map((card) => (
+            <div
+              key={card.phase}
+              className="bg-[#FCFBF8] border border-[#EAE5DB] rounded-2xl p-7 hover:-translate-y-1 hover:shadow-xl transition-all duration-200"
+            >
+              <p
+                style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
+                className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-[0.2em] uppercase mb-3"
+              >
+                {card.phase}
+              </p>
+              <h3
+                className="display-serif text-[#142028] text-xl mb-3"
+              >
+                {card.title}
+              </h3>
+              <div className="h-px w-10 bg-gradient-to-r from-[#FF8A4C] to-transparent mb-4" />
+              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/65 text-sm leading-relaxed">
+                {card.body}
+              </p>
+              <div className="mt-5 w-7 h-7 rounded-full flex items-center justify-center" style={{ background: "linear-gradient(90deg, #E0561F, #FF8A4C, #FFD36B)" }}>
+                <ArrowRight size={12} color="#142028" />
+              </div>
             </div>
           ))}
         </div>
@@ -234,46 +374,53 @@ function PreFlightBriefing() {
   );
 }
 
-// ─── The Concept Section ──────────────────────────────────────────────────────
-function TheConcept() {
-  return (
-    <section id="about" className="bg-[#F8F6F0] py-20 md:py-32">
-      <div className="container">
-        <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <div>
-            <div className="flex items-center gap-2 mb-6">
-              <div className="h-px w-8 bg-[#E8622A]" />
-              <span className="font-technical text-xs text-[#E8622A] tracking-[0.2em] uppercase">The Flightpath Concept</span>
-            </div>
-            <h2 className="font-display font-black text-5xl md:text-6xl text-[#0A1628] leading-none mb-6">
-              IN AVIATION,<br />
-              <span className="text-[#E8622A]">YOUR FLIGHTPATH</span><br />
-              IS YOURS TO CHART.
-            </h2>
-            <div className="h-px w-32 bg-gradient-to-r from-[#E8622A] to-transparent mb-6" />
-            <p className="font-body text-base text-[#0A1628]/70 leading-relaxed mb-4">
-              A flightpath isn't handed to a pilot. It's charted by them — with the help of navigators, instruments, and training. The pilot decides the destination. The flightpath is how they get there. Every leg of the route builds on the last.
-            </p>
-            <p className="font-body text-base text-[#0A1628]/70 leading-relaxed mb-8">
-              At Flightpath Teen Detox, we don't tell teens where to go. We give them the instruments, the training, and the navigators to chart a route to the life they want. Detox is the first leg. Residential treatment is the climb. Aftercare is the cruise altitude. The destination is theirs.
-            </p>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[#E8622A] flex items-center justify-center flex-shrink-0">
-                <span className="font-technical text-xs text-white font-bold">FP</span>
-              </div>
-              <p className="font-body text-sm text-[#0A1628]/60 italic">
-                "We don't pick your destination. We help you chart the route to get there."
-              </p>
-            </div>
-          </div>
+// ─── Our Approach ─────────────────────────────────────────────────────────────
+function OurApproach() {
+  const pillars = [
+    { num: "01", name: "Safe", desc: "Medical safety is non-negotiable. Every protocol is designed to minimize risk and maximize comfort during withdrawal." },
+    { num: "02", name: "Hopeful", desc: "We speak about the future with teens, not just the present crisis. Recovery has a destination — we help them see it." },
+    { num: "03", name: "Grounded", desc: "No promises we can't keep. Honest, evidence-informed care from day one." },
+    { num: "04", name: "Human", desc: "Behind every chart is a teenager with a story. Our staff are trained to see the person, not just the presenting problem." },
+  ];
 
-          <div className="relative">
-            <div className="absolute -top-4 -left-4 w-full h-full border-2 border-[#E8622A]/20 rounded-lg" />
-            <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663488423210/SUVBoqZCLc2b3z93g2JT8w/flightpath_cert-7WZDUxsip6dTePCG28pZQa.webp"
-              alt="Flightpath Complete — Flightpath Teen Detox"
-              className="relative z-10 w-full rounded-lg shadow-2xl"
-            />
+  return (
+    <section id="approach" className="bg-[#142028] py-20 md:py-28 relative overflow-hidden">
+      <div
+        className="absolute left-[-10%] bottom-[-10%] w-1/2 h-3/5 pointer-events-none"
+        style={{ background: "radial-gradient(ellipse at 30% 70%, rgba(224,86,31,0.1) 0%, transparent 65%)" }}
+        aria-hidden="true"
+      />
+      <div className="container relative z-10">
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-start">
+          <div>
+            <p className="eyebrow-label mb-4">Our Approach</p>
+            <h2
+              className="display-serif text-[#FCFBF8] mb-6"
+              style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}
+            >
+              Safety and dignity<br />
+              are not <em style={{ color: "#FFD36B" }}>optional.</em>
+            </h2>
+            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/55 text-base leading-relaxed mb-4">
+              Teenagers in crisis are not small adults. They need a clinical environment that meets them where they are — one that takes their experience seriously, respects their developing autonomy, and treats the family as a partner, not a problem to manage.
+            </p>
+            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/55 text-base leading-relaxed">
+              At Flightpath, we believe the first experience of treatment shapes everything that comes after. If a teen feels safe, seen, and respected during detox, they are more likely to engage with the recovery work ahead.
+            </p>
+          </div>
+          <div>
+            <p className="eyebrow-label mb-5">Four Pillars</p>
+            <div className="flex flex-col">
+              {pillars.map((p) => (
+                <div key={p.num} className="flex items-start gap-4 py-4 border-b border-white/[0.06] last:border-0">
+                  <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-widest w-6 flex-shrink-0 mt-0.5">{p.num}</span>
+                  <div>
+                    <p className="display-serif text-[#FCFBF8] text-lg mb-1">{p.name}</p>
+                    <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/40 text-sm leading-relaxed">{p.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -281,175 +428,193 @@ function TheConcept() {
   );
 }
 
-// ─── The Flightpath (Programs) ────────────────────────────────────────────────
-function TheFlightpath() {
-  const phases = [
-    {
-      leg: "LEG 01",
-      phase: "Ground School",
-      subtitle: "Medical Detox & Stabilization",
-      duration: "Typical: 5–10 Days",
-      status: "DEPARTURE",
-      description:
-        "Every flight begins on the ground. Ground School is where we stabilize the body, manage withdrawal safely with 24/7 clinical oversight, and prepare the mind for the climb ahead. You don't need to know the whole route. You just need to get airborne.",
-      details: [
-        "24/7 medical monitoring",
-        "Comfort-focused withdrawal management",
-        "Private room, meals, and rest",
-        "Initial clinical assessment",
-        "Family notification guidance",
-      ],
-    },
-    {
-      leg: "LEG 02",
-      phase: "The Climb",
-      subtitle: "Residential Treatment",
-      duration: "Typical: 30–90 Days",
-      status: "ASCENDING",
-      description:
-        "The climb is where the real work happens. With navigators beside you, you learn to read your own instruments — emotions, triggers, thought patterns. You practice navigating turbulence with support before you face it alone. Each session is a leg of the route.",
-      details: [
-        "Individual and group therapy",
-        "Adolescent-specific programming",
-        "Academic support coordination",
-        "Family therapy sessions",
-        "Life skills and coping tools",
-      ],
-    },
-    {
-      leg: "LEG 03",
-      phase: "Cruise Altitude",
-      subtitle: "Aftercare Planning",
-      duration: "Begins During Residential",
-      status: "DESTINATION AHEAD",
-      description:
-        "Your aftercare plan is built with you during residential treatment — not handed to you at discharge. You leave with a full flightpath, not just a goodbye. Cruise altitude isn't the end of the journey. It's where you take the controls.",
-      details: [
-        "Personalized aftercare flightpath",
-        "Sober living coordination",
-        "School re-entry planning",
-        "Ongoing therapy referrals",
-        "Alumni check-in program",
-      ],
-    },
+// ─── Environment ──────────────────────────────────────────────────────────────
+function Environment() {
+  const placeholders = [
+    { label: "Common Area", caption: "The common area", desc: "Designed to feel like a home, not a facility.", wide: true },
+    { label: "Private Room", caption: "Private rooms", desc: "Every teen has their own space. Rest is part of the treatment.", wide: false },
+    { label: "Outdoor Space", caption: "Outdoor areas", desc: "Southern California's light and air are part of the healing environment.", wide: false },
+    { label: "Clinical Space", caption: "Clinical spaces", desc: "Therapy and medical rooms designed to feel safe, not sterile.", wide: false },
   ];
 
-  const [activePhase, setActivePhase] = useState(0);
+  return (
+    <section id="environment" className="bg-[#FCFBF8] py-20 md:py-28">
+      <div className="container">
+        <div className="mb-10">
+          <p className="eyebrow-label mb-3">A Day on the Unit</p>
+          <h2 className="display-serif text-[#142028]" style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}>
+            Warm. Calm. <em style={{ color: "#E0561F" }}>Intentional.</em>
+          </h2>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {placeholders.map((p, i) => (
+            <div key={p.label} className={`${p.wide ? "col-span-2" : ""}`}>
+              <div
+                className="rounded-xl bg-[#EAE5DB] flex items-center justify-center"
+                style={{ aspectRatio: p.wide ? "16/9" : "4/3" }}
+              >
+                <div className="flex flex-col items-center gap-2 text-center p-4">
+                  <div className="w-9 h-9 rounded-full bg-[#2FB6A6]/15 border border-[#2FB6A6]/30 flex items-center justify-center">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2FB6A6" strokeWidth="1.5">
+                      <rect x="3" y="3" width="18" height="18" rx="2" />
+                      <circle cx="8.5" cy="8.5" r="1.5" />
+                      <path d="M21 15l-5-5L5 21" />
+                    </svg>
+                  </div>
+                  <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#23292D]/40 text-[0.65rem] font-semibold tracking-widest uppercase">{p.label}</p>
+                  <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/25 text-[0.65rem]">Real photography needed</p>
+                </div>
+              </div>
+              <div className="pt-2.5">
+                <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D] text-sm font-semibold mb-0.5">{p.caption}</p>
+                <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/45 text-xs leading-relaxed">{p.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── For Families / Referrers ─────────────────────────────────────────────────
+function Audiences() {
+  const [tab, setTab] = useState<"families" | "referrers">("families");
 
   return (
-    <section id="syllabus" className="bg-[#0A1628] py-20 md:py-32">
+    <section id="audiences" className="bg-[#F4F0E7] py-20 md:py-28">
       <div className="container">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="h-px w-8 bg-[#E8622A]" />
-          <span className="font-technical text-xs text-[#E8622A] tracking-[0.2em] uppercase">The Flightpath</span>
-        </div>
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
-          <h2 className="font-display font-black text-5xl md:text-6xl text-white leading-none">
-            YOUR ROUTE TO<br />
-            <span className="text-[#E8622A]">RECOVERY</span>
+        <div className="mb-10">
+          <p className="eyebrow-label mb-3">Who We Serve</p>
+          <h2 className="display-serif text-[#142028]" style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}>
+            For families.<br />
+            For <em style={{ color: "#E0561F" }}>clinicians.</em>
           </h2>
-          <p className="font-body text-sm text-white/50 max-w-xs leading-relaxed">
-            Three legs. One destination. Each one builds on the last. Your flightpath is built with your clinical team.
-          </p>
         </div>
 
-        <div className="flex gap-2 mb-8 border-b border-white/10 pb-0">
-          {phases.map((phase, i) => (
+        <div className="flex gap-0 border-b-2 border-[#EAE5DB] mb-10">
+          {(["families", "referrers"] as const).map((t) => (
             <button
-              key={i}
-              onClick={() => setActivePhase(i)}
-              className={`font-technical text-xs tracking-widest uppercase px-4 py-3 border-b-2 transition-all duration-200 ${
-                activePhase === i
-                  ? "border-[#E8622A] text-[#E8622A]"
-                  : "border-transparent text-white/40 hover:text-white/70"
+              key={t}
+              onClick={() => setTab(t)}
+              style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
+              className={`text-[0.8rem] font-semibold tracking-widest uppercase px-5 py-3 border-b-[2.5px] -mb-[2px] transition-all ${
+                tab === t
+                  ? "border-[#E0561F] text-[#E0561F]"
+                  : "border-transparent text-[#23292D]/35 hover:text-[#23292D]"
               }`}
             >
-              {phase.leg}
+              {t === "families" ? "For Families" : "For Clinicians & Referrers"}
             </button>
           ))}
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-16">
-          <div className="flight-card bg-white/5 border border-white/10 rounded-xl p-8">
-            <div className="flex items-start justify-between mb-6">
-              <div>
-                <div className="font-technical text-xs text-[#E8622A] tracking-widest mb-2">
-                  {phases[activePhase].status}
-                </div>
-                <h3 className="font-display font-black text-4xl text-white leading-none mb-1">
-                  {phases[activePhase].phase}
-                </h3>
-                <p className="font-body text-sm text-white/50">{phases[activePhase].subtitle}</p>
-              </div>
-              <div className="bg-[#E8622A]/10 border border-[#E8622A]/30 rounded-lg px-3 py-2 text-right">
-                <div className="font-technical text-xs text-[#E8622A]/70 tracking-wide">DURATION</div>
-                <div className="font-technical text-xs text-white/60">{phases[activePhase].duration}</div>
-              </div>
+        {tab === "families" ? (
+          <div className="grid md:grid-cols-2 gap-10 lg:gap-16">
+            <div>
+              <h3 className="display-serif text-[#142028] mb-4" style={{ fontSize: "clamp(1.6rem, 3vw, 2.4rem)" }}>
+                The hardest part<br />is the <em style={{ color: "#E0561F" }}>call.</em>
+              </h3>
+              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/60 text-base leading-relaxed mb-4">
+                You've probably been watching this for a while. Wondering if it's serious enough. You're not overreacting. And you don't need to have it figured out before you call us.
+              </p>
+              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/60 text-base leading-relaxed mb-6">
+                Our admissions team is trained to listen first. They'll help you understand what your teen is experiencing and what the next step looks like — without pressure and without judgment.
+              </p>
+              <ul className="flex flex-col gap-3">
+                {["Confidential conversation, any time of day or night", "Insurance verification assistance at no cost", "Family therapy included in all levels of care", "Parent coaching and sibling support available"].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#2FB6A6] flex-shrink-0 mt-2" />
+                    <span style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-sm text-[#23292D]/65">{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div className="h-px bg-gradient-to-r from-[#E8622A]/40 to-transparent mb-6" />
-            <p className="font-body text-base text-white/70 leading-relaxed">
-              {phases[activePhase].description}
-            </p>
-          </div>
-
-          <div>
-            <div className="font-technical text-xs text-white/30 tracking-widest uppercase mb-4">
-              What's Included
-            </div>
-            <div className="flex flex-col gap-3">
-              {phases[activePhase].details.map((detail, i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-lg px-4 py-3"
-                >
-                  <CheckCircle size={16} className="text-[#E8622A] flex-shrink-0" />
-                  <span className="font-body text-sm text-white/70">{detail}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex gap-3 mt-8">
-              <button
-                onClick={() => setActivePhase(Math.max(0, activePhase - 1))}
-                disabled={activePhase === 0}
-                className="flex items-center gap-2 font-technical text-xs text-white/40 hover:text-white/80 disabled:opacity-20 transition-colors tracking-widest uppercase"
-              >
-                ← Prev Leg
-              </button>
-              <div className="flex-1" />
-              <button
-                onClick={() => setActivePhase(Math.min(phases.length - 1, activePhase + 1))}
-                disabled={activePhase === phases.length - 1}
-                className="flex items-center gap-2 font-technical text-xs text-white/40 hover:text-white/80 disabled:opacity-20 transition-colors tracking-widest uppercase"
-              >
-                Next Leg →
-              </button>
+            <div className="bg-[#FCFBF8] border border-[#EAE5DB] rounded-2xl p-7">
+              <h4 className="display-serif text-[#142028] text-xl mb-3">We'll take it from here.</h4>
+              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/50 text-sm leading-relaxed mb-5">
+                One call is all it takes to start. Our team will walk you through everything — no commitment required, no pressure to decide on the spot.
+              </p>
+              <a href="tel:+18009999999" style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="block text-[#142028] text-2xl font-bold mb-4 no-underline hover:text-[#E0561F] transition-colors">
+                800-999-9999
+              </a>
+              <a href="#contact" className="btn-sunrise">Verify your benefits</a>
             </div>
           </div>
+        ) : (
+          <div className="grid md:grid-cols-2 gap-10 lg:gap-16">
+            <div>
+              <h3 className="display-serif text-[#142028] mb-4" style={{ fontSize: "clamp(1.6rem, 3vw, 2.4rem)" }}>
+                A detox partner<br />you can <em style={{ color: "#E0561F" }}>trust.</em>
+              </h3>
+              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/60 text-base leading-relaxed mb-4">
+                Flightpath Teen Detox is designed to serve as a reliable, clinically rigorous first step for adolescents you're referring into the continuum of care. We communicate clearly, coordinate actively, and return your patients stabilized and ready for the next level.
+              </p>
+              <ul className="flex flex-col gap-3">
+                {["Direct clinical liaison for referring providers", "Discharge summaries and transition coordination", "Dual diagnosis capability — co-occurring mental health", "Accepts most major insurance including Medi-Cal", "Same-day intake available for urgent referrals"].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#2FB6A6] flex-shrink-0 mt-2" />
+                    <span style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-sm text-[#23292D]/65">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="bg-[#FCFBF8] border border-[#EAE5DB] rounded-2xl p-7">
+              <h4 className="display-serif text-[#142028] text-xl mb-3">Referral line.</h4>
+              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/50 text-sm leading-relaxed mb-5">
+                Our clinical team is available for direct consultation. For urgent referrals, call the admissions line directly.
+              </p>
+              <a href="tel:+18009999999" style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="block text-[#142028] text-2xl font-bold mb-4 no-underline hover:text-[#E0561F] transition-colors">
+                800-999-9999
+              </a>
+              <a href="#contact" className="btn-sunrise">Send a referral</a>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+// ─── Admissions Flight Plan ───────────────────────────────────────────────────
+function AdmissionsFlightPlan() {
+  const steps = [
+    { num: "01", label: "Departure", title: "Call", desc: "One confidential call to our admissions team. No commitment, no pressure. Just a conversation about what your teen needs." },
+    { num: "02", label: "Climb", title: "Verify Benefits", desc: "We handle insurance verification for you. Most families are surprised by how much is covered. We'll explain what to expect before anything is decided." },
+    { num: "03", label: "Cruise", title: "Same-Day Intake", desc: "When you're ready, intake can happen the same day. Every recovery has a starting point. This is a good one." },
+  ];
+
+  return (
+    <section id="admissions" className="bg-[#142028] py-20 md:py-28 relative overflow-hidden">
+      <div
+        className="absolute right-0 top-0 w-2/5 h-full pointer-events-none"
+        style={{ background: "radial-gradient(ellipse at 80% 30%, rgba(255,138,76,0.09) 0%, transparent 65%)" }}
+        aria-hidden="true"
+      />
+      <div className="container relative z-10">
+        <div className="mb-12">
+          <p className="eyebrow-label" style={{ color: "#FFD36B" }}>Admissions</p>
+          <h2 className="display-serif text-[#FCFBF8] mt-3" style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}>
+            Three steps.<br />
+            One clear <em style={{ color: "#FFD36B" }}>flightpath.</em>
+          </h2>
         </div>
 
-        <div className="mt-16 border border-white/10 rounded-xl p-6 bg-white/[0.02]">
-          <div className="font-technical text-xs text-white/30 tracking-widest uppercase mb-4">Route Overview · Form FP-001</div>
-          <div className="flex flex-col md:flex-row gap-4">
-            {phases.map((phase, i) => (
-              <div key={i} className="flex-1 flex items-center gap-4">
-                <div className="flex flex-col items-center">
-                  <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center font-technical text-xs font-bold ${
-                    i === activePhase ? "border-[#E8622A] text-[#E8622A] bg-[#E8622A]/10" : "border-white/20 text-white/30"
-                  }`}>
-                    {String(i + 1).padStart(2, "0")}
-                  </div>
+        <div className="relative">
+          {/* Dashed connecting line */}
+          <div className="hidden md:block absolute top-7 left-14 right-14 h-px border-t-2 border-dashed border-[#FF8A4C]/25 z-0" />
+          <div className="grid md:grid-cols-3 gap-8 relative z-10">
+            {steps.map((step) => (
+              <div key={step.num} className="flex flex-col items-center text-center md:items-center">
+                <div
+                  className="w-14 h-14 rounded-full flex items-center justify-center mb-4 flex-shrink-0"
+                  style={{ background: "linear-gradient(135deg, #E0561F, #FF8A4C, #FFD36B)" }}
+                >
+                  <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#142028] text-sm font-extrabold">{step.num}</span>
                 </div>
-                <div>
-                  <div className="font-technical text-xs text-white/30 tracking-wide">{phase.status}</div>
-                  <div className="font-display font-bold text-sm text-white/70">{phase.phase}</div>
-                </div>
-                {i < phases.length - 1 && (
-                  <div className="hidden md:flex flex-1 items-center">
-                    <div className="h-px flex-1 border-t border-dashed border-white/10" />
-                    <ChevronRight size={12} className="text-white/20" />
-                  </div>
-                )}
+                <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-[0.2em] uppercase mb-1.5">{step.label}</p>
+                <h3 className="display-serif text-[#FCFBF8] text-xl mb-2">{step.title}</h3>
+                <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/40 text-sm leading-relaxed max-w-[200px]">{step.desc}</p>
               </div>
             ))}
           </div>
@@ -459,451 +624,189 @@ function TheFlightpath() {
   );
 }
 
-// ─── Programs Section ─────────────────────────────────────────────────────────
-function Programs() {
-  const programs = [
-    {
-      title: "Teen Medical Detox",
-      code: "FP-DX",
-      description: "Medically supervised withdrawal management for adolescents ages 13–17. Safe, comfortable, and clinically monitored around the clock.",
-      icon: "🩺",
-    },
-    {
-      title: "Residential Treatment",
-      code: "FP-RT",
-      description: "Structured daily programming with individual therapy, group sessions, family work, and academic support in a home-like setting.",
-      icon: "🏠",
-    },
-    {
-      title: "Dual Diagnosis Care",
-      code: "FP-DD",
-      description: "Co-occurring mental health conditions treated alongside substance use. Anxiety, depression, trauma — we navigate the whole route.",
-      icon: "🧠",
-    },
-    {
-      title: "Family Navigation",
-      code: "FP-FM",
-      description: "Recovery doesn't happen in isolation. Family therapy, parent coaching, and sibling support are built into every flightpath.",
-      icon: "👨‍👩‍👧",
-    },
-  ];
-
+// ─── Testimonial ──────────────────────────────────────────────────────────────
+function Testimonial() {
   return (
-    <section id="programs" className="bg-[#F8F6F0] py-20 md:py-32">
-      <div className="container">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="h-px w-8 bg-[#E8622A]" />
-          <span className="font-technical text-xs text-[#E8622A] tracking-[0.2em] uppercase">Programs</span>
+    <section className="bg-[#1B2A33] py-20 md:py-28 text-center relative overflow-hidden">
+      <div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3/5 h-4/5 pointer-events-none"
+        style={{ background: "radial-gradient(ellipse, rgba(255,138,76,0.06) 0%, transparent 65%)" }}
+        aria-hidden="true"
+      />
+      <div className="container max-w-2xl relative z-10">
+        <div
+          className="text-[#FF8A4C]/35 mb-4 leading-none select-none"
+          style={{ fontFamily: "'Instrument Serif', serif", fontSize: "5rem" }}
+          aria-hidden="true"
+        >
+          "
         </div>
-        <h2 className="font-display font-black text-5xl md:text-6xl text-[#0A1628] leading-none mb-12">
-          CARE FOR EVERY<br />
-          <span className="text-[#E8622A]">LEG OF THE ROUTE</span>
-        </h2>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          {programs.map((prog) => (
-            <div key={prog.code} className="flight-card bg-white border border-[#0A1628]/10 rounded-xl p-8 shadow-sm">
-              <div className="flex items-start justify-between mb-4">
-                <span className="text-3xl">{prog.icon}</span>
-                <span className="font-technical text-xs text-[#E8622A]/60 tracking-widest">{prog.code}</span>
-              </div>
-              <h3 className="font-display font-bold text-2xl text-[#0A1628] mb-3">{prog.title}</h3>
-              <div className="h-px w-12 bg-[#E8622A] mb-4" />
-              <p className="font-body text-sm text-[#0A1628]/60 leading-relaxed">{prog.description}</p>
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 font-technical text-xs text-[#E8622A] tracking-widest uppercase mt-6 hover:gap-3 transition-all duration-200"
-              >
-                Learn More <ArrowRight size={12} />
-              </a>
-            </div>
-          ))}
-        </div>
+        <blockquote>
+          <p
+            className="display-serif text-[#FCFBF8] italic leading-snug mb-6"
+            style={{ fontSize: "clamp(1.4rem, 3vw, 2.1rem)" }}
+          >
+            "I didn't know what to expect. I just knew I needed my kid to be{" "}
+            <em style={{ fontStyle: "normal", color: "#FFD36B" }}>safe.</em>{" "}
+            Flightpath was the first place that made me feel like we were going to be okay."
+          </p>
+          <footer
+            style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
+            className="text-white/30 text-xs font-semibold tracking-[0.15em] uppercase"
+          >
+            {/* LEGAL REVIEW: Replace with real attributed testimonial or remove per compliance */}
+            Parent of a former patient · Orange County, CA
+          </footer>
+        </blockquote>
       </div>
     </section>
   );
 }
 
-// ─── For Families Section ─────────────────────────────────────────────────────
-function ForFamilies() {
+// ─── Final CTA Band ───────────────────────────────────────────────────────────
+function CTABand() {
   return (
-    <section id="families" className="bg-[#0A1628] py-20 md:py-32">
+    <section
+      id="contact"
+      style={{ background: "linear-gradient(90deg, #E0561F 0%, #FF8A4C 50%, #FFD36B 100%)" }}
+      className="py-20 md:py-24"
+    >
       <div className="container">
-        <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="h-px w-8 bg-[#E8622A]" />
-              <span className="font-technical text-xs text-[#E8622A] tracking-[0.2em] uppercase">For Families</span>
-            </div>
-            <h2 className="font-display font-black text-5xl md:text-6xl text-white leading-none mb-6">
-              GROUND CONTROL<br />
-              <span className="text-[#E8622A]">IS ALWAYS</span><br />
-              LISTENING.
+            <h2
+              className="display-serif text-[#142028] mb-4"
+              style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}
+            >
+              The hardest part<br />
+              is the <em>call.</em>
             </h2>
-            <div className="h-px w-32 bg-gradient-to-r from-[#E8622A] to-transparent mb-6" />
-            <p className="font-body text-base text-white/70 leading-relaxed mb-4">
-              Watching your teen struggle is one of the hardest things a parent can face. You don't need to have the right words. You don't need to know the whole route. You just need to make the call.
+            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#142028]/60 text-base leading-relaxed mb-6">
+              We'll take it from there. Confidential, no-pressure conversation with a trained admissions navigator. Available 24 hours a day.
             </p>
-            <p className="font-body text-base text-white/70 leading-relaxed mb-8">
-              Our navigators can help you understand what treatment looks like for teens, whether insurance may help, and what the next leg of the flightpath could be. No pressure. No judgment. Just clear next steps.
-            </p>
-
-            <div className="flex flex-col gap-4 mb-8">
-              {[
-                "Confidential conversation with a trained navigator",
-                "Insurance verification assistance",
-                "Family therapy included in all programs",
-                "Parent coaching and sibling support",
-              ].map((item) => (
-                <div key={item} className="flex items-start gap-3">
-                  <div className="w-5 h-5 rounded-full bg-[#E8622A]/20 border border-[#E8622A]/40 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <CheckCircle size={10} className="text-[#E8622A]" />
-                  </div>
-                  <span className="font-body text-sm text-white/60">{item}</span>
-                </div>
-              ))}
-            </div>
-
             <a
-              href="#contact"
-              className="inline-flex items-center gap-3 bg-[#E8622A] text-white font-display font-bold text-sm tracking-widest uppercase px-8 py-4 rounded hover:bg-[#d4561f] transition-colors duration-200"
+              href="tel:+18009999999"
+              style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
+              className="text-[#142028] text-3xl font-extrabold no-underline hover:opacity-75 transition-opacity tracking-tight"
             >
-              Start Here <ArrowRight size={16} />
+              800-999-9999
             </a>
           </div>
-
-          <div className="bg-white/5 border border-white/10 rounded-xl p-8">
-            <div className="font-technical text-xs text-[#E8622A] tracking-widest uppercase mb-6">Navigation Checkpoint</div>
-            <p className="font-body text-sm text-white/50 mb-8">When you call, here is what to expect. No pressure, no judgment.</p>
-            <div className="flex flex-col gap-4">
-              {[
-                { num: "01", title: "Confidential Contact", desc: "A trained navigator answers your questions." },
-                { num: "02", title: "Situation Review", desc: "They listen and help you understand the situation." },
-                { num: "03", title: "Program Briefing", desc: "They explain teen detox and residential options." },
-                { num: "04", title: "Insurance Verification", desc: "They help verify your teen's coverage." },
-                { num: "05", title: "Next Leg", desc: "They explain possible next steps, without pressure." },
-              ].map((step) => (
-                <div key={step.num} className="flex items-start gap-4 pb-4 border-b border-white/5 last:border-0">
-                  <div className="font-technical text-xs text-[#E8622A]/60 tracking-widest w-6 flex-shrink-0 mt-0.5">{step.num}</div>
-                  <div>
-                    <div className="font-display font-bold text-sm text-white mb-0.5">{step.title}</div>
-                    <div className="font-body text-xs text-white/40">{step.desc}</div>
-                  </div>
-                  <div className="ml-auto">
-                    <span className="font-technical text-xs text-green-400/70 tracking-widest">CLEAR</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <a
-              href="tel:+18669693686"
-              className="flex items-center justify-center gap-2 mt-8 border border-[#E8622A]/40 text-[#E8622A] font-technical text-xs tracking-widest uppercase px-6 py-3 rounded hover:bg-[#E8622A]/10 transition-colors duration-200"
+          <div>
+            <form
+              className="flex flex-col gap-3"
+              onSubmit={(e) => e.preventDefault()}
+              aria-label="Verify your benefits"
             >
-              <Phone size={14} />
-              Call 866-969-3686
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── Insurance Section ────────────────────────────────────────────────────────
-function Insurance() {
-  return (
-    <section className="bg-[#F8F6F0] py-16 md:py-24">
-      <div className="container">
-        <div className="grid md:grid-cols-3 gap-8 items-center">
-          <div className="md:col-span-2">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="h-px w-8 bg-[#E8622A]" />
-              <span className="font-technical text-xs text-[#E8622A] tracking-[0.2em] uppercase">Insurance Access</span>
-            </div>
-            <h2 className="font-display font-black text-4xl md:text-5xl text-[#0A1628] leading-none mb-4">
-              THE FLIGHTPATH MAY BE<br />
-              <span className="text-[#E8622A]">MORE ACCESSIBLE</span><br />
-              THAN YOU THINK.
-            </h2>
-            <p className="font-body text-base text-[#0A1628]/60 leading-relaxed mb-6">
-              Flightpath Teen Detox works with major insurance carriers. Your benefits may cover a significant portion of teen detox and residential treatment. Verifying is the simplest first step on the route.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              {["Anthem Blue Cross", "Blue Shield of California", "MHN", "TRICARE"].map((ins) => (
-                <span key={ins} className="font-technical text-xs text-[#0A1628]/60 tracking-wide border border-[#0A1628]/20 rounded-full px-4 py-1.5 bg-white">
-                  {ins}
-                </span>
-              ))}
-            </div>
-          </div>
-          <div className="flex flex-col gap-4">
-            <a
-              href="#contact"
-              className="btn-beacon bg-[#E8622A] text-white font-display font-bold text-sm tracking-widest uppercase px-6 py-4 rounded text-center hover:bg-[#d4561f] transition-colors"
-            >
-              Verify Insurance Benefits
-            </a>
-            <a
-              href="tel:+18669693686"
-              className="border-2 border-[#0A1628]/20 text-[#0A1628] font-display font-bold text-sm tracking-widest uppercase px-6 py-4 rounded text-center hover:border-[#0A1628] transition-colors"
-            >
-              Ask About Self-Pay
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── FAQ Section ──────────────────────────────────────────────────────────────
-function FAQ() {
-  const [open, setOpen] = useState<number | null>(null);
-  const faqs = [
-    {
-      q: "What ages does Flightpath Teen Detox serve?",
-      a: "Flightpath is designed specifically for adolescents ages 13 through 17. Our programming, therapy modalities, and environment are built around the unique developmental needs of teenagers.",
-    },
-    {
-      q: "How is Flightpath different from adult programs?",
-      a: "Flightpath is a completely separate, adolescent-only program. While The Runway Recovery guides adults through a structured program, Flightpath uses the aviation metaphor differently — teens chart their own route, with navigators beside them every step of the way. The clinical team, programming, and environment are all designed specifically for teens.",
-    },
-    {
-      q: "What happens during teen medical detox?",
-      a: "Medical detox at Flightpath is supervised by licensed clinicians and board-certified addiction medicine physicians. Your teen will have a private room, 24/7 monitoring, comfort medications as appropriate, and meals. The goal is safe, dignified stabilization — the first leg of the flightpath.",
-    },
-    {
-      q: "Can parents be involved in treatment?",
-      a: "Absolutely. Family involvement is a core part of every flightpath at Flightpath Teen Detox. Family therapy sessions, parent coaching, and sibling support are built into residential treatment. We believe recovery is a family navigation.",
-    },
-    {
-      q: "Does insurance cover teen detox and residential treatment?",
-      a: "Flightpath works with Anthem Blue Cross, Blue Shield of California, MHN, and TRICARE. Many families find that insurance covers a significant portion of care. Call our navigators or use our verification form to understand your specific benefits.",
-    },
-    {
-      q: "What does a typical day look like for a teen at Flightpath?",
-      a: "Days at Flightpath are structured but not rigid. Mornings begin with wellness activities, followed by individual and group therapy sessions, academic support, and skills-building activities. Evenings include reflection time, peer connection, and rest. The schedule is designed to build the routines teens will carry on their own flightpath.",
-    },
-  ];
-
-  return (
-    <section className="bg-[#0A1628] py-20 md:py-32">
-      <div className="container max-w-3xl">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="h-px w-8 bg-[#E8622A]" />
-          <span className="font-technical text-xs text-[#E8622A] tracking-[0.2em] uppercase">Common Questions</span>
-        </div>
-        <h2 className="font-display font-black text-5xl md:text-6xl text-white leading-none mb-12">
-          PRE-FLIGHT<br />
-          <span className="text-[#E8622A]">BRIEFING</span>
-        </h2>
-        <div className="flex flex-col gap-3">
-          {faqs.map((faq, i) => (
-            <div key={i} className="border border-white/10 rounded-xl overflow-hidden">
+              <input
+                type="text"
+                placeholder="Your name"
+                className="bg-[#142028]/10 border border-[#142028]/15 rounded-xl px-4 py-3 text-[#142028] placeholder-[#142028]/35 text-sm focus:outline-none focus:border-[#142028]/35 transition-colors"
+                style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
+              />
+              <input
+                type="tel"
+                placeholder="Best phone number"
+                className="bg-[#142028]/10 border border-[#142028]/15 rounded-xl px-4 py-3 text-[#142028] placeholder-[#142028]/35 text-sm focus:outline-none focus:border-[#142028]/35 transition-colors"
+                style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
+              />
+              <textarea
+                placeholder="Brief message (optional)"
+                rows={3}
+                className="bg-[#142028]/10 border border-[#142028]/15 rounded-xl px-4 py-3 text-[#142028] placeholder-[#142028]/35 text-sm focus:outline-none focus:border-[#142028]/35 transition-colors resize-none"
+                style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
+              />
               <button
-                onClick={() => setOpen(open === i ? null : i)}
-                className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left hover:bg-white/5 transition-colors"
+                type="submit"
+                style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
+                className="bg-[#142028] text-[#FCFBF8] text-sm font-bold tracking-wide px-6 py-3 rounded-full self-start hover:opacity-85 active:scale-[0.97] transition-all"
               >
-                <span className="font-body text-base font-medium text-white/80">{faq.q}</span>
-                <ChevronDown
-                  size={16}
-                  className={`text-[#E8622A] flex-shrink-0 transition-transform duration-200 ${open === i ? "rotate-180" : ""}`}
-                />
+                Verify your benefits
               </button>
-              {open === i && (
-                <div className="px-6 pb-5 border-t border-white/5">
-                  <p className="font-body text-sm text-white/50 leading-relaxed pt-4">{faq.a}</p>
-                </div>
-              )}
-            </div>
-          ))}
+              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#142028]/40 text-xs leading-relaxed">
+                {/* LEGAL REVIEW: Confirm HIPAA-compliant form handling before launch */}
+                By submitting, you consent to a confidential callback from our admissions team. We do not sell or share your information.
+              </p>
+            </form>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-// ─── Contact / CTA Section ────────────────────────────────────────────────────
-function ContactCTA() {
-  const [name, setName] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-  };
-
+// ─── ATIS Ticker ──────────────────────────────────────────────────────────────
+function AtisTicker() {
+  const msg = "FLIGHTPATH TEEN DETOX · ORANGE COUNTY, CA · ADOLESCENT DETOX & STABILIZATION · AGES 13–17 · 24/7 ADMISSIONS · LICENSED · MOST INSURANCE ACCEPTED · A SAFE PLACE TO LAND · ";
   return (
-    <section id="contact" className="bg-[#F8F6F0] py-20 md:py-32">
-      <div className="container">
-        <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="h-px w-8 bg-[#E8622A]" />
-              <span className="font-technical text-xs text-[#E8622A] tracking-[0.2em] uppercase">Ready to Begin</span>
-            </div>
-            <h2 className="font-display font-black text-5xl md:text-6xl text-[#0A1628] leading-none mb-6">
-              GROUND CONTROL<br />
-              <span className="text-[#E8622A]">TO YOU.</span>
-            </h2>
-            <div className="h-px w-32 bg-gradient-to-r from-[#E8622A] to-transparent mb-6" />
-            <p className="font-body text-base text-[#0A1628]/70 leading-relaxed mb-8">
-              Whether you're a teen ready to chart your flightpath, or a parent watching from the ground — our navigators are standing by. One confidential call can change the direction of everything.
-            </p>
-            <div className="flex flex-col gap-4">
-              <a href="tel:+18669693686" className="flex items-center gap-3 group">
-                <div className="w-12 h-12 rounded-full bg-[#E8622A] flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Phone size={18} className="text-white" />
-                </div>
-                <div>
-                  <div className="font-technical text-xs text-[#0A1628]/40 tracking-widest uppercase">Call Admissions</div>
-                  <div className="font-display font-bold text-xl text-[#0A1628]">866-969-3686</div>
-                </div>
-              </a>
-            </div>
-
-            <div className="mt-10 p-6 bg-[#0A1628]/5 border border-[#0A1628]/10 rounded-xl">
-              <div className="font-technical text-xs text-[#0A1628]/40 tracking-widest uppercase mb-2">A note about privacy</div>
-              <p className="font-body text-xs text-[#0A1628]/50 leading-relaxed">
-                All calls and inquiries are completely confidential. We will never share your information without your explicit consent. No judgment. No pressure. Just clear next steps.
-              </p>
-            </div>
-          </div>
-
-          <div className="bg-[#0A1628] rounded-xl p-8">
-            <div className="font-technical text-xs text-[#E8622A] tracking-widest uppercase mb-2">Navigation Check-In</div>
-            <h3 className="font-display font-bold text-2xl text-white mb-2">Chart Your Flightpath</h3>
-            <p className="font-body text-sm text-white/50 mb-8">
-              Not a commitment. Just a first step. Put a name on it and come back when you're ready to begin. You hold the route.
-            </p>
-
-            {!submitted ? (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <div>
-                  <label className="font-technical text-xs text-white/40 tracking-widest uppercase block mb-2">
-                    Navigator Name
-                  </label>
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="First name (or a loved one's)"
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 font-body text-sm text-white placeholder-white/20 focus:outline-none focus:border-[#E8622A]/50 transition-colors"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="btn-beacon bg-[#E8622A] text-white font-display font-bold text-sm tracking-widest uppercase px-6 py-4 rounded hover:bg-[#d4561f] transition-colors"
-                >
-                  Chart Flightpath
-                </button>
-                <p className="font-technical text-xs text-white/20 text-center tracking-wide">
-                  Nothing is sent anywhere. Generated here on your device.
-                </p>
-              </form>
-            ) : (
-              <div className="border-2 border-[#C9A84C]/40 rounded-xl p-6 bg-[#C9A84C]/5 text-center">
-                <img
-                  src="https://d2xsxph8kpxj0f.cloudfront.net/310519663488423210/SUVBoqZCLc2b3z93g2JT8w/flightpath_cert-7WZDUxsip6dTePCG28pZQa.webp"
-                  alt="Flightpath Complete"
-                  className="w-full rounded-lg mb-4 opacity-90"
-                />
-                <div className="font-display font-black text-2xl text-white mb-1">
-                  {name || "NAVIGATOR"} — FLIGHTPATH CHARTED
-                </div>
-                <div className="font-technical text-xs text-[#C9A84C] tracking-widest uppercase mb-4">
-                  Route Locked · Flightpath Teen Detox
-                </div>
-                <p className="font-body text-xs text-white/40 leading-relaxed">
-                  Come back when you're ready to begin Ground School. We'll be here.
-                </p>
-                <button
-                  onClick={() => { setSubmitted(false); setName(""); }}
-                  className="mt-4 font-technical text-xs text-white/30 hover:text-white/60 tracking-widest uppercase transition-colors"
-                >
-                  Reset
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
+    <div className="bg-[#E0561F] overflow-hidden py-2">
+      <div className="ticker-track flex whitespace-nowrap">
+        <span
+          style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
+          className="text-white/80 text-[0.62rem] font-semibold tracking-[0.18em]"
+        >
+          {msg + msg}
+        </span>
       </div>
-    </section>
+    </div>
   );
 }
 
 // ─── Footer ───────────────────────────────────────────────────────────────────
 function Footer() {
   return (
-    <footer className="bg-[#0A1628] border-t border-white/10">
+    <footer className="bg-[#142028] border-t border-white/[0.06]">
       <AtisTicker />
-      <div className="container py-12">
-        <div className="grid md:grid-cols-4 gap-8 mb-10">
-          <div className="md:col-span-2">
-            <img
-              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663488423210/SUVBoqZCLc2b3z93g2JT8w/flightpath_logo_primary-cYHnZzGGD35gzCzLovnE69.webp"
-              alt="Flightpath Teen Detox"
-              className="h-12 w-auto mb-4 brightness-0 invert"
-            />
-            <p className="font-body text-sm text-white/40 leading-relaxed max-w-xs">
-              Teen detox and residential recovery in Orange County, CA. Designed for ages 13–17. Your life has a flightpath. Let us help you chart it.
+      <div className="container py-10">
+        <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-8">
+          <div>
+            <a href="/" className="flex items-center gap-2 no-underline mb-3">
+              <DeltaFlat size={20} opacity={0.55} />
+              <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#FCFBF8] font-bold text-base">
+                Flightpath <span className="text-[#FF8A4C]">Teen Detox</span>
+              </span>
+            </a>
+            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/35 text-sm leading-relaxed max-w-xs">
+              Medically supervised adolescent detox and stabilization in Orange County, California. Ages 13–17.
             </p>
-            <div className="flex gap-3 mt-6">
-              <span className="font-technical text-xs text-white/20 tracking-wide">Licensed · DHCS</span>
-              <span className="text-white/10">·</span>
-              <span className="font-technical text-xs text-white/20 tracking-wide">Joint Commission Accredited</span>
-            </div>
           </div>
-
-          <div>
-            <div className="font-technical text-xs text-[#E8622A] tracking-widest uppercase mb-4">Programs</div>
-            <div className="flex flex-col gap-2">
-              {["Teen Medical Detox", "Residential Treatment", "Dual Diagnosis", "Family Navigation", "Aftercare Planning"].map((item) => (
-                <a key={item} href="#programs" className="font-body text-sm text-white/40 hover:text-white/70 transition-colors">
-                  {item}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <div className="font-technical text-xs text-[#E8622A] tracking-widest uppercase mb-4">Support</div>
-            <div className="flex flex-col gap-2">
-              {["For Families", "Insurance & Cost", "The Flightpath", "About Us", "Contact"].map((item) => (
-                <a key={item} href="#families" className="font-body text-sm text-white/40 hover:text-white/70 transition-colors">
-                  {item}
-                </a>
-              ))}
-            </div>
-            <div className="mt-6">
-              <div className="font-technical text-xs text-white/20 tracking-widest uppercase mb-2">Adult Program</div>
+          <nav className="flex flex-wrap gap-x-6 gap-y-2">
+            {["The Program", "Our Approach", "Environment", "For Families", "Admissions", "Contact"].map((item) => (
               <a
-                href="https://therunwayrecovery.lovable.app"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-body text-xs text-white/30 hover:text-[#E8622A] transition-colors"
+                key={item}
+                href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
+                style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
+                className="text-white/35 hover:text-white text-xs font-medium tracking-wide transition-colors no-underline"
               >
-                The Runway Recovery →
+                {item}
               </a>
-              <p className="font-technical text-xs text-white/15 mt-1 leading-relaxed">
-                Adult detox &amp; residential program by the same owner. Separate program.
-              </p>
-            </div>
+            ))}
+          </nav>
+        </div>
+        <div className="border-t border-white/[0.06] pt-6 flex flex-col md:flex-row items-start justify-between gap-4">
+          <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/20 text-xs leading-relaxed max-w-xl">
+            {/* LEGAL REVIEW: Insert real license number, address, and accreditation details */}
+            Licensed by the California Department of Health Care Services (DHCS). License #[PLACEHOLDER]. This website is for informational purposes only and does not constitute medical advice or guarantee treatment outcomes. All calls are confidential.
+          </p>
+          <div className="text-right flex-shrink-0">
+            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/20 text-xs font-semibold tracking-wide">
+              SAMHSA Helpline:{" "}
+              <a href="tel:+18006624357" className="text-[#2FB6A6] no-underline hover:underline">
+                1-800-662-4357
+              </a>
+            </p>
+            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/15 text-xs mt-1">
+              © 2026 Flightpath Teen Detox
+            </p>
+            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/15 text-[0.65rem] mt-1">
+              Adult program:{" "}
+              <a href="https://therunwayrecovery.lovable.app" target="_blank" rel="noopener noreferrer" className="hover:text-white/30 transition-colors no-underline">
+                The Runway Recovery
+              </a>
+              {" "}· Same owner, separate program.
+            </p>
           </div>
         </div>
-
-        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <p className="font-technical text-xs text-white/20 leading-relaxed max-w-2xl">
-            Licensed by the State of California Department of Health Care Services (DHCS). Accredited by The Joint Commission. Flightpath Teen Detox is a specialized adolescent program in Orange County, CA.
-          </p>
-          <p className="font-technical text-xs text-white/20 flex-shrink-0">
-            © 2026 Flightpath Teen Detox
-          </p>
-        </div>
-
-        <p className="font-body text-xs text-white/15 mt-4 leading-relaxed">
-          This website is for general information and does not provide medical advice or guarantee treatment outcomes or insurance coverage. Please speak with our admissions team about your specific situation.
-        </p>
       </div>
     </footer>
   );
@@ -913,17 +816,17 @@ function Footer() {
 export default function Home() {
   return (
     <div className="min-h-screen">
+      <EyebrowBar />
       <Nav />
       <Hero />
-      <AtisTicker />
-      <PreFlightBriefing />
-      <TheConcept />
-      <TheFlightpath />
-      <Programs />
-      <ForFamilies />
-      <Insurance />
-      <FAQ />
-      <ContactCTA />
+      <ReassuranceStrip />
+      <TheProgram />
+      <OurApproach />
+      <Environment />
+      <Audiences />
+      <AdmissionsFlightPlan />
+      <Testimonial />
+      <CTABand />
       <Footer />
     </div>
   );

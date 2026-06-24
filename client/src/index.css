@@ -1,14 +1,16 @@
-/* ============================================================
-   SOLO TEEN RECOVERY — Global Design Tokens
-   Design: Cockpit at Golden Hour
-   Colors: Stratosphere Navy, Horizon Orange, Instrument Gold, Cloud White
-   Fonts: Barlow Condensed (display) + DM Sans (body) + Space Mono (technical)
-   ============================================================ */
+/*
+ * FLIGHTPATH TEEN DETOX — Global Design Tokens
+ * Design: Sunrise over Twilight Sky
+ * Palette: Tangerine #FF8A4C · Coral #E0561F · Ember #C2421F · Ink #142028 · Teal #2FB6A6 · Paper #FCFBF8
+ * Type: Instrument Serif (display) · Bricolage Grotesque (UI/eyebrows) · Hanken Grotesk (body)
+ */
 
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+
+/* ── Google Fonts are loaded in index.html ── */
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -48,51 +50,93 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* SOLO Brand Colors */
-  --color-navy: oklch(0.15 0.04 240);
-  --color-navy-deep: oklch(0.10 0.04 240);
-  --color-orange: oklch(0.62 0.19 40);
-  --color-orange-light: oklch(0.72 0.17 45);
-  --color-gold: oklch(0.72 0.12 75);
-  --color-cloud: oklch(0.98 0.005 80);
-  --color-altimeter: oklch(0.65 0.04 230);
-  --color-horizon-line: oklch(0.62 0.19 40);
+  /* Flightpath brand tokens */
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-ui: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body: 'Hanken Grotesk', system-ui, sans-serif;
+
+  --color-tangerine: oklch(0.72 0.18 40);
+  --color-coral: oklch(0.60 0.20 35);
+  --color-ember: oklch(0.52 0.18 33);
+  --color-ink: oklch(0.18 0.025 220);
+  --color-slate: oklch(0.22 0.025 220);
+  --color-teal: oklch(0.65 0.12 185);
+  --color-paper: oklch(0.99 0.005 80);
+  --color-cream: oklch(0.96 0.01 80);
+  --color-stone: oklch(0.91 0.015 80);
+  --color-gold: oklch(0.88 0.12 80);
+  --color-sand-gold: oklch(0.80 0.14 65);
 }
 
 :root {
-  --radius: 0.5rem;
-  --background: oklch(0.98 0.005 80);
-  --foreground: oklch(0.15 0.04 240);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0.04 240);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0.04 240);
-  --primary: oklch(0.62 0.19 40);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.15 0.04 240);
-  --secondary-foreground: oklch(1 0 0);
-  --muted: oklch(0.94 0.005 240);
-  --muted-foreground: oklch(0.55 0.03 240);
-  --accent: oklch(0.72 0.12 75);
-  --accent-foreground: oklch(0.15 0.04 240);
+  --radius: 0.75rem;
+  --background: oklch(0.99 0.005 80);
+  --foreground: oklch(0.18 0.025 220);
+  --card: oklch(0.99 0.005 80);
+  --card-foreground: oklch(0.18 0.025 220);
+  --popover: oklch(0.99 0.005 80);
+  --popover-foreground: oklch(0.18 0.025 220);
+  --primary: oklch(0.72 0.18 40);
+  --primary-foreground: oklch(0.18 0.025 220);
+  --secondary: oklch(0.96 0.01 80);
+  --secondary-foreground: oklch(0.18 0.025 220);
+  --muted: oklch(0.91 0.015 80);
+  --muted-foreground: oklch(0.45 0.02 220);
+  --accent: oklch(0.65 0.12 185);
+  --accent-foreground: oklch(0.99 0.005 80);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.88 0.01 240);
-  --input: oklch(0.88 0.01 240);
-  --ring: oklch(0.62 0.19 40);
-  --chart-1: oklch(0.62 0.19 40);
-  --chart-2: oklch(0.72 0.12 75);
-  --chart-3: oklch(0.15 0.04 240);
-  --chart-4: oklch(0.65 0.04 230);
-  --chart-5: oklch(0.85 0.005 80);
-  --sidebar: oklch(0.15 0.04 240);
-  --sidebar-foreground: oklch(0.98 0.005 80);
-  --sidebar-primary: oklch(0.62 0.19 40);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.20 0.04 240);
-  --sidebar-accent-foreground: oklch(0.98 0.005 80);
-  --sidebar-border: oklch(0.25 0.04 240);
-  --sidebar-ring: oklch(0.62 0.19 40);
+  --border: oklch(0.88 0.015 80);
+  --input: oklch(0.88 0.015 80);
+  --ring: oklch(0.65 0.12 185);
+  --chart-1: oklch(0.72 0.18 40);
+  --chart-2: oklch(0.60 0.20 35);
+  --chart-3: oklch(0.65 0.12 185);
+  --chart-4: oklch(0.88 0.12 80);
+  --chart-5: oklch(0.52 0.18 33);
+  --sidebar: oklch(0.99 0.005 80);
+  --sidebar-foreground: oklch(0.18 0.025 220);
+  --sidebar-primary: oklch(0.72 0.18 40);
+  --sidebar-primary-foreground: oklch(0.18 0.025 220);
+  --sidebar-accent: oklch(0.96 0.01 80);
+  --sidebar-accent-foreground: oklch(0.18 0.025 220);
+  --sidebar-border: oklch(0.88 0.015 80);
+  --sidebar-ring: oklch(0.65 0.12 185);
+}
+
+.dark {
+  --background: oklch(0.18 0.025 220);
+  --foreground: oklch(0.96 0.005 80);
+  --card: oklch(0.22 0.025 220);
+  --card-foreground: oklch(0.96 0.005 80);
+  --popover: oklch(0.22 0.025 220);
+  --popover-foreground: oklch(0.96 0.005 80);
+  --primary: oklch(0.72 0.18 40);
+  --primary-foreground: oklch(0.18 0.025 220);
+  --secondary: oklch(0.25 0.02 220);
+  --secondary-foreground: oklch(0.85 0.01 80);
+  --muted: oklch(0.28 0.02 220);
+  --muted-foreground: oklch(0.60 0.02 220);
+  --accent: oklch(0.65 0.12 185);
+  --accent-foreground: oklch(0.18 0.025 220);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.65 0.12 185);
+  --chart-1: oklch(0.72 0.18 40);
+  --chart-2: oklch(0.60 0.20 35);
+  --chart-3: oklch(0.65 0.12 185);
+  --chart-4: oklch(0.88 0.12 80);
+  --chart-5: oklch(0.52 0.18 33);
+  --sidebar: oklch(0.22 0.025 220);
+  --sidebar-foreground: oklch(0.96 0.005 80);
+  --sidebar-primary: oklch(0.72 0.18 40);
+  --sidebar-primary-foreground: oklch(0.18 0.025 220);
+  --sidebar-accent: oklch(0.25 0.02 220);
+  --sidebar-accent-foreground: oklch(0.96 0.005 80);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.65 0.12 185);
 }
 
 @layer base {
@@ -101,7 +145,8 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-body, 'Hanken Grotesk', system-ui, sans-serif);
+    -webkit-font-smoothing: antialiased;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
@@ -114,10 +159,6 @@
   input[type="radio"]:not(:disabled) {
     @apply cursor-pointer;
   }
-
-  h1, h2, h3, h4 {
-    font-family: 'Barlow Condensed', sans-serif;
-  }
 }
 
 @layer components {
@@ -128,143 +169,67 @@
     padding-left: 1rem;
     padding-right: 1rem;
   }
-
   .flex {
     min-height: 0;
     min-width: 0;
   }
-
   @media (min-width: 640px) {
-    .container {
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-    }
+    .container { padding-left: 1.5rem; padding-right: 1.5rem; }
   }
-
   @media (min-width: 1024px) {
-    .container {
-      padding-left: 2rem;
-      padding-right: 2rem;
-      max-width: 1280px;
-    }
+    .container { padding-left: 2rem; padding-right: 2rem; max-width: 1200px; }
   }
 
-  /* SOLO Brand Utilities */
-  .font-display {
-    font-family: 'Barlow Condensed', sans-serif;
+  /* Flightpath sunrise gradient button */
+  .btn-sunrise {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(90deg, #E0561F 0%, #FF8A4C 50%, #FFD36B 100%);
+    color: #142028;
+    font-family: var(--font-ui, 'Bricolage Grotesque', sans-serif);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 0.75rem 1.5rem;
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.18s cubic-bezier(0.23,1,0.32,1), transform 0.18s cubic-bezier(0.23,1,0.32,1);
+  }
+  .btn-sunrise:hover { opacity: 0.9; transform: translateY(-2px); }
+  .btn-sunrise:active { transform: scale(0.97); }
+  .btn-sunrise:focus-visible { outline: 3px solid #2FB6A6; outline-offset: 3px; }
+
+  /* Eyebrow label */
+  .eyebrow-label {
+    font-family: var(--font-ui, 'Bricolage Grotesque', sans-serif);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: #2FB6A6;
   }
 
-  .font-body {
-    font-family: 'DM Sans', sans-serif;
+  /* Instrument Serif display headline */
+  .display-serif {
+    font-family: var(--font-display, 'Instrument Serif', Georgia, serif);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
   }
+}
 
-  .font-technical {
-    font-family: 'Space Mono', monospace;
-  }
-
-  .text-navy {
-    color: oklch(0.15 0.04 240);
-  }
-
-  .bg-navy {
-    background-color: oklch(0.15 0.04 240);
-  }
-
-  .bg-navy-deep {
-    background-color: oklch(0.10 0.04 240);
-  }
-
-  .text-horizon {
-    color: oklch(0.62 0.19 40);
-  }
-
-  .bg-horizon {
-    background-color: oklch(0.62 0.19 40);
-  }
-
-  .text-gold {
-    color: oklch(0.72 0.12 75);
-  }
-
-  .bg-gold {
-    background-color: oklch(0.72 0.12 75);
-  }
-
-  .text-cloud {
-    color: oklch(0.98 0.005 80);
-  }
-
-  .bg-cloud {
-    background-color: oklch(0.98 0.005 80);
-  }
-
-  .horizon-line {
-    height: 2px;
-    background: linear-gradient(90deg, transparent, oklch(0.62 0.19 40), transparent);
-  }
-
-  .horizon-line-left {
-    height: 2px;
-    background: linear-gradient(90deg, oklch(0.62 0.19 40), transparent);
-  }
-
-  /* Beacon pulse animation for primary CTA */
-  @keyframes beacon-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 oklch(0.62 0.19 40 / 0.4); }
-    50% { box-shadow: 0 0 0 12px oklch(0.62 0.19 40 / 0); }
-  }
-
-  .btn-beacon {
-    animation: beacon-pulse 2.5s ease-in-out infinite;
-  }
-
-  /* Horizon line draw animation */
-  @keyframes draw-line {
-    from { width: 0; opacity: 0; }
-    to { width: 100%; opacity: 1; }
-  }
-
-  .animate-draw-line {
-    animation: draw-line 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-  }
-
-  /* Altitude rise animation */
-  @keyframes altitude-rise {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .animate-altitude-rise {
-    animation: altitude-rise 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-  }
-
-  /* Flight card hover */
-  .flight-card {
-    transition: transform 0.25s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.25s cubic-bezier(0.23, 1, 0.32, 1);
-  }
-
-  .flight-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px oklch(0.15 0.04 240 / 0.15);
-  }
-
-  /* Ticker tape scroll */
-  @keyframes ticker {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  .ticker-track {
-    animation: ticker 30s linear infinite;
-  }
-
-  .ticker-track:hover {
-    animation-play-state: paused;
-  }
-
-  /* Instrument gauge spin */
-  @keyframes gauge-spin {
-    from { transform: rotate(-45deg); }
-    to { transform: rotate(225deg); }
-  }
+/* Ticker animation */
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.ticker-track {
+  animation: ticker 28s linear infinite;
+  width: max-content;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; }
 }
