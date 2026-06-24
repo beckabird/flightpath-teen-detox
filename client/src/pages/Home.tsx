@@ -1,13 +1,14 @@
 /**
- * SOLO Teen Recovery — Home Page
+ * WAYPOINT Teen Recovery — Home Page
  * Design: Cockpit at Golden Hour
  * Colors: Stratosphere Navy (#0A1628), Horizon Orange (#E8622A), Instrument Gold (#C9A84C), Cloud White (#F8F6F0)
  * Fonts: Barlow Condensed (display), DM Sans (body), Space Mono (technical)
- * Layout: Asymmetric editorial, full-bleed cinematic panels, flight plan grid
+ * Core metaphor: A waypoint is a set of coordinates pilots navigate toward.
+ *   Recovery is navigation — each milestone is a waypoint on the route to your destination.
  */
 
-import { useState, useEffect, useRef } from "react";
-import { Phone, ChevronDown, Menu, X, ArrowRight, Shield, Award, Clock, Users, CheckCircle, ChevronRight } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Phone, ChevronDown, Menu, X, ArrowRight, Shield, Award, Clock, CheckCircle, ChevronRight } from "lucide-react";
 
 // ─── Navigation ───────────────────────────────────────────────────────────────
 function Nav() {
@@ -27,16 +28,14 @@ function Nav() {
       }`}
     >
       <div className="container flex items-center justify-between h-16 md:h-20">
-        {/* Logo */}
         <a href="/" className="flex items-center gap-3">
           <img
-            src="/manus-storage/solo_logo_primary_706f376d.png"
-            alt="SOLO Teen Recovery"
-            className="h-10 md:h-12 w-auto"
+            src="/manus-storage/waypoint_logo_primary_15c9c13c.png"
+            alt="Waypoint Teen Recovery"
+            className="h-10 md:h-12 w-auto brightness-0 invert"
           />
         </a>
 
-        {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
           {[
             { label: "Programs", href: "#programs" },
@@ -54,7 +53,6 @@ function Nav() {
           ))}
         </nav>
 
-        {/* CTA */}
         <div className="hidden md:flex items-center gap-3">
           <a
             href="tel:+18669693686"
@@ -71,7 +69,6 @@ function Nav() {
           </a>
         </div>
 
-        {/* Mobile menu button */}
         <button
           className="md:hidden text-white p-2"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -81,7 +78,6 @@ function Nav() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
       {menuOpen && (
         <div className="md:hidden bg-[#0A1628]/98 backdrop-blur-xl border-t border-white/10">
           <div className="container py-6 flex flex-col gap-4">
@@ -123,7 +119,7 @@ function Nav() {
 
 // ─── ATIS Ticker ──────────────────────────────────────────────────────────────
 function AtisTicker() {
-  const msg = "SOLO · TEEN RECOVERY · ORANGE COUNTY, CA · ADMISSIONS OPEN 24/7 · CONFIDENTIAL · NO JUDGMENT · NO PRESSURE · INSURANCE ACCEPTED · TEEN PROGRAM AGES 13–17 · LICENSED CLINICIANS · CALL 866-969-3686 · CLEARED TO BEGIN WHEN READY · ";
+  const msg = "WAYPOINT · TEEN RECOVERY · ORANGE COUNTY, CA · ADMISSIONS OPEN 24/7 · CONFIDENTIAL · NO JUDGMENT · NO PRESSURE · INSURANCE ACCEPTED · TEEN PROGRAM AGES 13–17 · LICENSED CLINICIANS · CALL 866-969-3686 · NEXT WAYPOINT AHEAD · ";
   const doubled = msg + msg;
   return (
     <div className="bg-[#E8622A] overflow-hidden py-2">
@@ -138,19 +134,15 @@ function AtisTicker() {
 function Hero() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/manus-storage/solo_hero_bg_3eb63abf.png')" }}
       />
-      {/* Gradient overlay — dark on left for text, lighter on right */}
       <div className="absolute inset-0 bg-gradient-to-r from-[#0A1628]/90 via-[#0A1628]/60 to-[#0A1628]/20" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/60 via-transparent to-[#0A1628]/30" />
 
-      {/* Content */}
       <div className="relative z-10 container pt-24 pb-16">
         <div className="max-w-2xl">
-          {/* Location badge */}
           <div className="flex items-center gap-2 mb-6">
             <div className="h-px w-8 bg-[#E8622A]" />
             <span className="font-technical text-xs text-[#E8622A] tracking-[0.2em] uppercase">
@@ -158,31 +150,27 @@ function Hero() {
             </span>
           </div>
 
-          {/* Main headline */}
           <h1 className="font-display font-black text-white leading-none mb-4">
-            <span className="block text-6xl md:text-8xl lg:text-9xl tracking-tight">YOU'RE NOT</span>
-            <span className="block text-6xl md:text-8xl lg:text-9xl tracking-tight">A PASSENGER.</span>
+            <span className="block text-6xl md:text-8xl lg:text-9xl tracking-tight">EVERY STEP</span>
+            <span className="block text-6xl md:text-8xl lg:text-9xl tracking-tight">IS A</span>
             <span className="block text-5xl md:text-7xl lg:text-8xl tracking-tight text-[#E8622A]">
-              YOU'RE THE PILOT.
+              WAYPOINT.
             </span>
           </h1>
 
-          {/* Horizon line */}
           <div className="my-6 h-px w-64 bg-gradient-to-r from-[#E8622A] to-transparent" />
 
-          {/* Subheadline */}
           <p className="font-body text-lg md:text-xl text-white/80 leading-relaxed mb-8 max-w-lg">
             Teen detox and residential recovery in Orange County, designed for ages 13–17.
-            We don't fly the plane for you. We teach you how.
+            You don't need to see the whole route. You just need the next waypoint.
           </p>
 
-          {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
             <a
               href="#contact"
               className="btn-beacon bg-[#E8622A] text-white font-display font-bold text-base tracking-widest uppercase px-8 py-4 rounded hover:bg-[#d4561f] transition-colors duration-200 text-center"
             >
-              Start Your Syllabus
+              Set Your First Waypoint
             </a>
             <a
               href="#syllabus"
@@ -192,7 +180,6 @@ function Hero() {
             </a>
           </div>
 
-          {/* Trust badges */}
           <div className="flex flex-wrap gap-4">
             {[
               { icon: <Shield size={14} />, text: "State Licensed · DHCS" },
@@ -208,7 +195,6 @@ function Hero() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
         <span className="font-technical text-xs text-white/40 tracking-widest">SCROLL</span>
         <ChevronDown size={16} className="text-white/40" />
@@ -220,10 +206,10 @@ function Hero() {
 // ─── Pre-Flight Briefing Bar ───────────────────────────────────────────────────
 function PreFlightBriefing() {
   const stats = [
-    { code: "SLO-001", label: "Ages Served", value: "13–17" },
-    { code: "SLO-002", label: "Clinical Monitoring", value: "24/7" },
-    { code: "SLO-003", label: "Program Phases", value: "3" },
-    { code: "SLO-004", label: "Insurance Networks", value: "4+" },
+    { code: "WPT-001", label: "Ages Served", value: "13–17" },
+    { code: "WPT-002", label: "Clinical Monitoring", value: "24/7" },
+    { code: "WPT-003", label: "Program Phases", value: "3" },
+    { code: "WPT-004", label: "Insurance Networks", value: "4+" },
   ];
 
   return (
@@ -254,40 +240,38 @@ function TheConcept() {
     <section id="about" className="bg-[#F8F6F0] py-20 md:py-32">
       <div className="container">
         <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Left: Text */}
           <div>
             <div className="flex items-center gap-2 mb-6">
               <div className="h-px w-8 bg-[#E8622A]" />
-              <span className="font-technical text-xs text-[#E8622A] tracking-[0.2em] uppercase">The SOLO Concept</span>
+              <span className="font-technical text-xs text-[#E8622A] tracking-[0.2em] uppercase">The Waypoint Concept</span>
             </div>
             <h2 className="font-display font-black text-5xl md:text-6xl text-[#0A1628] leading-none mb-6">
-              IN AVIATION,<br />
-              <span className="text-[#E8622A]">YOUR FIRST SOLO</span><br />
-              CHANGES EVERYTHING.
+              YOU DON'T NEED<br />
+              <span className="text-[#E8622A]">THE WHOLE ROUTE.</span><br />
+              JUST THE NEXT<br />WAYPOINT.
             </h2>
             <div className="h-px w-32 bg-gradient-to-r from-[#E8622A] to-transparent mb-6" />
             <p className="font-body text-base text-[#0A1628]/70 leading-relaxed mb-4">
-              The day a student pilot first takes the controls alone, without an instructor beside them, is the most significant moment in their training. The instructor trusts them. They trust themselves. That is the goal of everything that came before.
+              In aviation, a waypoint is a set of coordinates that marks a specific point along a flight route. Pilots don't need to see their final destination to begin. They just need the next waypoint — and the one after that, and the one after that. The route reveals itself one coordinate at a time.
             </p>
             <p className="font-body text-base text-[#0A1628]/70 leading-relaxed mb-8">
-              At SOLO, we don't treat teens as passengers being transported to recovery. We treat them as student pilots. We teach them to read their own instruments, navigate turbulence, and eventually fly their own lives. The goal isn't just sobriety. It's the confidence to solo.
+              At Waypoint Teen Recovery, we don't ask teens to picture the whole journey. We give them the next coordinate. Detox is a waypoint. Residential treatment is a waypoint. Aftercare is a waypoint. Each one brings them closer to the life they're navigating toward.
             </p>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-[#E8622A] flex items-center justify-center flex-shrink-0">
-                <span className="font-technical text-xs text-white font-bold">SLO</span>
+                <span className="font-technical text-xs text-white font-bold">WPT</span>
               </div>
               <p className="font-body text-sm text-[#0A1628]/60 italic">
-                "We don't fly the plane for you. We teach you how."
+                "You don't need to see the whole route. You just need the next waypoint."
               </p>
             </div>
           </div>
 
-          {/* Right: Wings image */}
           <div className="relative">
             <div className="absolute -top-4 -left-4 w-full h-full border-2 border-[#E8622A]/20 rounded-lg" />
             <img
-              src="/manus-storage/solo_wings_cert_a3c6d4f9.png"
-              alt="Earned Your Wings — SOLO Teen Recovery"
+              src="/manus-storage/waypoint_wings_cert_94d5ed07.png"
+              alt="Waypoint Reached — Waypoint Teen Recovery"
               className="relative z-10 w-full rounded-lg shadow-2xl"
             />
           </div>
@@ -301,13 +285,13 @@ function TheConcept() {
 function FlightSyllabus() {
   const phases = [
     {
-      leg: "LEG 01",
+      leg: "WPT 01",
       phase: "Ground School",
       subtitle: "Medical Detox & Stabilization",
       duration: "Typical: 5–10 Days",
-      status: "DEPARTURE",
+      status: "FIRST WAYPOINT",
       description:
-        "Before any pilot takes the controls, they master the fundamentals. Ground School is where we stabilize the body, manage withdrawal safely with 24/7 clinical oversight, and prepare the mind for what comes next. No turbulence is faced alone.",
+        "Before any navigator can chart a course, the aircraft needs to be airworthy. Ground School is where we stabilize the body, manage withdrawal safely with 24/7 clinical oversight, and prepare the mind for what comes next. The first waypoint is simply: arrive safely.",
       details: [
         "24/7 medical monitoring",
         "Comfort-focused withdrawal management",
@@ -317,13 +301,13 @@ function FlightSyllabus() {
       ],
     },
     {
-      leg: "LEG 02",
+      leg: "WPT 02",
       phase: "Dual Instruction",
       subtitle: "Residential Treatment",
       duration: "Typical: 30–90 Days",
-      status: "IN FLIGHT",
+      status: "EN ROUTE",
       description:
-        "In dual instruction, you're in the pilot's seat — but a trained instructor is right beside you with their own set of controls. You learn to read your internal instruments: emotions, triggers, thought patterns. You practice navigating turbulence with support before you face it alone.",
+        "In dual instruction, a trained navigator is beside you as you learn to read your own instruments — emotions, triggers, thought patterns. You practice navigating turbulence with support before you face it alone. Each therapy session is a waypoint. Each breakthrough is a coordinate reached.",
       details: [
         "Individual and group therapy",
         "Adolescent-specific programming",
@@ -333,13 +317,13 @@ function FlightSyllabus() {
       ],
     },
     {
-      leg: "LEG 03",
-      phase: "The Solo",
+      leg: "WPT 03",
+      phase: "The Final Leg",
       subtitle: "Aftercare Planning",
       duration: "Begins During Residential",
-      status: "APPROACH",
+      status: "DESTINATION AHEAD",
       description:
-        "The Solo is the goal of everything that came before. Your aftercare plan is built with you during residential treatment — not handed to you at discharge. You leave with a flight plan, not just a goodbye. We watch from the tower, but you're flying the plane.",
+        "Your aftercare plan is built with you during residential treatment — not handed to you at discharge. You leave with a full route map, not just a goodbye. The final waypoint isn't the end of the journey. It's the beginning of flying your own route.",
       details: [
         "Personalized aftercare roadmap",
         "Sober living coordination",
@@ -355,22 +339,20 @@ function FlightSyllabus() {
   return (
     <section id="syllabus" className="bg-[#0A1628] py-20 md:py-32">
       <div className="container">
-        {/* Header */}
         <div className="flex items-center gap-3 mb-4">
           <div className="h-px w-8 bg-[#E8622A]" />
           <span className="font-technical text-xs text-[#E8622A] tracking-[0.2em] uppercase">Flight Syllabus</span>
         </div>
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
           <h2 className="font-display font-black text-5xl md:text-6xl text-white leading-none">
-            YOUR FLIGHT<br />
-            <span className="text-[#E8622A]">PLAN TO RECOVERY</span>
+            YOUR ROUTE TO<br />
+            <span className="text-[#E8622A]">RECOVERY</span>
           </h2>
           <p className="font-body text-sm text-white/50 max-w-xs leading-relaxed">
-            Three phases, one mission. Each leg builds on the last. Your plan is built with your clinical team.
+            Three waypoints, one destination. Each one builds on the last. Your route is built with your clinical team.
           </p>
         </div>
 
-        {/* Phase selector */}
         <div className="flex gap-2 mb-8 border-b border-white/10 pb-0">
           {phases.map((phase, i) => (
             <button
@@ -387,7 +369,6 @@ function FlightSyllabus() {
           ))}
         </div>
 
-        {/* Active phase content */}
         <div className="grid md:grid-cols-2 gap-8 lg:gap-16">
           <div className="flight-card bg-white/5 border border-white/10 rounded-xl p-8">
             <div className="flex items-start justify-between mb-6">
@@ -420,7 +401,6 @@ function FlightSyllabus() {
                 <div
                   key={i}
                   className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-lg px-4 py-3"
-                  style={{ animationDelay: `${i * 60}ms` }}
                 >
                   <CheckCircle size={16} className="text-[#E8622A] flex-shrink-0" />
                   <span className="font-body text-sm text-white/70">{detail}</span>
@@ -428,14 +408,13 @@ function FlightSyllabus() {
               ))}
             </div>
 
-            {/* Navigation arrows */}
             <div className="flex gap-3 mt-8">
               <button
                 onClick={() => setActivePhase(Math.max(0, activePhase - 1))}
                 disabled={activePhase === 0}
                 className="flex items-center gap-2 font-technical text-xs text-white/40 hover:text-white/80 disabled:opacity-20 transition-colors tracking-widest uppercase"
               >
-                ← Prev Leg
+                ← Prev Waypoint
               </button>
               <div className="flex-1" />
               <button
@@ -443,15 +422,14 @@ function FlightSyllabus() {
                 disabled={activePhase === phases.length - 1}
                 className="flex items-center gap-2 font-technical text-xs text-white/40 hover:text-white/80 disabled:opacity-20 transition-colors tracking-widest uppercase"
               >
-                Next Leg →
+                Next Waypoint →
               </button>
             </div>
           </div>
         </div>
 
-        {/* Flight plan overview */}
         <div className="mt-16 border border-white/10 rounded-xl p-6 bg-white/[0.02]">
-          <div className="font-technical text-xs text-white/30 tracking-widest uppercase mb-4">Flight Plan Overview · Form SLO-001</div>
+          <div className="font-technical text-xs text-white/30 tracking-widest uppercase mb-4">Route Overview · Form WPT-001</div>
           <div className="flex flex-col md:flex-row gap-4">
             {phases.map((phase, i) => (
               <div key={i} className="flex-1 flex items-center gap-4">
@@ -461,9 +439,6 @@ function FlightSyllabus() {
                   }`}>
                     {String(i + 1).padStart(2, "0")}
                   </div>
-                  {i < phases.length - 1 && (
-                    <div className="hidden md:block absolute" />
-                  )}
                 </div>
                 <div>
                   <div className="font-technical text-xs text-white/30 tracking-wide">{phase.status}</div>
@@ -489,26 +464,26 @@ function Programs() {
   const programs = [
     {
       title: "Teen Medical Detox",
-      code: "SLO-DX",
+      code: "WPT-DX",
       description: "Medically supervised withdrawal management for adolescents ages 13–17. Safe, comfortable, and clinically monitored around the clock.",
       icon: "🩺",
     },
     {
       title: "Residential Treatment",
-      code: "SLO-RT",
+      code: "WPT-RT",
       description: "Structured daily programming with individual therapy, group sessions, family work, and academic support in a home-like setting.",
       icon: "🏠",
     },
     {
       title: "Dual Diagnosis Care",
-      code: "SLO-DD",
-      description: "Co-occurring mental health conditions treated alongside substance use. Anxiety, depression, trauma — we treat the whole pilot.",
+      code: "WPT-DD",
+      description: "Co-occurring mental health conditions treated alongside substance use. Anxiety, depression, trauma — we navigate the whole route.",
       icon: "🧠",
     },
     {
       title: "Family Navigation",
-      code: "SLO-FM",
-      description: "Recovery doesn't happen in isolation. Family therapy, parent coaching, and sibling support are built into every flight plan.",
+      code: "WPT-FM",
+      description: "Recovery doesn't happen in isolation. Family therapy, parent coaching, and sibling support are built into every route.",
       icon: "👨‍👩‍👧",
     },
   ];
@@ -522,7 +497,7 @@ function Programs() {
         </div>
         <h2 className="font-display font-black text-5xl md:text-6xl text-[#0A1628] leading-none mb-12">
           CARE FOR EVERY<br />
-          <span className="text-[#E8622A]">STAGE OF FLIGHT</span>
+          <span className="text-[#E8622A]">LEG OF THE ROUTE</span>
         </h2>
 
         <div className="grid md:grid-cols-2 gap-6">
@@ -567,10 +542,10 @@ function ForFamilies() {
             </h2>
             <div className="h-px w-32 bg-gradient-to-r from-[#E8622A] to-transparent mb-6" />
             <p className="font-body text-base text-white/70 leading-relaxed mb-4">
-              Watching your teen struggle is one of the hardest things a parent can face. You don't need to have the right words. You don't need to know what to do. You just need to make the call.
+              Watching your teen struggle is one of the hardest things a parent can face. You don't need to have the right words. You don't need to know the whole route. You just need to make the call.
             </p>
             <p className="font-body text-base text-white/70 leading-relaxed mb-8">
-              Our admissions team can help you understand what treatment looks like for teens, whether insurance may help, and what the next step could be. No pressure. No judgment. Just clear next steps, one checkpoint at a time.
+              Our navigators can help you understand what treatment looks like for teens, whether insurance may help, and what the next waypoint could be. No pressure. No judgment. Just clear next steps.
             </p>
 
             <div className="flex flex-col gap-4 mb-8">
@@ -597,9 +572,8 @@ function ForFamilies() {
             </a>
           </div>
 
-          {/* Right: Checklist card */}
           <div className="bg-white/5 border border-white/10 rounded-xl p-8">
-            <div className="font-technical text-xs text-[#E8622A] tracking-widest uppercase mb-6">Security Checkpoint</div>
+            <div className="font-technical text-xs text-[#E8622A] tracking-widest uppercase mb-6">Navigation Checkpoint</div>
             <p className="font-body text-sm text-white/50 mb-8">When you call, here is what to expect. No pressure, no judgment.</p>
             <div className="flex flex-col gap-4">
               {[
@@ -607,7 +581,7 @@ function ForFamilies() {
                 { num: "02", title: "Situation Review", desc: "They listen and help you understand the situation." },
                 { num: "03", title: "Program Briefing", desc: "They explain teen detox and residential options." },
                 { num: "04", title: "Insurance Verification", desc: "They help verify your teen's coverage." },
-                { num: "05", title: "Next Steps", desc: "They explain possible next steps, without pressure." },
+                { num: "05", title: "Next Waypoint", desc: "They explain possible next steps, without pressure." },
               ].map((step) => (
                 <div key={step.num} className="flex items-start gap-4 pb-4 border-b border-white/5 last:border-0">
                   <div className="font-technical text-xs text-[#E8622A]/60 tracking-widest w-6 flex-shrink-0 mt-0.5">{step.num}</div>
@@ -647,12 +621,12 @@ function Insurance() {
               <span className="font-technical text-xs text-[#E8622A] tracking-[0.2em] uppercase">Insurance Access</span>
             </div>
             <h2 className="font-display font-black text-4xl md:text-5xl text-[#0A1628] leading-none mb-4">
-              TREATMENT MAY BE<br />
+              THE ROUTE MAY BE<br />
               <span className="text-[#E8622A]">MORE ACCESSIBLE</span><br />
               THAN YOU THINK.
             </h2>
             <p className="font-body text-base text-[#0A1628]/60 leading-relaxed mb-6">
-              SOLO Teen Recovery works with major insurance carriers. Your benefits may cover a significant portion of teen detox and residential treatment. Verifying is the simplest way to understand your options.
+              Waypoint Teen Recovery works with major insurance carriers. Your benefits may cover a significant portion of teen detox and residential treatment. Verifying is the simplest first waypoint.
             </p>
             <div className="flex flex-wrap gap-3">
               {["Anthem Blue Cross", "Blue Shield of California", "MHN", "TRICARE"].map((ins) => (
@@ -687,28 +661,28 @@ function FAQ() {
   const [open, setOpen] = useState<number | null>(null);
   const faqs = [
     {
-      q: "What ages does SOLO Teen Recovery serve?",
-      a: "SOLO is designed specifically for adolescents ages 13 through 17. Our programming, therapy modalities, and environment are built around the unique developmental needs of teenagers.",
+      q: "What ages does Waypoint Teen Recovery serve?",
+      a: "Waypoint is designed specifically for adolescents ages 13 through 17. Our programming, therapy modalities, and environment are built around the unique developmental needs of teenagers.",
     },
     {
-      q: "How is SOLO different from adult programs?",
-      a: "SOLO is a completely separate, adolescent-only program. While adults at The Runway Recovery are guided through a structured flight plan, SOLO treats teens as student pilots — teaching them to navigate their own lives. The clinical team, programming, and environment are all designed for teens.",
+      q: "How is Waypoint different from adult programs?",
+      a: "Waypoint is a completely separate, adolescent-only program. While The Runway Recovery guides adults through a structured flight plan, Waypoint uses the navigation metaphor differently — every milestone in recovery is a waypoint on the teen's own route. The clinical team, programming, and environment are all designed specifically for teens.",
     },
     {
       q: "What happens during teen medical detox?",
-      a: "Medical detox at SOLO is supervised by licensed clinicians and board-certified addiction medicine physicians. Your teen will have a private room, 24/7 monitoring, comfort medications as appropriate, and meals. The goal is safe, dignified stabilization before residential treatment begins.",
+      a: "Medical detox at Waypoint is supervised by licensed clinicians and board-certified addiction medicine physicians. Your teen will have a private room, 24/7 monitoring, comfort medications as appropriate, and meals. The goal is safe, dignified stabilization — the first waypoint on the route.",
     },
     {
       q: "Can parents be involved in treatment?",
-      a: "Absolutely. Family involvement is a core part of the SOLO flight plan. Family therapy sessions, parent coaching, and sibling support are built into residential treatment. We believe recovery is a family journey.",
+      a: "Absolutely. Family involvement is a core part of every route at Waypoint. Family therapy sessions, parent coaching, and sibling support are built into residential treatment. We believe recovery is a family navigation.",
     },
     {
       q: "Does insurance cover teen detox and residential treatment?",
-      a: "SOLO works with Anthem Blue Cross, Blue Shield of California, MHN, and TRICARE. Many families find that insurance covers a significant portion of care. Call our admissions team or use our verification form to understand your specific benefits.",
+      a: "Waypoint works with Anthem Blue Cross, Blue Shield of California, MHN, and TRICARE. Many families find that insurance covers a significant portion of care. Call our navigators or use our verification form to understand your specific benefits.",
     },
     {
-      q: "What does a typical day look like for a teen at SOLO?",
-      a: "Days at SOLO are structured but not rigid. Mornings begin with wellness activities, followed by individual and group therapy sessions, academic support, and skills-building activities. Evenings include reflection time, peer connection, and rest. The schedule is designed to build the routines teens will carry into their solo flight.",
+      q: "What does a typical day look like for a teen at Waypoint?",
+      a: "Days at Waypoint are structured but not rigid. Mornings begin with wellness activities, followed by individual and group therapy sessions, academic support, and skills-building activities. Evenings include reflection time, peer connection, and rest. The schedule is designed to build the routines teens will carry into their own route.",
     },
   ];
 
@@ -763,7 +737,6 @@ function ContactCTA() {
     <section id="contact" className="bg-[#F8F6F0] py-20 md:py-32">
       <div className="container">
         <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
-          {/* Left */}
           <div>
             <div className="flex items-center gap-3 mb-4">
               <div className="h-px w-8 bg-[#E8622A]" />
@@ -775,13 +748,10 @@ function ContactCTA() {
             </h2>
             <div className="h-px w-32 bg-gradient-to-r from-[#E8622A] to-transparent mb-6" />
             <p className="font-body text-base text-[#0A1628]/70 leading-relaxed mb-8">
-              Whether you're a teen ready to take the controls, or a parent watching from the ground — our navigators are standing by. One confidential call can change the direction of everything.
+              Whether you're a teen ready to set your first waypoint, or a parent watching from the ground — our navigators are standing by. One confidential call can change the direction of everything.
             </p>
             <div className="flex flex-col gap-4">
-              <a
-                href="tel:+18669693686"
-                className="flex items-center gap-3 group"
-              >
+              <a href="tel:+18669693686" className="flex items-center gap-3 group">
                 <div className="w-12 h-12 rounded-full bg-[#E8622A] flex items-center justify-center group-hover:scale-110 transition-transform">
                   <Phone size={18} className="text-white" />
                 </div>
@@ -800,19 +770,18 @@ function ContactCTA() {
             </div>
           </div>
 
-          {/* Right: Wings certificate generator */}
           <div className="bg-[#0A1628] rounded-xl p-8">
-            <div className="font-technical text-xs text-[#E8622A] tracking-widest uppercase mb-2">Pre-Flight Check-In</div>
-            <h3 className="font-display font-bold text-2xl text-white mb-2">Issue Your Wings</h3>
+            <div className="font-technical text-xs text-[#E8622A] tracking-widest uppercase mb-2">Navigation Check-In</div>
+            <h3 className="font-display font-bold text-2xl text-white mb-2">Set Your First Waypoint</h3>
             <p className="font-body text-sm text-white/50 mb-8">
-              Not a commitment. Just a first, hopeful step. Put a name on it and come back when you're ready to begin. You hold the wings.
+              Not a commitment. Just a first coordinate. Put a name on it and come back when you're ready to begin. You hold the route.
             </p>
 
             {!submitted ? (
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <div>
                   <label className="font-technical text-xs text-white/40 tracking-widest uppercase block mb-2">
-                    Pilot Name
+                    Navigator Name
                   </label>
                   <input
                     type="text"
@@ -826,7 +795,7 @@ function ContactCTA() {
                   type="submit"
                   className="btn-beacon bg-[#E8622A] text-white font-display font-bold text-sm tracking-widest uppercase px-6 py-4 rounded hover:bg-[#d4561f] transition-colors"
                 >
-                  Issue Wings
+                  Set Waypoint
                 </button>
                 <p className="font-technical text-xs text-white/20 text-center tracking-wide">
                   Nothing is sent anywhere. Generated here on your device.
@@ -835,15 +804,15 @@ function ContactCTA() {
             ) : (
               <div className="border-2 border-[#C9A84C]/40 rounded-xl p-6 bg-[#C9A84C]/5 text-center">
                 <img
-                  src="/manus-storage/solo_wings_cert_a3c6d4f9.png"
-                  alt="Your Wings"
+                  src="/manus-storage/waypoint_wings_cert_94d5ed07.png"
+                  alt="Waypoint Reached"
                   className="w-full rounded-lg mb-4 opacity-90"
                 />
                 <div className="font-display font-black text-2xl text-white mb-1">
-                  {name || "PILOT"} — CLEARED
+                  {name || "NAVIGATOR"} — WAYPOINT SET
                 </div>
                 <div className="font-technical text-xs text-[#C9A84C] tracking-widest uppercase mb-4">
-                  Wings Issued · SOLO Teen Recovery
+                  First Coordinate Locked · Waypoint Teen Recovery
                 </div>
                 <p className="font-body text-xs text-white/40 leading-relaxed">
                   Come back when you're ready to begin Ground School. We'll be here.
@@ -870,15 +839,14 @@ function Footer() {
       <AtisTicker />
       <div className="container py-12">
         <div className="grid md:grid-cols-4 gap-8 mb-10">
-          {/* Brand */}
           <div className="md:col-span-2">
             <img
-              src="/manus-storage/solo_logo_primary_706f376d.png"
-              alt="SOLO Teen Recovery"
+              src="/manus-storage/waypoint_logo_primary_15c9c13c.png"
+              alt="Waypoint Teen Recovery"
               className="h-12 w-auto mb-4 brightness-0 invert"
             />
             <p className="font-body text-sm text-white/40 leading-relaxed max-w-xs">
-              Teen detox and residential recovery in Orange County, CA. Designed for ages 13–17. Teaching teens to take the controls of their own lives.
+              Teen detox and residential recovery in Orange County, CA. Designed for ages 13–17. Every step of recovery is a waypoint on the route to your life.
             </p>
             <div className="flex gap-3 mt-6">
               <span className="font-technical text-xs text-white/20 tracking-wide">Licensed · DHCS</span>
@@ -887,7 +855,6 @@ function Footer() {
             </div>
           </div>
 
-          {/* Programs */}
           <div>
             <div className="font-technical text-xs text-[#E8622A] tracking-widest uppercase mb-4">Programs</div>
             <div className="flex flex-col gap-2">
@@ -899,11 +866,10 @@ function Footer() {
             </div>
           </div>
 
-          {/* Support */}
           <div>
             <div className="font-technical text-xs text-[#E8622A] tracking-widest uppercase mb-4">Support</div>
             <div className="flex flex-col gap-2">
-              {["For Families", "Insurance & Cost", "Flight Syllabus", "About SOLO", "Contact"].map((item) => (
+              {["For Families", "Insurance & Cost", "Flight Syllabus", "About Waypoint", "Contact"].map((item) => (
                 <a key={item} href="#families" className="font-body text-sm text-white/40 hover:text-white/70 transition-colors">
                   {item}
                 </a>
@@ -928,10 +894,10 @@ function Footer() {
 
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <p className="font-technical text-xs text-white/20 leading-relaxed max-w-2xl">
-            Licensed by the State of California Department of Health Care Services (DHCS). Accredited by The Joint Commission. SOLO Teen Recovery is a specialized adolescent program in Orange County, CA.
+            Licensed by the State of California Department of Health Care Services (DHCS). Accredited by The Joint Commission. Waypoint Teen Recovery is a specialized adolescent program in Orange County, CA.
           </p>
           <p className="font-technical text-xs text-white/20 flex-shrink-0">
-            © 2026 SOLO Teen Recovery
+            © 2026 Waypoint Teen Recovery
           </p>
         </div>
 
