@@ -1,423 +1,202 @@
 /**
- * FLIGHTPATH TEEN DETOX — Home Page
- * Design: Sunrise over Twilight Sky
- * Colors: Tangerine #FF8A4C · Coral #E0561F · Ember #C2421F · Ink #142028 · Teal #2FB6A6 · Paper #FCFBF8
- * Type: Instrument Serif (display) · Bricolage Grotesque (UI/eyebrows) · Hanken Grotesk (body)
- * Metaphor: Recovery as a guided flight path — departure, climb, destination.
+ * KARLE KREATIVES — Flightpath Teen Detox Brand Proposal
+ * A proposal site, not the client's live site.
+ * Presents: brand concept, deliverables, three engagement paths, pricing, and approval CTA.
+ * Type: Instrument Serif (display) · Bricolage Grotesque (UI) · Hanken Grotesk (body)
+ * Palette: Sunrise coral/tangerine/gold on twilight ink + warm paper
  */
 
-import { useState, useEffect, useRef } from "react";
-import { Phone, Menu, X, ChevronDown, ArrowRight, CheckCircle } from "lucide-react";
+import { useState } from "react";
+import { Check, ChevronDown, ArrowRight } from "lucide-react";
 
-// ─── Delta Mark SVG (dimensional faceted) ─────────────────────────────────────
-function DeltaMark({ size = 32, className = "", style }: { size?: number; className?: string; style?: React.CSSProperties }) {
+// ─── Delta Mark ───────────────────────────────────────────────────────────────
+function Delta({ size = 28, style }: { size?: number; style?: React.CSSProperties }) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 80 80"
-      fill="none"
-      aria-hidden="true"
-      className={className}
-      style={style}
-    >
+    <svg width={size} height={size} viewBox="0 0 80 80" fill="none" aria-hidden="true" style={style}>
       <defs>
-        <linearGradient id="dTL" x1="0" y1="0" x2="1" y2="1">
+        <linearGradient id="pTL" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="#FFD36B" />
           <stop offset="100%" stopColor="#FF8A4C" />
         </linearGradient>
-        <linearGradient id="dTR" x1="1" y1="0" x2="0" y2="1">
+        <linearGradient id="pTR" x1="1" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#FFB259" />
           <stop offset="100%" stopColor="#E0561F" />
         </linearGradient>
-        <linearGradient id="dBL" x1="0" y1="1" x2="1" y2="0">
+        <linearGradient id="pBL" x1="0" y1="1" x2="1" y2="0">
           <stop offset="0%" stopColor="#C2421F" />
           <stop offset="100%" stopColor="#E0561F" />
         </linearGradient>
-        <linearGradient id="dBR" x1="1" y1="1" x2="0" y2="0">
+        <linearGradient id="pBR" x1="1" y1="1" x2="0" y2="0">
           <stop offset="0%" stopColor="#8B2A0F" />
           <stop offset="100%" stopColor="#C2421F" />
         </linearGradient>
       </defs>
-      <polygon points="40,6 6,68 40,50" fill="url(#dTL)" />
-      <polygon points="40,6 74,68 40,50" fill="url(#dTR)" />
-      <polygon points="40,50 6,68 26,74" fill="url(#dBL)" />
-      <polygon points="40,50 74,68 54,74" fill="url(#dBR)" />
+      <polygon points="40,6 6,68 40,50" fill="url(#pTL)" />
+      <polygon points="40,6 74,68 40,50" fill="url(#pTR)" />
+      <polygon points="40,50 6,68 26,74" fill="url(#pBL)" />
+      <polygon points="40,50 74,68 54,74" fill="url(#pBR)" />
       <line x1="40" y1="6" x2="40" y2="50" stroke="#FFC65C" strokeWidth="1.2" opacity="0.55" />
     </svg>
   );
 }
 
-// Flat silhouette for footer/favicon
-function DeltaFlat({ size = 22, opacity = 0.6 }: { size?: number; opacity?: number }) {
+// ─── Eyebrow ──────────────────────────────────────────────────────────────────
+function Eyebrow({ children, light = false, gold = false }: { children: React.ReactNode; light?: boolean; gold?: boolean }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 80 80" fill="none" aria-hidden="true">
-      <polygon points="40,6 6,72 40,54 74,72" fill={`rgba(255,138,76,${opacity})`} />
-    </svg>
-  );
-}
-
-// ─── Eyebrow Bar ──────────────────────────────────────────────────────────────
-function EyebrowBar() {
-  return (
-    <div className="bg-[#142028] border-b border-white/5 py-1.5 text-center">
-      <span
-        style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "0.62rem", letterSpacing: "0.22em" }}
-        className="text-white/35 uppercase font-semibold tracking-widest"
-      >
-        Orange County, CA
-        <span className="text-[#2FB6A6] mx-2">·</span>
-        Adolescent Detox
-        <span className="text-[#2FB6A6] mx-2">·</span>
-        24/7 Admissions
-        <span className="text-[#2FB6A6] mx-2">·</span>
-        HDG 015
-      </span>
-    </div>
-  );
-}
-
-// ─── Navigation ───────────────────────────────────────────────────────────────
-function Nav() {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const navLinks = [
-    { label: "The Program", href: "#program" },
-    { label: "Our Approach", href: "#approach" },
-    { label: "Admissions", href: "#admissions" },
-    { label: "Contact", href: "#contact" },
-  ];
-
-  return (
-    <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-[#142028]/96 backdrop-blur-xl shadow-lg" : "bg-[#142028]/90 backdrop-blur-md"
-      } border-b border-white/[0.07]`}
+    <p
+      style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "0.65rem", letterSpacing: "0.24em" }}
+      className={`font-semibold uppercase ${light ? "text-[#2FB6A6]" : gold ? "text-[#FFD36B]" : "text-[#2FB6A6]"}`}
     >
-      <div className="container flex items-center justify-between h-16">
-        <a href="/" className="flex items-center gap-2.5 no-underline">
-          <DeltaMark size={30} />
-          <span
-            style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
-            className="text-[#FCFBF8] font-bold text-[1.05rem] tracking-tight"
-          >
-            Flightpath <span className="text-[#FF8A4C]">Teen Detox</span>
+      {children}
+    </p>
+  );
+}
+
+// ─── Section Divider ─────────────────────────────────────────────────────────
+function Divider() {
+  return <div className="h-px w-12 bg-gradient-to-r from-[#FF8A4C] to-transparent my-5" />;
+}
+
+// ─── 1. Cover / Hero ─────────────────────────────────────────────────────────
+function Cover() {
+  return (
+    <section className="bg-[#142028] min-h-screen flex flex-col relative overflow-hidden">
+      {/* Top bar */}
+      <div className="border-b border-white/[0.07] px-8 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-2.5">
+          <Delta size={22} />
+          <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/80 text-sm font-bold tracking-tight">
+            Karle <span className="text-[#FF8A4C]">Kreatives</span>
           </span>
-        </a>
-
-        <nav className="hidden md:flex items-center gap-7">
-          {navLinks.map((l) => (
-            <a
-              key={l.label}
-              href={l.href}
-              style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
-              className="text-white/60 hover:text-white text-[0.8rem] font-medium tracking-wide transition-colors no-underline"
-            >
-              {l.label}
-            </a>
-          ))}
-        </nav>
-
-        <div className="hidden md:flex items-center gap-3">
-          <a
-            href="tel:+18009999999"
-            style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
-            className="text-white/35 hover:text-white text-xs tracking-wider transition-colors no-underline"
-          >
-            800-999-9999
-          </a>
-          <a
-            href="#contact"
-            className="btn-sunrise text-sm"
-          >
-            Verify your benefits
-          </a>
         </div>
-
-        <button
-          className="md:hidden text-white p-1.5"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
-        >
-          {menuOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        <div className="flex items-center gap-6">
+          <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/25 text-xs tracking-widest uppercase">Brand Proposal</span>
+          <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/25 text-xs">Prepared for Flightpath Teen Detox</span>
+        </div>
       </div>
 
-      {menuOpen && (
-        <div className="md:hidden bg-[#142028] border-t border-white/[0.07]">
-          <div className="container py-5 flex flex-col gap-1">
-            {navLinks.map((l) => (
-              <a
-                key={l.label}
-                href={l.href}
-                onClick={() => setMenuOpen(false)}
-                style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
-                className="text-white/65 hover:text-[#FF8A4C] text-[0.9rem] font-medium py-2.5 border-b border-white/[0.06] transition-colors no-underline"
-              >
-                {l.label}
-              </a>
-            ))}
-            <a
-              href="#contact"
-              onClick={() => setMenuOpen(false)}
-              className="btn-sunrise justify-center mt-3"
-            >
-              Verify your benefits
-            </a>
-          </div>
-        </div>
-      )}
-    </header>
-  );
-}
-
-// ─── Hero ─────────────────────────────────────────────────────────────────────
-function Hero() {
-  return (
-    <section
-      id="hero"
-      className="relative bg-[#142028] min-h-[92vh] flex items-center overflow-hidden py-24"
-    >
-      {/* Coral glow */}
-      <div
-        className="absolute right-[-5%] top-[10%] w-[55%] h-[80%] pointer-events-none"
-        style={{
-          background: "radial-gradient(ellipse at 70% 40%, rgba(224,86,31,0.2) 0%, rgba(255,138,76,0.07) 45%, transparent 70%)",
-        }}
-        aria-hidden="true"
-      />
-
-      <div className="container relative z-10">
-        <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Text */}
+      {/* Hero content */}
+      <div className="flex-1 flex items-center">
+        <div className="max-w-6xl mx-auto px-8 w-full grid md:grid-cols-2 gap-16 items-center py-20">
           <div>
-            <p className="eyebrow-label mb-5">Orange County, California · Ages 13–17</p>
-            <h1
-              className="display-serif text-[#FCFBF8] mb-5"
-              style={{ fontSize: "clamp(2.8rem, 6vw, 5.5rem)" }}
-            >
-              A safe place<br />
-              to <em style={{ color: "#FFD36B" }}>land.</em>
-            </h1>
-            <p
-              style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
-              className="text-white/60 text-[1.05rem] leading-relaxed mb-8 max-w-md font-light"
-            >
-              Medically supervised adolescent detox and stabilization. Genuinely human care for teens and the families who love them.
-            </p>
-            <div className="flex flex-wrap gap-3 mb-6">
-              <a href="#contact" className="btn-sunrise">Talk to our team</a>
-              <a
-                href="#program"
-                style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
-                className="inline-flex items-center gap-2 text-white/70 hover:text-white border border-white/25 hover:border-white/50 rounded-full px-6 py-3 text-sm font-semibold tracking-wide transition-all no-underline"
+            <Eyebrow>Brand Identity + Proposal</Eyebrow>
+            <div className="mt-4 mb-6">
+              <h1
+                style={{ fontFamily: "'Instrument Serif', Georgia, serif", fontSize: "clamp(3rem, 6vw, 5.5rem)", lineHeight: 1.06, letterSpacing: "-0.02em" }}
+                className="text-[#FCFBF8]"
               >
-                How it works
-              </a>
+                Flightpath<br />
+                <em style={{ color: "#FFD36B" }}>Teen Detox.</em>
+              </h1>
             </div>
-            <p
-              style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
-              className="text-white/25 text-xs tracking-widest"
-            >
-              24/7 ADMISSIONS:{" "}
-              <a href="tel:+18009999999" className="text-white/40 hover:text-[#FF8A4C] transition-colors no-underline">
-                800-999-9999
-              </a>
+            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/50 text-base leading-relaxed max-w-md mb-8">
+              A complete brand foundation and a phased plan to launch it — visual identity, voice, and the marketing structure to carry it from opening day to a program at scale.
             </p>
+            <div className="flex flex-wrap gap-3 text-xs" style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}>
+              <div className="flex items-center gap-2 text-white/40">
+                <span className="text-[#2FB6A6]">Karla &amp; Tyler</span>
+                <span className="text-white/15">·</span>
+                <span>Karle Kreatives</span>
+              </div>
+            </div>
           </div>
 
-          {/* Delta mark with compass ring */}
-          <div className="flex items-center justify-center relative" aria-hidden="true">
-            {/* Compass ring */}
+          {/* Brand preview card */}
+          <div className="relative">
             <div
-              className="absolute rounded-full border border-white/[0.06]"
-              style={{ width: 300, height: 300 }}
+              className="absolute inset-0 rounded-3xl"
+              style={{ background: "radial-gradient(ellipse at 60% 40%, rgba(224,86,31,0.18) 0%, transparent 65%)" }}
+              aria-hidden="true"
             />
-            <div
-              className="absolute rounded-full border border-dashed border-white/[0.04]"
-              style={{ width: 268, height: 268 }}
-            />
-            {/* Cardinal marks */}
-            <svg className="absolute" width="300" height="300" viewBox="0 0 300 300">
-              <g stroke="rgba(255,255,255,0.08)" strokeWidth="1">
-                <line x1="150" y1="6" x2="150" y2="18" />
-                <line x1="150" y1="282" x2="150" y2="294" />
-                <line x1="6" y1="150" x2="18" y2="150" />
-                <line x1="282" y1="150" x2="294" y2="150" />
-              </g>
-              <g fill="rgba(255,255,255,0.1)" fontFamily="'Bricolage Grotesque', sans-serif" fontSize="8" fontWeight="600" letterSpacing="0.1em" textAnchor="middle">
-                <text x="150" y="5">N</text>
-                <text x="150" y="300">S</text>
-                <text x="4" y="154">W</text>
-                <text x="296" y="154">E</text>
-              </g>
-              <text x="150" y="280" fill="rgba(255,138,76,0.45)" fontFamily="'Bricolage Grotesque', sans-serif" fontSize="7" fontWeight="700" letterSpacing="0.2em" textAnchor="middle">HDG 015</text>
-            </svg>
-            {/* Delta */}
-            <DeltaMark
-              size={160}
-              className="relative z-10"
-              style={{ filter: "drop-shadow(0 8px 40px rgba(224,86,31,0.35)) drop-shadow(0 2px 8px rgba(255,138,76,0.2))" } as React.CSSProperties}
-            />
+            <div className="relative bg-[#1B2A33] border border-white/[0.08] rounded-3xl p-8">
+              <div className="flex items-center gap-3 mb-6">
+                <Delta size={40} />
+                <div>
+                  <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#FCFBF8] font-bold text-lg tracking-tight">Flightpath</p>
+                  <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#FF8A4C] text-xs font-semibold tracking-widest uppercase">Teen Detox</p>
+                </div>
+              </div>
+              <p style={{ fontFamily: "'Instrument Serif', serif" }} className="text-[#FCFBF8] text-xl italic leading-snug mb-5">
+                "Recovery as a <span style={{ color: "#FF8A4C" }}>flight path</span> — a departure, a climb, and a safe place to land."
+              </p>
+              <div className="flex gap-2 flex-wrap">
+                {["Safe", "Hopeful", "Grounded", "Human"].map((p) => (
+                  <span key={p} style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[0.65rem] font-semibold tracking-widest uppercase text-white/40 border border-white/10 rounded-full px-3 py-1">{p}</span>
+                ))}
+              </div>
+              {/* Color swatches */}
+              <div className="flex gap-1.5 mt-5">
+                {["#FF8A4C","#FFD36B","#E0561F","#C2421F","#142028","#1B2A33","#FCFBF8","#F4F0E7"].map((c) => (
+                  <div key={c} className="w-7 h-7 rounded-full border border-white/10 flex-shrink-0" style={{ background: c }} />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 animate-bounce" aria-hidden="true">
-        <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/25 text-[0.6rem] tracking-widest uppercase">Scroll</span>
-        <ChevronDown size={14} className="text-white/25" />
+      {/* Scroll cue */}
+      <div className="flex flex-col items-center gap-1.5 pb-8 animate-bounce" aria-hidden="true">
+        <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/20 text-[0.6rem] tracking-widest uppercase">Scroll to explore</span>
+        <ChevronDown size={14} className="text-white/20" />
       </div>
     </section>
   );
 }
 
-// ─── Reassurance Strip ────────────────────────────────────────────────────────
-function ReassuranceStrip() {
-  const items = [
-    "Medically supervised",
-    "Licensed clinicians",
-    "Family-centered care",
-    "Most insurance accepted",
-  ];
+// ─── 2. Inside This Document (nav) ───────────────────────────────────────────
+function InsideDoc() {
+  const sections = ["The Brand", "Logo", "Color", "Type", "Voice", "Applications", "Engagement", "Investment"];
   return (
-    <div className="bg-[#FCFBF8] border-b border-[#EAE5DB] py-4">
-      <div className="container">
-        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-          {items.map((item, i) => (
-            <div key={item} className="flex items-center gap-2">
-              <div className="w-4 h-4 rounded-full bg-[#2FB6A6] flex items-center justify-center flex-shrink-0">
-                <svg width="8" height="8" viewBox="0 0 8 8" fill="none">
-                  <polyline points="1.5,4 3.2,5.8 6.5,2" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-              <span style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D] text-sm font-medium">
-                {item}
-              </span>
-              {i < items.length - 1 && <span className="text-[#EAE5DB] ml-3 hidden sm:inline">·</span>}
-            </div>
-          ))}
-        </div>
+    <div className="bg-[#FCFBF8] border-b border-[#EAE5DB] py-3 overflow-x-auto">
+      <div className="max-w-6xl mx-auto px-8 flex items-center gap-1">
+        <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#23292D]/30 text-[0.65rem] font-semibold tracking-widest uppercase mr-3 flex-shrink-0">Inside this document</span>
+        {sections.map((s, i) => (
+          <span key={s} className="flex items-center gap-1 flex-shrink-0">
+            <a href={`#section-${s.toLowerCase().replace(/\s+/g, "-")}`} style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#23292D]/50 hover:text-[#E0561F] text-[0.72rem] font-medium tracking-wide transition-colors no-underline">{s}</a>
+            {i < sections.length - 1 && <span className="text-[#EAE5DB] mx-1">·</span>}
+          </span>
+        ))}
       </div>
     </div>
   );
 }
 
-// ─── The Program ──────────────────────────────────────────────────────────────
-function TheProgram() {
-  const cards = [
-    {
-      phase: "Phase 01 · Departure",
-      title: "Assessment & Intake",
-      body: "From the moment you arrive, a clinical team is ready. A licensed clinician conducts a comprehensive assessment — medical, psychological, and social — so your teen's care is built around them, not a template. No waiting rooms. No judgment. Just a warm, structured welcome.",
-    },
-    {
-      phase: "Phase 02 · Climb",
-      title: "Medically Supervised Detox",
-      body: "Withdrawal is managed safely, with 24/7 nursing oversight and physician-directed comfort care. Your teen is never alone in this process. The goal is a stable, dignified transition — not just getting through it, but arriving on the other side ready for what comes next.",
-    },
-    {
-      phase: "Phase 03 · Cruise",
-      title: "Stabilization & Transition",
-      body: "Detox is a beginning, not an end. Before discharge, the clinical team works with your family to build a clear transition plan. Your teen leaves with a flightpath, not just a goodbye.",
-    },
-  ];
-
-  return (
-    <section id="program" className="bg-[#F4F0E7] py-20 md:py-28">
-      <div className="container">
-        <div className="mb-12">
-          <p className="eyebrow-label mb-3">The Program</p>
-          <h2
-            className="display-serif text-[#142028]"
-            style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}
-          >
-            What a stay at Flightpath<br />
-            actually <em style={{ color: "#E0561F" }}>looks like.</em>
-          </h2>
-        </div>
-        <div className="grid md:grid-cols-3 gap-5">
-          {cards.map((card) => (
-            <div
-              key={card.phase}
-              className="bg-[#FCFBF8] border border-[#EAE5DB] rounded-2xl p-7 hover:-translate-y-1 hover:shadow-xl transition-all duration-200"
-            >
-              <p
-                style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
-                className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-[0.2em] uppercase mb-3"
-              >
-                {card.phase}
-              </p>
-              <h3
-                className="display-serif text-[#142028] text-xl mb-3"
-              >
-                {card.title}
-              </h3>
-              <div className="h-px w-10 bg-gradient-to-r from-[#FF8A4C] to-transparent mb-4" />
-              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/65 text-sm leading-relaxed">
-                {card.body}
-              </p>
-              <div className="mt-5 w-7 h-7 rounded-full flex items-center justify-center" style={{ background: "linear-gradient(90deg, #E0561F, #FF8A4C, #FFD36B)" }}>
-                <ArrowRight size={12} color="#142028" />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── Our Approach ─────────────────────────────────────────────────────────────
-function OurApproach() {
+// ─── 3. The Brand Concept ─────────────────────────────────────────────────────
+function TheBrand() {
   const pillars = [
-    { num: "01", name: "Safe", desc: "Medical safety is non-negotiable. Every protocol is designed to minimize risk and maximize comfort during withdrawal." },
-    { num: "02", name: "Hopeful", desc: "We speak about the future with teens, not just the present crisis. Recovery has a destination — we help them see it." },
-    { num: "03", name: "Grounded", desc: "No promises we can't keep. Honest, evidence-informed care from day one." },
-    { num: "04", name: "Human", desc: "Behind every chart is a teenager with a story. Our staff are trained to see the person, not just the presenting problem." },
+    { name: "Safe", desc: "Medical safety is non-negotiable. Every protocol is designed to minimize risk and maximize comfort during withdrawal." },
+    { name: "Hopeful", desc: "We speak about the future with teens, not just the present crisis. Recovery has a destination — we help them see it." },
+    { name: "Grounded", desc: "No promises we can't keep. Honest, evidence-informed care from day one." },
+    { name: "Human", desc: "Behind every chart is a teenager with a story. Our staff are trained to see the person, not just the presenting problem." },
   ];
-
   return (
-    <section id="approach" className="bg-[#142028] py-20 md:py-28 relative overflow-hidden">
-      <div
-        className="absolute left-[-10%] bottom-[-10%] w-1/2 h-3/5 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at 30% 70%, rgba(224,86,31,0.1) 0%, transparent 65%)" }}
-        aria-hidden="true"
-      />
-      <div className="container relative z-10">
-        <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-start">
+    <section id="section-the-brand" className="bg-[#F4F0E7] py-20 md:py-28">
+      <div className="max-w-6xl mx-auto px-8">
+        <div className="grid md:grid-cols-2 gap-16 items-start">
           <div>
-            <p className="eyebrow-label mb-4">Our Approach</p>
+            <Eyebrow>The Brand</Eyebrow>
+            <Divider />
             <h2
-              className="display-serif text-[#FCFBF8] mb-6"
-              style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}
+              style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(2.2rem, 4vw, 3.4rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }}
+              className="text-[#142028] mb-6"
             >
-              Safety and dignity<br />
-              are not <em style={{ color: "#FFD36B" }}>optional.</em>
+              Recovery as a <em style={{ color: "#E0561F" }}>flight path</em> — a departure, a climb, and a safe place to land.
             </h2>
-            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/55 text-base leading-relaxed mb-4">
-              Teenagers in crisis are not small adults. They need a clinical environment that meets them where they are — one that takes their experience seriously, respects their developing autonomy, and treats the family as a partner, not a problem to manage.
+            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/60 text-base leading-relaxed mb-4">
+              Flightpath leans into the idea that recovery isn't a fall from grace — it's a journey with a destination. For an adolescent, it positions a new kind of power: the teen isn't just a passenger. They're learning to navigate.
             </p>
-            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/55 text-base leading-relaxed">
-              At Flightpath, we believe the first experience of treatment shapes everything that comes after. If a teen feels safe, seen, and respected during detox, they are more likely to engage with the recovery work ahead.
+            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/60 text-base leading-relaxed">
+              This identity is sophisticated but never clinical — an ascending delta wing, warm sunrise colors, and an editorial voice that reads more trustworthy than clinical, human enough for families.
             </p>
           </div>
-          <div>
-            <p className="eyebrow-label mb-5">Four Pillars</p>
-            <div className="flex flex-col">
-              {pillars.map((p) => (
-                <div key={p.num} className="flex items-start gap-4 py-4 border-b border-white/[0.06] last:border-0">
-                  <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-widest w-6 flex-shrink-0 mt-0.5">{p.num}</span>
-                  <div>
-                    <p className="display-serif text-[#FCFBF8] text-lg mb-1">{p.name}</p>
-                    <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/40 text-sm leading-relaxed">{p.desc}</p>
-                  </div>
+          <div className="bg-[#142028] rounded-2xl p-7">
+            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-[0.2em] uppercase mb-5">Brand Pillars</p>
+            <div className="flex flex-col gap-0">
+              {pillars.map((p, i) => (
+                <div key={p.name} className={`py-4 ${i < pillars.length - 1 ? "border-b border-white/[0.06]" : ""}`}>
+                  <p style={{ fontFamily: "'Instrument Serif', serif" }} className="text-[#FCFBF8] text-lg mb-1">{p.name}</p>
+                  <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/40 text-sm leading-relaxed">{p.desc}</p>
                 </div>
               ))}
             </div>
@@ -428,47 +207,107 @@ function OurApproach() {
   );
 }
 
-// ─── Environment ──────────────────────────────────────────────────────────────
-function Environment() {
-  const placeholders = [
-    { label: "Common Area", caption: "The common area", desc: "Designed to feel like a home, not a facility.", wide: true },
-    { label: "Private Room", caption: "Private rooms", desc: "Every teen has their own space. Rest is part of the treatment.", wide: false },
-    { label: "Outdoor Space", caption: "Outdoor areas", desc: "Southern California's light and air are part of the healing environment.", wide: false },
-    { label: "Clinical Space", caption: "Clinical spaces", desc: "Therapy and medical rooms designed to feel safe, not sterile.", wide: false },
-  ];
-
+// ─── 4. Logo ──────────────────────────────────────────────────────────────────
+function LogoSection() {
   return (
-    <section id="environment" className="bg-[#FCFBF8] py-20 md:py-28">
-      <div className="container">
-        <div className="mb-10">
-          <p className="eyebrow-label mb-3">A Day on the Unit</p>
-          <h2 className="display-serif text-[#142028]" style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}>
-            Warm. Calm. <em style={{ color: "#E0561F" }}>Intentional.</em>
-          </h2>
+    <section id="section-logo" className="bg-[#FCFBF8] py-20 md:py-28">
+      <div className="max-w-6xl mx-auto px-8">
+        <Eyebrow>Logo Design</Eyebrow>
+        <Divider />
+        <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(2rem, 3.5vw, 3rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }} className="text-[#142028] mb-12">
+          The mark. The lockup. The system.
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {/* Primary lockup — dark */}
+          <div className="col-span-2 bg-[#142028] rounded-2xl p-10 flex flex-col items-center justify-center gap-4">
+            <div className="flex items-center gap-3">
+              <Delta size={48} />
+              <div>
+                <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#FCFBF8] font-bold text-2xl tracking-tight">Flightpath</p>
+                <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#FF8A4C] text-xs font-semibold tracking-[0.2em] uppercase">Teen Detox</p>
+              </div>
+            </div>
+            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/25 text-[0.65rem] tracking-widest uppercase">Primary — Dark</p>
+          </div>
+          {/* Primary lockup — light */}
+          <div className="col-span-2 bg-[#F4F0E7] rounded-2xl p-10 flex flex-col items-center justify-center gap-4 border border-[#EAE5DB]">
+            <div className="flex items-center gap-3">
+              <Delta size={48} />
+              <div>
+                <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#142028] font-bold text-2xl tracking-tight">Flightpath</p>
+                <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#E0561F] text-xs font-semibold tracking-[0.2em] uppercase">Teen Detox</p>
+              </div>
+            </div>
+            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#23292D]/25 text-[0.65rem] tracking-widest uppercase">Primary — Light</p>
+          </div>
+          {/* Icon only — dark */}
+          <div className="bg-[#1B2A33] rounded-2xl p-8 flex flex-col items-center justify-center gap-3">
+            <Delta size={52} />
+            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/25 text-[0.65rem] tracking-widest uppercase">Icon</p>
+          </div>
+          {/* Icon — sunrise bg */}
+          <div className="rounded-2xl p-8 flex flex-col items-center justify-center gap-3" style={{ background: "linear-gradient(135deg, #E0561F, #FF8A4C, #FFD36B)" }}>
+            <Delta size={52} />
+            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#142028]/40 text-[0.65rem] tracking-widest uppercase">Sunrise</p>
+          </div>
+          {/* Reversed white */}
+          <div className="bg-[#E0561F] rounded-2xl p-8 flex flex-col items-center justify-center gap-3">
+            <svg width="52" height="52" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+              <polygon points="40,6 6,68 40,50 74,68" fill="rgba(255,255,255,0.9)" />
+              <polygon points="40,50 6,68 26,74" fill="rgba(255,255,255,0.5)" />
+              <polygon points="40,50 74,68 54,74" fill="rgba(255,255,255,0.65)" />
+            </svg>
+            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/40 text-[0.65rem] tracking-widest uppercase">Reversed</p>
+          </div>
+          {/* 3-color label */}
+          <div className="bg-[#FCFBF8] border border-[#EAE5DB] rounded-2xl p-8 flex flex-col items-center justify-center gap-3">
+            <div className="flex items-center gap-1.5">
+              <Delta size={20} />
+              <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#142028] font-bold text-sm">Flightpath</span>
+            </div>
+            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#23292D]/25 text-[0.65rem] tracking-widest uppercase">3-Color Label</p>
+          </div>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {placeholders.map((p, i) => (
-            <div key={p.label} className={`${p.wide ? "col-span-2" : ""}`}>
-              <div
-                className="rounded-xl bg-[#EAE5DB] flex items-center justify-center"
-                style={{ aspectRatio: p.wide ? "16/9" : "4/3" }}
-              >
-                <div className="flex flex-col items-center gap-2 text-center p-4">
-                  <div className="w-9 h-9 rounded-full bg-[#2FB6A6]/15 border border-[#2FB6A6]/30 flex items-center justify-center">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2FB6A6" strokeWidth="1.5">
-                      <rect x="3" y="3" width="18" height="18" rx="2" />
-                      <circle cx="8.5" cy="8.5" r="1.5" />
-                      <path d="M21 15l-5-5L5 21" />
-                    </svg>
-                  </div>
-                  <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#23292D]/40 text-[0.65rem] font-semibold tracking-widest uppercase">{p.label}</p>
-                  <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/25 text-[0.65rem]">Real photography needed</p>
-                </div>
-              </div>
-              <div className="pt-2.5">
-                <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D] text-sm font-semibold mb-0.5">{p.caption}</p>
-                <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/45 text-xs leading-relaxed">{p.desc}</p>
-              </div>
+        <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/40 text-sm mt-6 leading-relaxed max-w-2xl">
+          Clear space equal to the width of the delta mark on all sides. Minimum display size 24px. The faceted delta references both the aviation delta wing and the mathematical symbol for change — appropriate for a program built around transformation.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+// ─── 5. Color ─────────────────────────────────────────────────────────────────
+function ColorSection() {
+  const palette = [
+    { name: "Tangerine", hex: "#FF8A4C", role: "Primary brand" },
+    { name: "Sand", hex: "#FFD36B", role: "Accent / Gold" },
+    { name: "Coral", hex: "#E0561F", role: "CTA / Emphasis" },
+    { name: "Ember", hex: "#C2421F", role: "Deep accent" },
+    { name: "Twilight", hex: "#142028", role: "Primary dark" },
+    { name: "Slate", hex: "#1B2A33", role: "Secondary dark" },
+    { name: "Paper", hex: "#FCFBF8", role: "Light base" },
+    { name: "Cream", hex: "#F4F0E7", role: "Warm background" },
+  ];
+  return (
+    <section id="section-color" className="bg-[#142028] py-20 md:py-28">
+      <div className="max-w-6xl mx-auto px-8">
+        <Eyebrow light>Color</Eyebrow>
+        <Divider />
+        <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(2rem, 3.5vw, 3rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }} className="text-[#FCFBF8] mb-4">
+          A sunrise palette. Warm structure and a deep twilight base.
+        </h2>
+        <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/45 text-base leading-relaxed mb-10 max-w-xl">
+          The signature gradient turns ember into gold — the light of a runway at sunrise. For a teen, it doesn't look clinical. For a parent, it looks trustworthy.
+        </p>
+        {/* Gradient bar */}
+        <div className="h-14 rounded-xl mb-8" style={{ background: "linear-gradient(90deg, #C2421F 0%, #E0561F 20%, #FF8A4C 45%, #FFB259 65%, #FFD36B 100%)" }} />
+        <div className="grid grid-cols-4 md:grid-cols-8 gap-3">
+          {palette.map((c) => (
+            <div key={c.name}>
+              <div className="h-16 rounded-xl mb-2 border border-white/[0.07]" style={{ background: c.hex }} />
+              <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#FCFBF8] text-xs font-semibold">{c.name}</p>
+              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/30 text-[0.65rem]">{c.hex}</p>
+              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/25 text-[0.6rem]">{c.role}</p>
             </div>
           ))}
         </div>
@@ -477,144 +316,74 @@ function Environment() {
   );
 }
 
-// ─── For Families / Referrers ─────────────────────────────────────────────────
-function Audiences() {
-  const [tab, setTab] = useState<"families" | "referrers">("families");
-
+// ─── 6. Typography ────────────────────────────────────────────────────────────
+function TypeSection() {
   return (
-    <section id="audiences" className="bg-[#F4F0E7] py-20 md:py-28">
-      <div className="container">
-        <div className="mb-10">
-          <p className="eyebrow-label mb-3">Who We Serve</p>
-          <h2 className="display-serif text-[#142028]" style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}>
-            For families.<br />
-            For <em style={{ color: "#E0561F" }}>clinicians.</em>
-          </h2>
-        </div>
-
-        <div className="flex gap-0 border-b-2 border-[#EAE5DB] mb-10">
-          {(["families", "referrers"] as const).map((t) => (
-            <button
-              key={t}
-              onClick={() => setTab(t)}
-              style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
-              className={`text-[0.8rem] font-semibold tracking-widest uppercase px-5 py-3 border-b-[2.5px] -mb-[2px] transition-all ${
-                tab === t
-                  ? "border-[#E0561F] text-[#E0561F]"
-                  : "border-transparent text-[#23292D]/35 hover:text-[#23292D]"
-              }`}
-            >
-              {t === "families" ? "For Families" : "For Clinicians & Referrers"}
-            </button>
-          ))}
-        </div>
-
-        {tab === "families" ? (
-          <div className="grid md:grid-cols-2 gap-10 lg:gap-16">
-            <div>
-              <h3 className="display-serif text-[#142028] mb-4" style={{ fontSize: "clamp(1.6rem, 3vw, 2.4rem)" }}>
-                The hardest part<br />is the <em style={{ color: "#E0561F" }}>call.</em>
-              </h3>
-              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/60 text-base leading-relaxed mb-4">
-                You've probably been watching this for a while. Wondering if it's serious enough. You're not overreacting. And you don't need to have it figured out before you call us.
-              </p>
-              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/60 text-base leading-relaxed mb-6">
-                Our admissions team is trained to listen first. They'll help you understand what your teen is experiencing and what the next step looks like — without pressure and without judgment.
-              </p>
-              <ul className="flex flex-col gap-3">
-                {["Confidential conversation, any time of day or night", "Insurance verification assistance at no cost", "Family therapy included in all levels of care", "Parent coaching and sibling support available"].map((item) => (
-                  <li key={item} className="flex items-start gap-2.5">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#2FB6A6] flex-shrink-0 mt-2" />
-                    <span style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-sm text-[#23292D]/65">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="bg-[#FCFBF8] border border-[#EAE5DB] rounded-2xl p-7">
-              <h4 className="display-serif text-[#142028] text-xl mb-3">We'll take it from here.</h4>
-              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/50 text-sm leading-relaxed mb-5">
-                One call is all it takes to start. Our team will walk you through everything — no commitment required, no pressure to decide on the spot.
-              </p>
-              <a href="tel:+18009999999" style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="block text-[#142028] text-2xl font-bold mb-4 no-underline hover:text-[#E0561F] transition-colors">
-                800-999-9999
-              </a>
-              <a href="#contact" className="btn-sunrise">Verify your benefits</a>
-            </div>
+    <section id="section-type" className="bg-[#FCFBF8] py-20 md:py-28">
+      <div className="max-w-6xl mx-auto px-8">
+        <Eyebrow>Typography</Eyebrow>
+        <Divider />
+        <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(2rem, 3.5vw, 3rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }} className="text-[#142028] mb-12">
+          Three voices. One system.
+        </h2>
+        <div className="grid md:grid-cols-3 gap-6">
+          <div className="bg-[#F4F0E7] rounded-2xl p-7 border border-[#EAE5DB]">
+            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-widest uppercase mb-4">Display</p>
+            <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: "3.5rem", lineHeight: 1 }} className="text-[#142028] mb-4">Aa</p>
+            <p style={{ fontFamily: "'Instrument Serif', serif" }} className="text-[#142028] text-lg mb-3">Flightpath</p>
+            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#23292D]/50 text-xs font-semibold">Instrument Serif</p>
+            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/35 text-xs mt-1">Headlines, hero text, pull quotes</p>
           </div>
-        ) : (
-          <div className="grid md:grid-cols-2 gap-10 lg:gap-16">
-            <div>
-              <h3 className="display-serif text-[#142028] mb-4" style={{ fontSize: "clamp(1.6rem, 3vw, 2.4rem)" }}>
-                A detox partner<br />you can <em style={{ color: "#E0561F" }}>trust.</em>
-              </h3>
-              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/60 text-base leading-relaxed mb-4">
-                Flightpath Teen Detox is designed to serve as a reliable, clinically rigorous first step for adolescents you're referring into the continuum of care. We communicate clearly, coordinate actively, and return your patients stabilized and ready for the next level.
-              </p>
-              <ul className="flex flex-col gap-3">
-                {["Direct clinical liaison for referring providers", "Discharge summaries and transition coordination", "Dual diagnosis capability — co-occurring mental health", "Accepts most major insurance including Medi-Cal", "Same-day intake available for urgent referrals"].map((item) => (
-                  <li key={item} className="flex items-start gap-2.5">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#2FB6A6] flex-shrink-0 mt-2" />
-                    <span style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-sm text-[#23292D]/65">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="bg-[#FCFBF8] border border-[#EAE5DB] rounded-2xl p-7">
-              <h4 className="display-serif text-[#142028] text-xl mb-3">Referral line.</h4>
-              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/50 text-sm leading-relaxed mb-5">
-                Our clinical team is available for direct consultation. For urgent referrals, call the admissions line directly.
-              </p>
-              <a href="tel:+18009999999" style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="block text-[#142028] text-2xl font-bold mb-4 no-underline hover:text-[#E0561F] transition-colors">
-                800-999-9999
-              </a>
-              <a href="#contact" className="btn-sunrise">Send a referral</a>
-            </div>
+          <div className="bg-[#F4F0E7] rounded-2xl p-7 border border-[#EAE5DB]">
+            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-widest uppercase mb-4">UI / Eyebrows</p>
+            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "3.5rem", lineHeight: 1, fontWeight: 700 }} className="text-[#142028] mb-4">Aa</p>
+            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#142028] text-lg font-bold mb-3">Flightpath</p>
+            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#23292D]/50 text-xs font-semibold">Bricolage Grotesque</p>
+            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/35 text-xs mt-1">Labels, buttons, navigation, eyebrows</p>
           </div>
-        )}
+          <div className="bg-[#F4F0E7] rounded-2xl p-7 border border-[#EAE5DB]">
+            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-widest uppercase mb-4">Body</p>
+            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif", fontSize: "3.5rem", lineHeight: 1, fontWeight: 400 }} className="text-[#142028] mb-4">Aa</p>
+            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#142028] text-lg mb-3">Flightpath</p>
+            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#23292D]/50 text-xs font-semibold">Hanken Grotesk</p>
+            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/35 text-xs mt-1">Body copy, descriptions, legal</p>
+          </div>
+        </div>
       </div>
     </section>
   );
 }
 
-// ─── Admissions Flight Plan ───────────────────────────────────────────────────
-function AdmissionsFlightPlan() {
-  const steps = [
-    { num: "01", label: "Departure", title: "Call", desc: "One confidential call to our admissions team. No commitment, no pressure. Just a conversation about what your teen needs." },
-    { num: "02", label: "Climb", title: "Verify Benefits", desc: "We handle insurance verification for you. Most families are surprised by how much is covered. We'll explain what to expect before anything is decided." },
-    { num: "03", label: "Cruise", title: "Same-Day Intake", desc: "When you're ready, intake can happen the same day. Every recovery has a starting point. This is a good one." },
+// ─── 7. Voice & Messaging ─────────────────────────────────────────────────────
+function VoiceSection() {
+  const examples = [
+    { label: "Hero headline", text: "A safe place to land." },
+    { label: "Subhead", text: "Medically supervised adolescent detox and stabilization. Genuinely human care for teens and the families who love them." },
+    { label: "For families", text: "The hardest part is the call. We'll take it from there." },
+    { label: "Admissions CTA", text: "Today recovery has a starting point. This is a good one." },
   ];
-
   return (
-    <section id="admissions" className="bg-[#142028] py-20 md:py-28 relative overflow-hidden">
-      <div
-        className="absolute right-0 top-0 w-2/5 h-full pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at 80% 30%, rgba(255,138,76,0.09) 0%, transparent 65%)" }}
-        aria-hidden="true"
-      />
-      <div className="container relative z-10">
-        <div className="mb-12">
-          <p className="eyebrow-label" style={{ color: "#FFD36B" }}>Admissions</p>
-          <h2 className="display-serif text-[#FCFBF8] mt-3" style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}>
-            Three steps.<br />
-            One clear <em style={{ color: "#FFD36B" }}>flightpath.</em>
-          </h2>
-        </div>
-
-        <div className="relative">
-          {/* Dashed connecting line */}
-          <div className="hidden md:block absolute top-7 left-14 right-14 h-px border-t-2 border-dashed border-[#FF8A4C]/25 z-0" />
-          <div className="grid md:grid-cols-3 gap-8 relative z-10">
-            {steps.map((step) => (
-              <div key={step.num} className="flex flex-col items-center text-center md:items-center">
-                <div
-                  className="w-14 h-14 rounded-full flex items-center justify-center mb-4 flex-shrink-0"
-                  style={{ background: "linear-gradient(135deg, #E0561F, #FF8A4C, #FFD36B)" }}
-                >
-                  <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#142028] text-sm font-extrabold">{step.num}</span>
-                </div>
-                <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-[0.2em] uppercase mb-1.5">{step.label}</p>
-                <h3 className="display-serif text-[#FCFBF8] text-xl mb-2">{step.title}</h3>
-                <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/40 text-sm leading-relaxed max-w-[200px]">{step.desc}</p>
+    <section id="section-voice" className="bg-[#1B2A33] py-20 md:py-28">
+      <div className="max-w-6xl mx-auto px-8">
+        <Eyebrow light>Voice &amp; Messaging</Eyebrow>
+        <Divider />
+        <div className="grid md:grid-cols-2 gap-12 items-start">
+          <div>
+            <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(2rem, 3.5vw, 3rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }} className="text-[#FCFBF8] mb-5">
+              Warm, plain-spoken, and <em style={{ color: "#FF8A4C" }}>outcome-first.</em>
+            </h2>
+            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/50 text-base leading-relaxed mb-4">
+              We speak to the parent who is scared and the teen who is exhausted, and the clinician who needs to trust us. No jargon. No false hope. No language that overstates outcomes.
+            </p>
+            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/50 text-base leading-relaxed">
+              Lead with more than the teen. Lead with the family. Sentences that feel like a hand on the shoulder, not a brochure. Confident without being clinical. Structured without being cold.
+            </p>
+          </div>
+          <div className="flex flex-col gap-4">
+            {examples.map((e) => (
+              <div key={e.label} className="bg-[#142028] rounded-xl p-5 border border-white/[0.06]">
+                <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.62rem] font-bold tracking-widest uppercase mb-2">{e.label}</p>
+                <p style={{ fontFamily: "'Instrument Serif', serif" }} className="text-[#FCFBF8] text-base italic leading-snug">"{e.text}"</p>
               </div>
             ))}
           </div>
@@ -624,189 +393,333 @@ function AdmissionsFlightPlan() {
   );
 }
 
-// ─── Testimonial ──────────────────────────────────────────────────────────────
-function Testimonial() {
+// ─── 8. Applications ─────────────────────────────────────────────────────────
+function Applications() {
   return (
-    <section className="bg-[#1B2A33] py-20 md:py-28 text-center relative overflow-hidden">
-      <div
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3/5 h-4/5 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse, rgba(255,138,76,0.06) 0%, transparent 65%)" }}
-        aria-hidden="true"
-      />
-      <div className="container max-w-2xl relative z-10">
-        <div
-          className="text-[#FF8A4C]/35 mb-4 leading-none select-none"
-          style={{ fontFamily: "'Instrument Serif', serif", fontSize: "5rem" }}
-          aria-hidden="true"
-        >
-          "
+    <section id="section-applications" className="bg-[#F4F0E7] py-20 md:py-28">
+      <div className="max-w-6xl mx-auto px-8">
+        <Eyebrow>Applications</Eyebrow>
+        <Divider />
+        <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(2rem, 3.5vw, 3rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }} className="text-[#142028] mb-12">
+          How the brand lives in the world.
+        </h2>
+        <div className="grid md:grid-cols-3 gap-5">
+          {/* Website preview */}
+          <div className="md:col-span-2 bg-[#142028] rounded-2xl overflow-hidden border border-white/[0.07]">
+            <div className="bg-[#0F1A22] px-4 py-2.5 flex items-center gap-2 border-b border-white/[0.06]">
+              <div className="flex gap-1.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
+              </div>
+              <div className="flex-1 bg-white/[0.06] rounded-full px-3 py-0.5 mx-2">
+                <span style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/20 text-[0.6rem]">flightpathteendetox.com</span>
+              </div>
+            </div>
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-5">
+                <div className="flex items-center gap-2">
+                  <Delta size={18} />
+                  <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white text-xs font-bold">Flightpath <span className="text-[#FF8A4C]">Teen Detox</span></span>
+                </div>
+                <div className="rounded-full px-3 py-1 text-[0.6rem] font-bold" style={{ background: "linear-gradient(90deg, #E0561F, #FF8A4C, #FFD36B)", color: "#142028", fontFamily: "'Bricolage Grotesque', sans-serif" }}>Verify your benefits</div>
+              </div>
+              <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.8rem", lineHeight: 1.1 }} className="text-[#FCFBF8] mb-2">A safe place<br />to <em style={{ color: "#FFD36B" }}>land.</em></p>
+              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/40 text-xs leading-relaxed mb-4">Medically supervised adolescent detox and stabilization. Genuinely human care.</p>
+              <div className="flex gap-2">
+                <div className="rounded-full px-3 py-1.5 text-[0.65rem] font-bold" style={{ background: "linear-gradient(90deg, #E0561F, #FF8A4C)", color: "#142028", fontFamily: "'Bricolage Grotesque', sans-serif" }}>Talk to our team</div>
+                <div className="rounded-full px-3 py-1.5 text-[0.65rem] font-semibold border border-white/20 text-white/60" style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}>How it works</div>
+              </div>
+            </div>
+          </div>
+          {/* Icon / badge */}
+          <div className="flex flex-col gap-4">
+            <div className="bg-[#142028] rounded-2xl p-6 flex flex-col items-center justify-center gap-3 flex-1">
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ background: "linear-gradient(135deg, #E0561F, #FF8A4C, #FFD36B)" }}>
+                <Delta size={36} />
+              </div>
+              <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/30 text-[0.65rem] tracking-widest uppercase">App Icon / Favicon</p>
+            </div>
+            <div className="bg-[#E0561F] rounded-2xl p-6 flex flex-col items-center justify-center gap-2">
+              <svg width="36" height="36" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+                <polygon points="40,6 6,68 40,50 74,68" fill="rgba(255,255,255,0.9)" />
+                <polygon points="40,50 6,68 26,74" fill="rgba(255,255,255,0.5)" />
+                <polygon points="40,50 74,68 54,74" fill="rgba(255,255,255,0.65)" />
+              </svg>
+              <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/50 text-[0.65rem] tracking-widest uppercase">Reversed / Coral</p>
+            </div>
+          </div>
         </div>
-        <blockquote>
-          <p
-            className="display-serif text-[#FCFBF8] italic leading-snug mb-6"
-            style={{ fontSize: "clamp(1.4rem, 3vw, 2.1rem)" }}
-          >
-            "I didn't know what to expect. I just knew I needed my kid to be{" "}
-            <em style={{ fontStyle: "normal", color: "#FFD36B" }}>safe.</em>{" "}
-            Flightpath was the first place that made me feel like we were going to be okay."
-          </p>
-          <footer
-            style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
-            className="text-white/30 text-xs font-semibold tracking-[0.15em] uppercase"
-          >
-            {/* LEGAL REVIEW: Replace with real attributed testimonial or remove per compliance */}
-            Parent of a former patient · Orange County, CA
-          </footer>
-        </blockquote>
       </div>
     </section>
   );
 }
 
-// ─── Final CTA Band ───────────────────────────────────────────────────────────
-function CTABand() {
+// ─── 9. Engagement Paths ─────────────────────────────────────────────────────
+function Engagement() {
+  return (
+    <section id="section-engagement" className="bg-[#142028] py-20 md:py-28">
+      <div className="max-w-6xl mx-auto px-8">
+        <Eyebrow gold>Engagement</Eyebrow>
+        <Divider />
+        <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(2rem, 3.5vw, 3rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }} className="text-[#FCFBF8] mb-4">
+          A full-stack marketing engagement — not a monthly retainer.
+        </h2>
+        <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/45 text-base leading-relaxed mb-12 max-w-2xl">
+          Direction: brand strategy, brand creation, and hands-on execution, structured to start here and scale into a full-time role as the program grows.
+        </p>
+        {/* Three phases */}
+        <div className="grid md:grid-cols-3 gap-1 mb-12">
+          {[
+            { num: "Phase 1", label: "Departure", sub: "Brand Buildout", desc: "Identity to launch. One-time engagement to build the full brand foundation and get the program to market." },
+            { num: "Phase 2", label: "Climb", sub: "Contract Retainer", desc: "Monthly marketing, social, SEO, and outreach. Ongoing execution structured to grow census." },
+            { num: "Phase 3", label: "Cruise", sub: "Part-Time Role", desc: "Embedded Director of Marketing with benefits. Strategy to systems, full ownership of the marketing function." },
+          ].map((p, i) => (
+            <div key={p.num} className={`p-6 ${i === 0 ? "rounded-l-2xl" : i === 2 ? "rounded-r-2xl" : ""} ${i === 1 ? "bg-[#1B2A33]" : "bg-[#1B2A33]/60"} border border-white/[0.06]`}>
+              <div className="w-10 h-10 rounded-full flex items-center justify-center mb-4" style={{ background: "linear-gradient(135deg, #E0561F, #FF8A4C, #FFD36B)" }}>
+                <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#142028] text-xs font-extrabold">{i + 1}</span>
+              </div>
+              <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-widest uppercase mb-1">{p.num} · {p.label}</p>
+              <p style={{ fontFamily: "'Instrument Serif', serif" }} className="text-[#FCFBF8] text-xl mb-3">{p.sub}</p>
+              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/40 text-sm leading-relaxed">{p.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── 10. Investment / Pricing ─────────────────────────────────────────────────
+function Investment() {
+  const phase1Deliverables = [
+    ["Brand strategy", "Name, messaging, guidelines"],
+    ["Website", "Design + development"],
+    ["Logo + visual system", "Full asset suite"],
+    ["Messaging", "Voice, copy framework"],
+    ["Digital presence", "Google setup, email signature templates"],
+    ["Marketing strategy", "Launch plan"],
+    ["Reporting", "Baseline analytics setup"],
+  ];
+  const phase2Deliverables = [
+    ["Content creation", "Monthly content calendar"],
+    ["Ads management", "Paid social + search"],
+    ["Social media management", "SEO, Google Business"],
+    ["Monthly outreach", "Campaigns, teen plan"],
+    ["Monthly SEO reporting", "Rankings + traffic"],
+  ];
+  const phase3Deliverables = [
+    ["Director of Marketing title", "With benefits"],
+    ["Ongoing strategy", "Systems to scale"],
+    ["Social media management", "SEO, Google Business"],
+    ["Monthly outreach campaigns", "Teen plan"],
+    ["Monthly SEO reporting", "Full analytics"],
+  ];
+
+  return (
+    <section id="section-investment" className="bg-[#FCFBF8] py-20 md:py-28">
+      <div className="max-w-6xl mx-auto px-8">
+        <Eyebrow>Investment</Eyebrow>
+        <Divider />
+        <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(2rem, 3.5vw, 3rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }} className="text-[#142028] mb-4">
+          All three reflect a <em style={{ color: "#E0561F" }}>below-rate discount</em> for the mission.
+        </h2>
+        <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/55 text-base leading-relaxed mb-12 max-w-2xl">
+          Standard rates for three-piece brand buildouts range from $8,000–$12,000. This is mission-driven pricing. An intentional decision to build something that matters at a rate that makes it possible.
+        </p>
+
+        <div className="grid md:grid-cols-3 gap-5">
+          {/* Phase 1 */}
+          <div className="bg-[#142028] rounded-2xl overflow-hidden">
+            <div className="p-6 border-b border-white/[0.07]">
+              <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-widest uppercase mb-2">Phase 1 · Departure</p>
+              <p style={{ fontFamily: "'Instrument Serif', serif" }} className="text-[#FCFBF8] text-xl mb-1">Brand Buildout</p>
+              <div className="flex items-baseline gap-1 mt-3">
+                <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#FFD36B] text-4xl font-extrabold">$5,000</span>
+                <span style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/30 text-sm">one-time</span>
+              </div>
+              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/35 text-xs mt-1">50% on approval · 50% on delivery</p>
+            </div>
+            <div className="p-6">
+              <div className="flex flex-col gap-2.5">
+                {phase1Deliverables.map(([item, sub]) => (
+                  <div key={item} className="flex items-start gap-2.5">
+                    <div className="w-4 h-4 rounded-full bg-[#2FB6A6]/20 border border-[#2FB6A6]/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Check size={8} className="text-[#2FB6A6]" />
+                    </div>
+                    <div>
+                      <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/80 text-sm font-medium">{item}</p>
+                      <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/30 text-xs">{sub}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Phase 2 */}
+          <div className="bg-[#1B2A33] rounded-2xl overflow-hidden border-2 border-[#FF8A4C]/40 relative">
+            <div className="absolute top-4 right-4">
+              <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[0.6rem] font-bold tracking-widest uppercase bg-[#FF8A4C]/20 text-[#FF8A4C] border border-[#FF8A4C]/30 rounded-full px-2.5 py-0.5">Recommended</span>
+            </div>
+            <div className="p-6 border-b border-white/[0.07]">
+              <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-widest uppercase mb-2">Phase 2 · Climb</p>
+              <p style={{ fontFamily: "'Instrument Serif', serif" }} className="text-[#FCFBF8] text-xl mb-1">Contract Retainer</p>
+              <div className="flex items-baseline gap-1 mt-3">
+                <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#FFD36B] text-4xl font-extrabold">$3.5–5K</span>
+                <span style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/30 text-sm">/mo</span>
+              </div>
+              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/35 text-xs mt-1">After Phase 1 · 3-month minimum</p>
+            </div>
+            <div className="p-6">
+              <div className="flex flex-col gap-2.5">
+                {phase2Deliverables.map(([item, sub]) => (
+                  <div key={item} className="flex items-start gap-2.5">
+                    <div className="w-4 h-4 rounded-full bg-[#2FB6A6]/20 border border-[#2FB6A6]/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Check size={8} className="text-[#2FB6A6]" />
+                    </div>
+                    <div>
+                      <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/80 text-sm font-medium">{item}</p>
+                      <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/30 text-xs">{sub}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Phase 3 */}
+          <div className="bg-[#142028] rounded-2xl overflow-hidden">
+            <div className="p-6 border-b border-white/[0.07]">
+              <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-widest uppercase mb-2">Phase 3 · Cruise</p>
+              <p style={{ fontFamily: "'Instrument Serif', serif" }} className="text-[#FCFBF8] text-xl mb-1">Part-Time Role</p>
+              <div className="flex items-baseline gap-1 mt-3">
+                <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#FFD36B] text-4xl font-extrabold">$90–115K</span>
+                <span style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/30 text-sm">/yr</span>
+              </div>
+              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/35 text-xs mt-1">Director of Marketing · with benefits</p>
+            </div>
+            <div className="p-6">
+              <div className="flex flex-col gap-2.5">
+                {phase3Deliverables.map(([item, sub]) => (
+                  <div key={item} className="flex items-start gap-2.5">
+                    <div className="w-4 h-4 rounded-full bg-[#2FB6A6]/20 border border-[#2FB6A6]/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Check size={8} className="text-[#2FB6A6]" />
+                    </div>
+                    <div>
+                      <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/80 text-sm font-medium">{item}</p>
+                      <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/30 text-xs">{sub}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── 11. Approval / Close ─────────────────────────────────────────────────────
+function Approval() {
+  const [name, setName] = useState("");
+  const [approved, setApproved] = useState(false);
+
   return (
     <section
-      id="contact"
-      style={{ background: "linear-gradient(90deg, #E0561F 0%, #FF8A4C 50%, #FFD36B 100%)" }}
-      className="py-20 md:py-24"
+      id="section-approval"
+      className="relative py-20 md:py-28 overflow-hidden"
+      style={{ background: "linear-gradient(135deg, #1B2A33 0%, #142028 60%, #0F1A22 100%)" }}
     >
-      <div className="container">
-        <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: "radial-gradient(ellipse at 30% 60%, rgba(224,86,31,0.12) 0%, transparent 60%)" }}
+        aria-hidden="true"
+      />
+      <div className="max-w-6xl mx-auto px-8 relative z-10">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
           <div>
-            <h2
-              className="display-serif text-[#142028] mb-4"
-              style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}
-            >
-              The hardest part<br />
-              is the <em>call.</em>
+            <Eyebrow gold>Next Steps</Eyebrow>
+            <Divider />
+            <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(2.2rem, 4vw, 3.5rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }} className="text-[#FCFBF8] mb-5">
+              Let's give it a <em style={{ color: "#FF8A4C" }}>place to land.</em>
             </h2>
-            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#142028]/60 text-base leading-relaxed mb-6">
-              We'll take it from there. Confidential, no-pressure conversation with a trained admissions navigator. Available 24 hours a day.
+            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/50 text-base leading-relaxed mb-6">
+              An approval is the permission — verbal, written, or by signature — both parties confirm the scope, pricing, and terms outlined here. A formal contract follows.
             </p>
-            <a
-              href="tel:+18009999999"
-              style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
-              className="text-[#142028] text-3xl font-extrabold no-underline hover:opacity-75 transition-opacity tracking-tight"
-            >
-              800-999-9999
-            </a>
+            <div className="flex items-center gap-3 mt-8">
+              <Delta size={22} />
+              <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/40 text-sm font-bold">Karle <span className="text-[#FF8A4C]">Kreatives</span></span>
+            </div>
           </div>
-          <div>
-            <form
-              className="flex flex-col gap-3"
-              onSubmit={(e) => e.preventDefault()}
-              aria-label="Verify your benefits"
-            >
-              <input
-                type="text"
-                placeholder="Your name"
-                className="bg-[#142028]/10 border border-[#142028]/15 rounded-xl px-4 py-3 text-[#142028] placeholder-[#142028]/35 text-sm focus:outline-none focus:border-[#142028]/35 transition-colors"
-                style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
-              />
-              <input
-                type="tel"
-                placeholder="Best phone number"
-                className="bg-[#142028]/10 border border-[#142028]/15 rounded-xl px-4 py-3 text-[#142028] placeholder-[#142028]/35 text-sm focus:outline-none focus:border-[#142028]/35 transition-colors"
-                style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
-              />
-              <textarea
-                placeholder="Brief message (optional)"
-                rows={3}
-                className="bg-[#142028]/10 border border-[#142028]/15 rounded-xl px-4 py-3 text-[#142028] placeholder-[#142028]/35 text-sm focus:outline-none focus:border-[#142028]/35 transition-colors resize-none"
-                style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
-              />
-              <button
-                type="submit"
-                style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
-                className="bg-[#142028] text-[#FCFBF8] text-sm font-bold tracking-wide px-6 py-3 rounded-full self-start hover:opacity-85 active:scale-[0.97] transition-all"
-              >
-                Verify your benefits
-              </button>
-              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#142028]/40 text-xs leading-relaxed">
-                {/* LEGAL REVIEW: Confirm HIPAA-compliant form handling before launch */}
-                By submitting, you consent to a confidential callback from our admissions team. We do not sell or share your information.
-              </p>
-            </form>
+
+          <div className="bg-[#1B2A33] border border-white/[0.08] rounded-2xl p-7">
+            {!approved ? (
+              <>
+                <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-widest uppercase mb-5">Approvals</p>
+                <div className="flex flex-col gap-4 mb-6">
+                  <div>
+                    <label style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/35 text-xs font-semibold tracking-widest uppercase block mb-1.5">Client Name / Signature</label>
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Type your full name"
+                      className="w-full bg-[#142028] border border-white/[0.1] rounded-xl px-4 py-3 text-[#FCFBF8] placeholder-white/20 text-sm focus:outline-none focus:border-[#FF8A4C]/50 transition-colors"
+                      style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/35 text-xs font-semibold tracking-widest uppercase block mb-1.5">Approved Project</label>
+                    <div className="bg-[#142028] border border-white/[0.07] rounded-xl px-4 py-3">
+                      <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/50 text-sm">Flightpath Teen Detox — Phase 1 Brand Buildout</p>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  onClick={() => { if (name.trim()) setApproved(true); }}
+                  style={{ background: "linear-gradient(90deg, #E0561F, #FF8A4C, #FFD36B)", fontFamily: "'Bricolage Grotesque', sans-serif" }}
+                  className="w-full text-[#142028] text-sm font-bold tracking-wide py-3.5 rounded-full flex items-center justify-center gap-2 hover:opacity-90 active:scale-[0.97] transition-all disabled:opacity-40"
+                  disabled={!name.trim()}
+                >
+                  Approve &amp; Start Phase 1
+                  <ArrowRight size={14} />
+                </button>
+                <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/20 text-xs mt-3 text-center leading-relaxed">
+                  Typing your name constitutes a digital signature confirming agreement to the scope and pricing outlined in this proposal. A formal contract will follow.
+                </p>
+              </>
+            ) : (
+              <div className="text-center py-6">
+                <div className="w-14 h-14 rounded-full bg-[#2FB6A6]/20 border border-[#2FB6A6]/40 flex items-center justify-center mx-auto mb-4">
+                  <Check size={24} className="text-[#2FB6A6]" />
+                </div>
+                <p style={{ fontFamily: "'Instrument Serif', serif" }} className="text-[#FCFBF8] text-2xl mb-2">Cleared for takeoff.</p>
+                <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/45 text-sm leading-relaxed mb-1">Approved by <span className="text-white/70">{name}</span></p>
+                <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/30 text-xs">Karle Kreatives will follow up with a formal contract within 24 hours.</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-// ─── ATIS Ticker ──────────────────────────────────────────────────────────────
-function AtisTicker() {
-  const msg = "FLIGHTPATH TEEN DETOX · ORANGE COUNTY, CA · ADOLESCENT DETOX & STABILIZATION · AGES 13–17 · 24/7 ADMISSIONS · LICENSED · MOST INSURANCE ACCEPTED · A SAFE PLACE TO LAND · ";
-  return (
-    <div className="bg-[#E0561F] overflow-hidden py-2">
-      <div className="ticker-track flex whitespace-nowrap">
-        <span
-          style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
-          className="text-white/80 text-[0.62rem] font-semibold tracking-[0.18em]"
-        >
-          {msg + msg}
-        </span>
-      </div>
-    </div>
   );
 }
 
 // ─── Footer ───────────────────────────────────────────────────────────────────
 function Footer() {
   return (
-    <footer className="bg-[#142028] border-t border-white/[0.06]">
-      <AtisTicker />
-      <div className="container py-10">
-        <div className="flex flex-col md:flex-row items-start justify-between gap-8 mb-8">
-          <div>
-            <a href="/" className="flex items-center gap-2 no-underline mb-3">
-              <DeltaFlat size={20} opacity={0.55} />
-              <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#FCFBF8] font-bold text-base">
-                Flightpath <span className="text-[#FF8A4C]">Teen Detox</span>
-              </span>
-            </a>
-            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/35 text-sm leading-relaxed max-w-xs">
-              Medically supervised adolescent detox and stabilization in Orange County, California. Ages 13–17.
-            </p>
-          </div>
-          <nav className="flex flex-wrap gap-x-6 gap-y-2">
-            {["The Program", "Our Approach", "Environment", "For Families", "Admissions", "Contact"].map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
-                style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
-                className="text-white/35 hover:text-white text-xs font-medium tracking-wide transition-colors no-underline"
-              >
-                {item}
-              </a>
-            ))}
-          </nav>
+    <footer className="bg-[#0F1A22] border-t border-white/[0.05] py-6">
+      <div className="max-w-6xl mx-auto px-8 flex flex-col md:flex-row items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <Delta size={16} />
+          <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/30 text-xs font-bold">Karle <span className="text-[#FF8A4C]/50">Kreatives</span></span>
         </div>
-        <div className="border-t border-white/[0.06] pt-6 flex flex-col md:flex-row items-start justify-between gap-4">
-          <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/20 text-xs leading-relaxed max-w-xl">
-            {/* LEGAL REVIEW: Insert real license number, address, and accreditation details */}
-            Licensed by the California Department of Health Care Services (DHCS). License #[PLACEHOLDER]. This website is for informational purposes only and does not constitute medical advice or guarantee treatment outcomes. All calls are confidential.
-          </p>
-          <div className="text-right flex-shrink-0">
-            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/20 text-xs font-semibold tracking-wide">
-              SAMHSA Helpline:{" "}
-              <a href="tel:+18006624357" className="text-[#2FB6A6] no-underline hover:underline">
-                1-800-662-4357
-              </a>
-            </p>
-            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/15 text-xs mt-1">
-              © 2026 Flightpath Teen Detox
-            </p>
-            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/15 text-[0.65rem] mt-1">
-              Adult program:{" "}
-              <a href="https://therunwayrecovery.lovable.app" target="_blank" rel="noopener noreferrer" className="hover:text-white/30 transition-colors no-underline">
-                The Runway Recovery
-              </a>
-              {" "}· Same owner, separate program.
-            </p>
-          </div>
-        </div>
+        <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/15 text-xs text-center">
+          Confidential proposal prepared for Flightpath Teen Detox · © 2026 Karle Kreatives · Not for distribution
+        </p>
+        <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/15 text-xs">HDG 015</p>
       </div>
     </footer>
   );
@@ -816,17 +729,17 @@ function Footer() {
 export default function Home() {
   return (
     <div className="min-h-screen">
-      <EyebrowBar />
-      <Nav />
-      <Hero />
-      <ReassuranceStrip />
-      <TheProgram />
-      <OurApproach />
-      <Environment />
-      <Audiences />
-      <AdmissionsFlightPlan />
-      <Testimonial />
-      <CTABand />
+      <Cover />
+      <InsideDoc />
+      <TheBrand />
+      <LogoSection />
+      <ColorSection />
+      <TypeSection />
+      <VoiceSection />
+      <Applications />
+      <Engagement />
+      <Investment />
+      <Approval />
       <Footer />
     </div>
   );
