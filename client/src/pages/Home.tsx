@@ -1,10 +1,10 @@
 /**
- * WAYPOINT Teen Recovery — Home Page
+ * FLIGHTPATH Teen Detox — Home Page
  * Design: Cockpit at Golden Hour
  * Colors: Stratosphere Navy (#0A1628), Horizon Orange (#E8622A), Instrument Gold (#C9A84C), Cloud White (#F8F6F0)
  * Fonts: Barlow Condensed (display), DM Sans (body), Space Mono (technical)
- * Core metaphor: A waypoint is a set of coordinates pilots navigate toward.
- *   Recovery is navigation — each milestone is a waypoint on the route to your destination.
+ * Core metaphor: A flightpath is the route a pilot charts and follows.
+ *   Recovery is navigation — teens chart their own course and follow it, one leg at a time.
  */
 
 import { useState, useEffect } from "react";
@@ -30,8 +30,8 @@ function Nav() {
       <div className="container flex items-center justify-between h-16 md:h-20">
         <a href="/" className="flex items-center gap-3">
           <img
-            src="/manus-storage/waypoint_logo_primary_15c9c13c.png"
-            alt="Waypoint Teen Recovery"
+            src="https://d2xsxph8kpxj0f.cloudfront.net/310519663488423210/SUVBoqZCLc2b3z93g2JT8w/flightpath_logo_primary-cYHnZzGGD35gzCzLovnE69.webp"
+            alt="Flightpath Teen Detox"
             className="h-10 md:h-12 w-auto brightness-0 invert"
           />
         </a>
@@ -39,7 +39,7 @@ function Nav() {
         <nav className="hidden md:flex items-center gap-8">
           {[
             { label: "Programs", href: "#programs" },
-            { label: "Flight Syllabus", href: "#syllabus" },
+            { label: "The Flightpath", href: "#syllabus" },
             { label: "For Families", href: "#families" },
             { label: "About", href: "#about" },
           ].map((item) => (
@@ -83,7 +83,7 @@ function Nav() {
           <div className="container py-6 flex flex-col gap-4">
             {[
               { label: "Programs", href: "#programs" },
-              { label: "Flight Syllabus", href: "#syllabus" },
+              { label: "The Flightpath", href: "#syllabus" },
               { label: "For Families", href: "#families" },
               { label: "About", href: "#about" },
             ].map((item) => (
@@ -119,7 +119,7 @@ function Nav() {
 
 // ─── ATIS Ticker ──────────────────────────────────────────────────────────────
 function AtisTicker() {
-  const msg = "WAYPOINT · TEEN RECOVERY · ORANGE COUNTY, CA · ADMISSIONS OPEN 24/7 · CONFIDENTIAL · NO JUDGMENT · NO PRESSURE · INSURANCE ACCEPTED · TEEN PROGRAM AGES 13–17 · LICENSED CLINICIANS · CALL 866-969-3686 · NEXT WAYPOINT AHEAD · ";
+  const msg = "FLIGHTPATH · TEEN DETOX · ORANGE COUNTY, CA · ADMISSIONS OPEN 24/7 · CONFIDENTIAL · NO JUDGMENT · NO PRESSURE · INSURANCE ACCEPTED · TEEN PROGRAM AGES 13–17 · LICENSED CLINICIANS · CALL 866-969-3686 · YOUR FLIGHTPATH STARTS HERE · ";
   const doubled = msg + msg;
   return (
     <div className="bg-[#E8622A] overflow-hidden py-2">
@@ -151,10 +151,10 @@ function Hero() {
           </div>
 
           <h1 className="font-display font-black text-white leading-none mb-4">
-            <span className="block text-6xl md:text-8xl lg:text-9xl tracking-tight">EVERY STEP</span>
-            <span className="block text-6xl md:text-8xl lg:text-9xl tracking-tight">IS A</span>
+            <span className="block text-6xl md:text-8xl lg:text-9xl tracking-tight">YOUR LIFE</span>
+            <span className="block text-6xl md:text-8xl lg:text-9xl tracking-tight">HAS A</span>
             <span className="block text-5xl md:text-7xl lg:text-8xl tracking-tight text-[#E8622A]">
-              WAYPOINT.
+              FLIGHTPATH.
             </span>
           </h1>
 
@@ -162,7 +162,7 @@ function Hero() {
 
           <p className="font-body text-lg md:text-xl text-white/80 leading-relaxed mb-8 max-w-lg">
             Teen detox and residential recovery in Orange County, designed for ages 13–17.
-            You don't need to see the whole route. You just need the next waypoint.
+            We don't pick your destination. We help you chart the route to get there.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
@@ -170,13 +170,13 @@ function Hero() {
               href="#contact"
               className="btn-beacon bg-[#E8622A] text-white font-display font-bold text-base tracking-widest uppercase px-8 py-4 rounded hover:bg-[#d4561f] transition-colors duration-200 text-center"
             >
-              Set Your First Waypoint
+              Chart Your Flightpath
             </a>
             <a
               href="#syllabus"
               className="border-2 border-white/40 text-white font-display font-bold text-base tracking-widest uppercase px-8 py-4 rounded hover:border-white hover:bg-white/10 transition-all duration-200 text-center"
             >
-              View Flight Plan
+              View the Route
             </a>
           </div>
 
@@ -206,10 +206,10 @@ function Hero() {
 // ─── Pre-Flight Briefing Bar ───────────────────────────────────────────────────
 function PreFlightBriefing() {
   const stats = [
-    { code: "WPT-001", label: "Ages Served", value: "13–17" },
-    { code: "WPT-002", label: "Clinical Monitoring", value: "24/7" },
-    { code: "WPT-003", label: "Program Phases", value: "3" },
-    { code: "WPT-004", label: "Insurance Networks", value: "4+" },
+    { code: "FP-001", label: "Ages Served", value: "13–17" },
+    { code: "FP-002", label: "Clinical Monitoring", value: "24/7" },
+    { code: "FP-003", label: "Program Phases", value: "3" },
+    { code: "FP-004", label: "Insurance Networks", value: "4+" },
   ];
 
   return (
@@ -243,26 +243,26 @@ function TheConcept() {
           <div>
             <div className="flex items-center gap-2 mb-6">
               <div className="h-px w-8 bg-[#E8622A]" />
-              <span className="font-technical text-xs text-[#E8622A] tracking-[0.2em] uppercase">The Waypoint Concept</span>
+              <span className="font-technical text-xs text-[#E8622A] tracking-[0.2em] uppercase">The Flightpath Concept</span>
             </div>
             <h2 className="font-display font-black text-5xl md:text-6xl text-[#0A1628] leading-none mb-6">
-              YOU DON'T NEED<br />
-              <span className="text-[#E8622A]">THE WHOLE ROUTE.</span><br />
-              JUST THE NEXT<br />WAYPOINT.
+              IN AVIATION,<br />
+              <span className="text-[#E8622A]">YOUR FLIGHTPATH</span><br />
+              IS YOURS TO CHART.
             </h2>
             <div className="h-px w-32 bg-gradient-to-r from-[#E8622A] to-transparent mb-6" />
             <p className="font-body text-base text-[#0A1628]/70 leading-relaxed mb-4">
-              In aviation, a waypoint is a set of coordinates that marks a specific point along a flight route. Pilots don't need to see their final destination to begin. They just need the next waypoint — and the one after that, and the one after that. The route reveals itself one coordinate at a time.
+              A flightpath isn't handed to a pilot. It's charted by them — with the help of navigators, instruments, and training. The pilot decides the destination. The flightpath is how they get there. Every leg of the route builds on the last.
             </p>
             <p className="font-body text-base text-[#0A1628]/70 leading-relaxed mb-8">
-              At Waypoint Teen Recovery, we don't ask teens to picture the whole journey. We give them the next coordinate. Detox is a waypoint. Residential treatment is a waypoint. Aftercare is a waypoint. Each one brings them closer to the life they're navigating toward.
+              At Flightpath Teen Detox, we don't tell teens where to go. We give them the instruments, the training, and the navigators to chart a route to the life they want. Detox is the first leg. Residential treatment is the climb. Aftercare is the cruise altitude. The destination is theirs.
             </p>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-[#E8622A] flex items-center justify-center flex-shrink-0">
-                <span className="font-technical text-xs text-white font-bold">WPT</span>
+                <span className="font-technical text-xs text-white font-bold">FP</span>
               </div>
               <p className="font-body text-sm text-[#0A1628]/60 italic">
-                "You don't need to see the whole route. You just need the next waypoint."
+                "We don't pick your destination. We help you chart the route to get there."
               </p>
             </div>
           </div>
@@ -270,8 +270,8 @@ function TheConcept() {
           <div className="relative">
             <div className="absolute -top-4 -left-4 w-full h-full border-2 border-[#E8622A]/20 rounded-lg" />
             <img
-              src="/manus-storage/waypoint_wings_cert_94d5ed07.png"
-              alt="Waypoint Reached — Waypoint Teen Recovery"
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663488423210/SUVBoqZCLc2b3z93g2JT8w/flightpath_cert-7WZDUxsip6dTePCG28pZQa.webp"
+              alt="Flightpath Complete — Flightpath Teen Detox"
               className="relative z-10 w-full rounded-lg shadow-2xl"
             />
           </div>
@@ -281,17 +281,17 @@ function TheConcept() {
   );
 }
 
-// ─── Flight Syllabus (Programs) ───────────────────────────────────────────────
-function FlightSyllabus() {
+// ─── The Flightpath (Programs) ────────────────────────────────────────────────
+function TheFlightpath() {
   const phases = [
     {
-      leg: "WPT 01",
+      leg: "LEG 01",
       phase: "Ground School",
       subtitle: "Medical Detox & Stabilization",
       duration: "Typical: 5–10 Days",
-      status: "FIRST WAYPOINT",
+      status: "DEPARTURE",
       description:
-        "Before any navigator can chart a course, the aircraft needs to be airworthy. Ground School is where we stabilize the body, manage withdrawal safely with 24/7 clinical oversight, and prepare the mind for what comes next. The first waypoint is simply: arrive safely.",
+        "Every flight begins on the ground. Ground School is where we stabilize the body, manage withdrawal safely with 24/7 clinical oversight, and prepare the mind for the climb ahead. You don't need to know the whole route. You just need to get airborne.",
       details: [
         "24/7 medical monitoring",
         "Comfort-focused withdrawal management",
@@ -301,13 +301,13 @@ function FlightSyllabus() {
       ],
     },
     {
-      leg: "WPT 02",
-      phase: "Dual Instruction",
+      leg: "LEG 02",
+      phase: "The Climb",
       subtitle: "Residential Treatment",
       duration: "Typical: 30–90 Days",
-      status: "EN ROUTE",
+      status: "ASCENDING",
       description:
-        "In dual instruction, a trained navigator is beside you as you learn to read your own instruments — emotions, triggers, thought patterns. You practice navigating turbulence with support before you face it alone. Each therapy session is a waypoint. Each breakthrough is a coordinate reached.",
+        "The climb is where the real work happens. With navigators beside you, you learn to read your own instruments — emotions, triggers, thought patterns. You practice navigating turbulence with support before you face it alone. Each session is a leg of the route.",
       details: [
         "Individual and group therapy",
         "Adolescent-specific programming",
@@ -317,15 +317,15 @@ function FlightSyllabus() {
       ],
     },
     {
-      leg: "WPT 03",
-      phase: "The Final Leg",
+      leg: "LEG 03",
+      phase: "Cruise Altitude",
       subtitle: "Aftercare Planning",
       duration: "Begins During Residential",
       status: "DESTINATION AHEAD",
       description:
-        "Your aftercare plan is built with you during residential treatment — not handed to you at discharge. You leave with a full route map, not just a goodbye. The final waypoint isn't the end of the journey. It's the beginning of flying your own route.",
+        "Your aftercare plan is built with you during residential treatment — not handed to you at discharge. You leave with a full flightpath, not just a goodbye. Cruise altitude isn't the end of the journey. It's where you take the controls.",
       details: [
-        "Personalized aftercare roadmap",
+        "Personalized aftercare flightpath",
         "Sober living coordination",
         "School re-entry planning",
         "Ongoing therapy referrals",
@@ -341,7 +341,7 @@ function FlightSyllabus() {
       <div className="container">
         <div className="flex items-center gap-3 mb-4">
           <div className="h-px w-8 bg-[#E8622A]" />
-          <span className="font-technical text-xs text-[#E8622A] tracking-[0.2em] uppercase">Flight Syllabus</span>
+          <span className="font-technical text-xs text-[#E8622A] tracking-[0.2em] uppercase">The Flightpath</span>
         </div>
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
           <h2 className="font-display font-black text-5xl md:text-6xl text-white leading-none">
@@ -349,7 +349,7 @@ function FlightSyllabus() {
             <span className="text-[#E8622A]">RECOVERY</span>
           </h2>
           <p className="font-body text-sm text-white/50 max-w-xs leading-relaxed">
-            Three waypoints, one destination. Each one builds on the last. Your route is built with your clinical team.
+            Three legs. One destination. Each one builds on the last. Your flightpath is built with your clinical team.
           </p>
         </div>
 
@@ -414,7 +414,7 @@ function FlightSyllabus() {
                 disabled={activePhase === 0}
                 className="flex items-center gap-2 font-technical text-xs text-white/40 hover:text-white/80 disabled:opacity-20 transition-colors tracking-widest uppercase"
               >
-                ← Prev Waypoint
+                ← Prev Leg
               </button>
               <div className="flex-1" />
               <button
@@ -422,14 +422,14 @@ function FlightSyllabus() {
                 disabled={activePhase === phases.length - 1}
                 className="flex items-center gap-2 font-technical text-xs text-white/40 hover:text-white/80 disabled:opacity-20 transition-colors tracking-widest uppercase"
               >
-                Next Waypoint →
+                Next Leg →
               </button>
             </div>
           </div>
         </div>
 
         <div className="mt-16 border border-white/10 rounded-xl p-6 bg-white/[0.02]">
-          <div className="font-technical text-xs text-white/30 tracking-widest uppercase mb-4">Route Overview · Form WPT-001</div>
+          <div className="font-technical text-xs text-white/30 tracking-widest uppercase mb-4">Route Overview · Form FP-001</div>
           <div className="flex flex-col md:flex-row gap-4">
             {phases.map((phase, i) => (
               <div key={i} className="flex-1 flex items-center gap-4">
@@ -464,26 +464,26 @@ function Programs() {
   const programs = [
     {
       title: "Teen Medical Detox",
-      code: "WPT-DX",
+      code: "FP-DX",
       description: "Medically supervised withdrawal management for adolescents ages 13–17. Safe, comfortable, and clinically monitored around the clock.",
       icon: "🩺",
     },
     {
       title: "Residential Treatment",
-      code: "WPT-RT",
+      code: "FP-RT",
       description: "Structured daily programming with individual therapy, group sessions, family work, and academic support in a home-like setting.",
       icon: "🏠",
     },
     {
       title: "Dual Diagnosis Care",
-      code: "WPT-DD",
+      code: "FP-DD",
       description: "Co-occurring mental health conditions treated alongside substance use. Anxiety, depression, trauma — we navigate the whole route.",
       icon: "🧠",
     },
     {
       title: "Family Navigation",
-      code: "WPT-FM",
-      description: "Recovery doesn't happen in isolation. Family therapy, parent coaching, and sibling support are built into every route.",
+      code: "FP-FM",
+      description: "Recovery doesn't happen in isolation. Family therapy, parent coaching, and sibling support are built into every flightpath.",
       icon: "👨‍👩‍👧",
     },
   ];
@@ -545,7 +545,7 @@ function ForFamilies() {
               Watching your teen struggle is one of the hardest things a parent can face. You don't need to have the right words. You don't need to know the whole route. You just need to make the call.
             </p>
             <p className="font-body text-base text-white/70 leading-relaxed mb-8">
-              Our navigators can help you understand what treatment looks like for teens, whether insurance may help, and what the next waypoint could be. No pressure. No judgment. Just clear next steps.
+              Our navigators can help you understand what treatment looks like for teens, whether insurance may help, and what the next leg of the flightpath could be. No pressure. No judgment. Just clear next steps.
             </p>
 
             <div className="flex flex-col gap-4 mb-8">
@@ -581,7 +581,7 @@ function ForFamilies() {
                 { num: "02", title: "Situation Review", desc: "They listen and help you understand the situation." },
                 { num: "03", title: "Program Briefing", desc: "They explain teen detox and residential options." },
                 { num: "04", title: "Insurance Verification", desc: "They help verify your teen's coverage." },
-                { num: "05", title: "Next Waypoint", desc: "They explain possible next steps, without pressure." },
+                { num: "05", title: "Next Leg", desc: "They explain possible next steps, without pressure." },
               ].map((step) => (
                 <div key={step.num} className="flex items-start gap-4 pb-4 border-b border-white/5 last:border-0">
                   <div className="font-technical text-xs text-[#E8622A]/60 tracking-widest w-6 flex-shrink-0 mt-0.5">{step.num}</div>
@@ -621,12 +621,12 @@ function Insurance() {
               <span className="font-technical text-xs text-[#E8622A] tracking-[0.2em] uppercase">Insurance Access</span>
             </div>
             <h2 className="font-display font-black text-4xl md:text-5xl text-[#0A1628] leading-none mb-4">
-              THE ROUTE MAY BE<br />
+              THE FLIGHTPATH MAY BE<br />
               <span className="text-[#E8622A]">MORE ACCESSIBLE</span><br />
               THAN YOU THINK.
             </h2>
             <p className="font-body text-base text-[#0A1628]/60 leading-relaxed mb-6">
-              Waypoint Teen Recovery works with major insurance carriers. Your benefits may cover a significant portion of teen detox and residential treatment. Verifying is the simplest first waypoint.
+              Flightpath Teen Detox works with major insurance carriers. Your benefits may cover a significant portion of teen detox and residential treatment. Verifying is the simplest first step on the route.
             </p>
             <div className="flex flex-wrap gap-3">
               {["Anthem Blue Cross", "Blue Shield of California", "MHN", "TRICARE"].map((ins) => (
@@ -661,28 +661,28 @@ function FAQ() {
   const [open, setOpen] = useState<number | null>(null);
   const faqs = [
     {
-      q: "What ages does Waypoint Teen Recovery serve?",
-      a: "Waypoint is designed specifically for adolescents ages 13 through 17. Our programming, therapy modalities, and environment are built around the unique developmental needs of teenagers.",
+      q: "What ages does Flightpath Teen Detox serve?",
+      a: "Flightpath is designed specifically for adolescents ages 13 through 17. Our programming, therapy modalities, and environment are built around the unique developmental needs of teenagers.",
     },
     {
-      q: "How is Waypoint different from adult programs?",
-      a: "Waypoint is a completely separate, adolescent-only program. While The Runway Recovery guides adults through a structured flight plan, Waypoint uses the navigation metaphor differently — every milestone in recovery is a waypoint on the teen's own route. The clinical team, programming, and environment are all designed specifically for teens.",
+      q: "How is Flightpath different from adult programs?",
+      a: "Flightpath is a completely separate, adolescent-only program. While The Runway Recovery guides adults through a structured program, Flightpath uses the aviation metaphor differently — teens chart their own route, with navigators beside them every step of the way. The clinical team, programming, and environment are all designed specifically for teens.",
     },
     {
       q: "What happens during teen medical detox?",
-      a: "Medical detox at Waypoint is supervised by licensed clinicians and board-certified addiction medicine physicians. Your teen will have a private room, 24/7 monitoring, comfort medications as appropriate, and meals. The goal is safe, dignified stabilization — the first waypoint on the route.",
+      a: "Medical detox at Flightpath is supervised by licensed clinicians and board-certified addiction medicine physicians. Your teen will have a private room, 24/7 monitoring, comfort medications as appropriate, and meals. The goal is safe, dignified stabilization — the first leg of the flightpath.",
     },
     {
       q: "Can parents be involved in treatment?",
-      a: "Absolutely. Family involvement is a core part of every route at Waypoint. Family therapy sessions, parent coaching, and sibling support are built into residential treatment. We believe recovery is a family navigation.",
+      a: "Absolutely. Family involvement is a core part of every flightpath at Flightpath Teen Detox. Family therapy sessions, parent coaching, and sibling support are built into residential treatment. We believe recovery is a family navigation.",
     },
     {
       q: "Does insurance cover teen detox and residential treatment?",
-      a: "Waypoint works with Anthem Blue Cross, Blue Shield of California, MHN, and TRICARE. Many families find that insurance covers a significant portion of care. Call our navigators or use our verification form to understand your specific benefits.",
+      a: "Flightpath works with Anthem Blue Cross, Blue Shield of California, MHN, and TRICARE. Many families find that insurance covers a significant portion of care. Call our navigators or use our verification form to understand your specific benefits.",
     },
     {
-      q: "What does a typical day look like for a teen at Waypoint?",
-      a: "Days at Waypoint are structured but not rigid. Mornings begin with wellness activities, followed by individual and group therapy sessions, academic support, and skills-building activities. Evenings include reflection time, peer connection, and rest. The schedule is designed to build the routines teens will carry into their own route.",
+      q: "What does a typical day look like for a teen at Flightpath?",
+      a: "Days at Flightpath are structured but not rigid. Mornings begin with wellness activities, followed by individual and group therapy sessions, academic support, and skills-building activities. Evenings include reflection time, peer connection, and rest. The schedule is designed to build the routines teens will carry on their own flightpath.",
     },
   ];
 
@@ -748,7 +748,7 @@ function ContactCTA() {
             </h2>
             <div className="h-px w-32 bg-gradient-to-r from-[#E8622A] to-transparent mb-6" />
             <p className="font-body text-base text-[#0A1628]/70 leading-relaxed mb-8">
-              Whether you're a teen ready to set your first waypoint, or a parent watching from the ground — our navigators are standing by. One confidential call can change the direction of everything.
+              Whether you're a teen ready to chart your flightpath, or a parent watching from the ground — our navigators are standing by. One confidential call can change the direction of everything.
             </p>
             <div className="flex flex-col gap-4">
               <a href="tel:+18669693686" className="flex items-center gap-3 group">
@@ -772,9 +772,9 @@ function ContactCTA() {
 
           <div className="bg-[#0A1628] rounded-xl p-8">
             <div className="font-technical text-xs text-[#E8622A] tracking-widest uppercase mb-2">Navigation Check-In</div>
-            <h3 className="font-display font-bold text-2xl text-white mb-2">Set Your First Waypoint</h3>
+            <h3 className="font-display font-bold text-2xl text-white mb-2">Chart Your Flightpath</h3>
             <p className="font-body text-sm text-white/50 mb-8">
-              Not a commitment. Just a first coordinate. Put a name on it and come back when you're ready to begin. You hold the route.
+              Not a commitment. Just a first step. Put a name on it and come back when you're ready to begin. You hold the route.
             </p>
 
             {!submitted ? (
@@ -795,7 +795,7 @@ function ContactCTA() {
                   type="submit"
                   className="btn-beacon bg-[#E8622A] text-white font-display font-bold text-sm tracking-widest uppercase px-6 py-4 rounded hover:bg-[#d4561f] transition-colors"
                 >
-                  Set Waypoint
+                  Chart Flightpath
                 </button>
                 <p className="font-technical text-xs text-white/20 text-center tracking-wide">
                   Nothing is sent anywhere. Generated here on your device.
@@ -804,15 +804,15 @@ function ContactCTA() {
             ) : (
               <div className="border-2 border-[#C9A84C]/40 rounded-xl p-6 bg-[#C9A84C]/5 text-center">
                 <img
-                  src="/manus-storage/waypoint_wings_cert_94d5ed07.png"
-                  alt="Waypoint Reached"
+                  src="https://d2xsxph8kpxj0f.cloudfront.net/310519663488423210/SUVBoqZCLc2b3z93g2JT8w/flightpath_cert-7WZDUxsip6dTePCG28pZQa.webp"
+                  alt="Flightpath Complete"
                   className="w-full rounded-lg mb-4 opacity-90"
                 />
                 <div className="font-display font-black text-2xl text-white mb-1">
-                  {name || "NAVIGATOR"} — WAYPOINT SET
+                  {name || "NAVIGATOR"} — FLIGHTPATH CHARTED
                 </div>
                 <div className="font-technical text-xs text-[#C9A84C] tracking-widest uppercase mb-4">
-                  First Coordinate Locked · Waypoint Teen Recovery
+                  Route Locked · Flightpath Teen Detox
                 </div>
                 <p className="font-body text-xs text-white/40 leading-relaxed">
                   Come back when you're ready to begin Ground School. We'll be here.
@@ -841,12 +841,12 @@ function Footer() {
         <div className="grid md:grid-cols-4 gap-8 mb-10">
           <div className="md:col-span-2">
             <img
-              src="/manus-storage/waypoint_logo_primary_15c9c13c.png"
-              alt="Waypoint Teen Recovery"
+              src="https://d2xsxph8kpxj0f.cloudfront.net/310519663488423210/SUVBoqZCLc2b3z93g2JT8w/flightpath_logo_primary-cYHnZzGGD35gzCzLovnE69.webp"
+              alt="Flightpath Teen Detox"
               className="h-12 w-auto mb-4 brightness-0 invert"
             />
             <p className="font-body text-sm text-white/40 leading-relaxed max-w-xs">
-              Teen detox and residential recovery in Orange County, CA. Designed for ages 13–17. Every step of recovery is a waypoint on the route to your life.
+              Teen detox and residential recovery in Orange County, CA. Designed for ages 13–17. Your life has a flightpath. Let us help you chart it.
             </p>
             <div className="flex gap-3 mt-6">
               <span className="font-technical text-xs text-white/20 tracking-wide">Licensed · DHCS</span>
@@ -869,7 +869,7 @@ function Footer() {
           <div>
             <div className="font-technical text-xs text-[#E8622A] tracking-widest uppercase mb-4">Support</div>
             <div className="flex flex-col gap-2">
-              {["For Families", "Insurance & Cost", "Flight Syllabus", "About Waypoint", "Contact"].map((item) => (
+              {["For Families", "Insurance & Cost", "The Flightpath", "About Us", "Contact"].map((item) => (
                 <a key={item} href="#families" className="font-body text-sm text-white/40 hover:text-white/70 transition-colors">
                   {item}
                 </a>
@@ -894,10 +894,10 @@ function Footer() {
 
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <p className="font-technical text-xs text-white/20 leading-relaxed max-w-2xl">
-            Licensed by the State of California Department of Health Care Services (DHCS). Accredited by The Joint Commission. Waypoint Teen Recovery is a specialized adolescent program in Orange County, CA.
+            Licensed by the State of California Department of Health Care Services (DHCS). Accredited by The Joint Commission. Flightpath Teen Detox is a specialized adolescent program in Orange County, CA.
           </p>
           <p className="font-technical text-xs text-white/20 flex-shrink-0">
-            © 2026 Waypoint Teen Recovery
+            © 2026 Flightpath Teen Detox
           </p>
         </div>
 
@@ -918,7 +918,7 @@ export default function Home() {
       <AtisTicker />
       <PreFlightBriefing />
       <TheConcept />
-      <FlightSyllabus />
+      <TheFlightpath />
       <Programs />
       <ForFamilies />
       <Insurance />
