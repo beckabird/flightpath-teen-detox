@@ -177,38 +177,63 @@ function Nav() {
 function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col justify-end overflow-hidden">
+      {/* Background photo */}
       <div className="absolute inset-0">
         <img src={HERO_IMG} alt="" className="w-full h-full object-cover" />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(20,32,40,0.3) 0%, rgba(20,32,40,0.5) 40%, rgba(20,32,40,0.92) 80%, #142028 100%)" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(20,32,40,0.55) 0%, rgba(20,32,40,0.45) 35%, rgba(20,32,40,0.88) 70%, #142028 100%)" }} />
       </div>
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pb-20 pt-40 w-full">
-        <div className="max-w-3xl">
-          <div className="flex items-center gap-2 mb-5">
+
+      {/* Giant background mark watermark */}
+      <div className="absolute inset-0 flex items-center justify-end overflow-hidden pointer-events-none" style={{ zIndex: 1 }}>
+        <img src={MARK_DIM} alt="" style={{ width: "min(70vw, 680px)", opacity: 0.18, transform: "translateX(15%) translateY(-5%)", objectFit: "contain" }} />
+      </div>
+
+      <div className="relative w-full" style={{ zIndex: 10 }}>
+        {/* Eyebrow */}
+        <div className="max-w-7xl mx-auto px-6 pb-2 pt-36">
+          <div className="flex items-center gap-3 mb-6">
             <span style={{ fontFamily: F.ui, fontSize: "0.65rem", letterSpacing: "0.22em", color: C.teal, fontWeight: 700 }} className="uppercase">Brand + Marketing Proposal</span>
-            <span style={{ color: C.border }}>·</span>
+            <span style={{ width: 1, height: 12, background: "rgba(252,251,248,0.15)" }} />
             <span style={{ fontFamily: F.ui, fontSize: "0.65rem", letterSpacing: "0.22em", color: "rgba(252,251,248,0.3)", fontWeight: 600 }} className="uppercase">Prepared by Karle Kreatives</span>
           </div>
-          <h1 style={{ fontFamily: F.serif, fontSize: "clamp(3.2rem,7vw,6rem)", lineHeight: 1.0, letterSpacing: "-0.025em", color: C.paper }}>
-            A safe place<br />to <em style={{ color: C.gold }}>land.</em>
-          </h1>
-          <p style={{ fontFamily: F.body, fontSize: "1.15rem", lineHeight: 1.7, color: "rgba(252,251,248,0.6)", maxWidth: 520, marginTop: 20 }}>
-            This document is the brand. Everything you're reading, the type, the colors, the voice, the layout, is the Flightpath Teen Detox identity, built and ready to deploy.
-          </p>
-          <div className="flex flex-wrap gap-3 mt-8">
-            <button onClick={() => document.getElementById("project-plan")?.scrollIntoView({ behavior: "smooth" })}
-              style={{ fontFamily: F.ui, fontSize: "0.8rem", fontWeight: 700, background: `linear-gradient(90deg,${C.coral},${C.tangerine},${C.gold})`, color: C.ink, padding: "12px 24px", borderRadius: 999 }}
-              className="flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all">
-              View the Project Plan <ArrowRight size={14} />
-            </button>
-            <button onClick={() => document.getElementById("investment")?.scrollIntoView({ behavior: "smooth" })}
-              style={{ fontFamily: F.ui, fontSize: "0.8rem", fontWeight: 600, border: `1px solid rgba(252,251,248,0.2)`, color: "rgba(252,251,248,0.7)", padding: "12px 24px", borderRadius: 999, background: "transparent" }}
-              className="hover:border-white/40 hover:text-white transition-all">
-              Skip to Pricing
-            </button>
+        </div>
+
+        {/* Big brand name block */}
+        <div className="max-w-7xl mx-auto px-6">
+          {/* Stacked logo mark + giant wordmark */}
+          <div className="flex items-center gap-6 mb-4">
+            <img src={MARK_DIM} alt="" style={{ width: "clamp(64px, 9vw, 110px)", objectFit: "contain", flexShrink: 0 }} />
+            <div>
+              <p style={{ fontFamily: F.ui, fontSize: "clamp(0.6rem, 1vw, 0.75rem)", letterSpacing: "0.35em", color: C.tangerine, fontWeight: 700, marginBottom: 4 }} className="uppercase">Flightpath Teen Detox</p>
+              <h1 style={{ fontFamily: F.serif, fontSize: "clamp(4.5rem, 11vw, 10rem)", lineHeight: 0.92, letterSpacing: "-0.03em", color: C.paper, margin: 0 }}>
+                Flight<em style={{ color: C.gold, fontStyle: "italic" }}>path.</em>
+              </h1>
+            </div>
+          </div>
+          {/* Coral rule */}
+          <div style={{ width: 64, height: 3, background: `linear-gradient(90deg,${C.coral},${C.tangerine})`, borderRadius: 2, marginBottom: 20, marginLeft: "calc(clamp(64px, 9vw, 110px) + 1.5rem)" }} />
+          {/* Sub copy + CTAs */}
+          <div style={{ marginLeft: "calc(clamp(64px, 9vw, 110px) + 1.5rem)" }}>
+            <p style={{ fontFamily: F.body, fontSize: "clamp(0.95rem, 1.5vw, 1.15rem)", lineHeight: 1.7, color: "rgba(252,251,248,0.55)", maxWidth: 500, marginBottom: 28 }}>
+              This document is the brand. The type, the colors, the voice, the layout — it is the Flightpath identity, built and ready to deploy.
+            </p>
+            <div className="flex flex-wrap gap-3 pb-20">
+              <button onClick={() => document.getElementById("project-plan")?.scrollIntoView({ behavior: "smooth" })}
+                style={{ fontFamily: F.ui, fontSize: "0.8rem", fontWeight: 700, background: `linear-gradient(90deg,${C.coral},${C.tangerine})`, color: C.paper, padding: "13px 26px", borderRadius: 999 }}
+                className="flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all">
+                View the Project Plan <ArrowRight size={14} />
+              </button>
+              <button onClick={() => document.getElementById("investment")?.scrollIntoView({ behavior: "smooth" })}
+                style={{ fontFamily: F.ui, fontSize: "0.8rem", fontWeight: 600, border: `1px solid rgba(252,251,248,0.18)`, color: "rgba(252,251,248,0.65)", padding: "13px 26px", borderRadius: 999, background: "transparent" }}
+                className="hover:border-white/40 hover:text-white transition-all">
+                Skip to Pricing
+              </button>
+            </div>
           </div>
         </div>
       </div>
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 animate-bounce z-10">
+
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 animate-bounce" style={{ zIndex: 10 }}>
         <ChevronDown size={16} style={{ color: "rgba(252,251,248,0.25)" }} />
       </div>
     </section>
@@ -612,55 +637,38 @@ function SocialStrategy() {
 }
 
 // ─── 7. Content Examples ──────────────────────────────────────────────────────
-function ContentExamples() {
-  const posts = [
-    {
-      type: "Brand Awareness",
-      typeColor: C.teal,
-      headline: "A safe place\nto land.",
-      sub: "Medically supervised\nteen detox, Orange County.",
-      caption: "Recovery isn't a fall from grace.\n\nIt's a flight path. A departure, a climb, and a safe place to land.\n\nFlightpath Teen Detox is Orange County's dedicated adolescent medical detox, built specifically for teens.\n\n#FlightpathTeenDetox #TeenRecovery #OrangeCounty",
-      bg: `linear-gradient(135deg, ${C.ink} 0%, ${C.slate} 100%)`,
-      accentMark: "dim",
-    },
-    {
-      type: "For Families",
-      typeColor: C.gold,
-      headline: "The hardest\npart is\nthe call.",
-      sub: "We're here 24/7.\nNo judgment. Just answers.",
-      caption: "You don't need to have it figured out. You just need to make the call.\n\nOur admissions team is available around the clock for families who need answers right now.\n\n#FlightpathTeenDetox #ForFamilies #TeenDetox",
-      bg: `linear-gradient(135deg, #0F1A22 0%, #1B2A33 100%)`,
-      accentMark: "white",
-    },
-    {
-      type: "Education",
-      typeColor: C.tangerine,
-      headline: "What teen\ndetox\nactually\nlooks like.",
-      sub: "24/7 medical supervision.\nIndividualized protocols.",
-      caption: "Withdrawal looks different for every teenager. That's why Flightpath uses individualized protocols, not a one-size approach.\n\n24/7 medical supervision. Comfort-focused care. Family communication throughout.\n\n#FlightpathTeenDetox #TeenRecovery #AdolescentDetox",
-      bg: `linear-gradient(135deg, ${C.coral} 0%, ${C.tangerine} 100%)`,
-      accentMark: "white",
-    },
-    {
-      type: "Hope",
-      typeColor: C.gold,
-      headline: "Every step\nforward is\na waypoint.",
-      sub: "Recovery is navigation,\nnot punishment.",
-      caption: "Recovery isn't a destination. It's a direction.\n\nEvery step forward is a waypoint on the path. We chart the course together.\n\n#FlightpathTeenDetox #TeenRecovery #OrangeCounty #AdolescentCare",
-      bg: `linear-gradient(160deg, #142028 0%, #1B3040 60%, #0F1A22 100%)`,
-      accentMark: "dim",
-    },
-    {
-      type: "Action",
-      typeColor: C.coral,
-      headline: "Insurance\nverified\nin minutes.",
-      sub: "Most major plans accepted.\nLink in bio.",
-      caption: "Don't let insurance questions stop you from making the call.\n\nOur team verifies benefits quickly so families can focus on what matters: getting their teen the help they need.\n\n#FlightpathTeenDetox #TeenDetox #InsuranceCovered",
-      bg: `linear-gradient(135deg, ${C.slate} 0%, ${C.ink} 100%)`,
-      accentMark: "tangerine",
-    },
-  ];
+// ─── IG Avatar ────────────────────────────────────────────────────────────────
+function IGAvatar() {
+  return (
+    <div style={{ width: 32, height: 32, borderRadius: "50%", background: `linear-gradient(135deg,${C.coral},${C.gold})`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+      <Mark size={18} variant="white" />
+    </div>
+  );
+}
+function IGHeader({ platform = "Instagram" }: { platform?: string }) {
+  return (
+    <div style={{ padding: "10px 14px", borderBottom: `1px solid #EAE5DB`, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <IGAvatar />
+        <div>
+          <p style={{ fontFamily: F.ui, fontSize: "0.73rem", fontWeight: 700, color: C.ink }}>flightpathteendetox</p>
+          <p style={{ fontFamily: F.body, fontSize: "0.62rem", color: "rgba(35,41,45,0.4)" }}>Orange County, CA</p>
+        </div>
+      </div>
+      <span style={{ fontFamily: F.ui, fontSize: "0.55rem", fontWeight: 700, letterSpacing: "0.12em", color: "rgba(35,41,45,0.3)", textTransform: "uppercase" }}>{platform}</span>
+    </div>
+  );
+}
+function IGCaption({ label, labelColor, text }: { label: string; labelColor: string; text: string }) {
+  return (
+    <div style={{ padding: "12px 14px" }}>
+      <span style={{ fontFamily: F.ui, fontSize: "0.56rem", fontWeight: 700, letterSpacing: "0.15em", color: labelColor, background: `${labelColor}15`, border: `1px solid ${labelColor}30`, padding: "2px 8px", borderRadius: 999, textTransform: "uppercase" }}>{label}</span>
+      <p style={{ fontFamily: F.body, fontSize: "0.74rem", color: "rgba(35,41,45,0.6)", lineHeight: 1.65, marginTop: 8, whiteSpace: "pre-line" }}>{text}</p>
+    </div>
+  );
+}
 
+function ContentExamples() {
   return (
     <section id="content" style={{ background: C.cream }} className="py-24 md:py-32">
       <div className="max-w-7xl mx-auto px-6">
@@ -668,65 +676,223 @@ function ContentExamples() {
         <Rule />
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
           <H2>Real posts. Real voice. Ready to publish.</H2>
-          <p style={{ fontFamily: F.body, fontSize: "0.85rem", color: "rgba(35,41,45,0.45)", maxWidth: 280 }}>
-            Sample deliverables from Month 1 of the retainer.
-          </p>
+          <p style={{ fontFamily: F.body, fontSize: "0.85rem", color: "rgba(35,41,45,0.45)", maxWidth: 280 }}>Sample deliverables from Month 1 of the retainer.</p>
         </div>
-        {/* 5 post cards in a masonry-style grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {posts.map((p, i) => (
-            <div key={p.type + i}
-              style={{ background: C.paper, border: `1px solid #EAE5DB`, borderRadius: 20, overflow: "hidden",
-                gridColumn: i === 0 ? "span 2" : "span 1",
-              }}
-              className={i === 0 ? "md:col-span-2" : ""}
-            >
-              {/* IG header */}
-              <div style={{ padding: "10px 14px", borderBottom: `1px solid #EAE5DB`, display: "flex", alignItems: "center", gap: 10 }}>
-                <div style={{ width: 30, height: 30, borderRadius: "50%", background: `linear-gradient(135deg,${C.coral},${C.gold})`, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden", padding: 3 }}>
-                  <Mark size={18} variant="white" />
-                </div>
-                <div>
-                  <p style={{ fontFamily: F.ui, fontSize: "0.73rem", fontWeight: 700, color: C.ink }}>flightpathteendetox</p>
-                  <p style={{ fontFamily: F.body, fontSize: "0.62rem", color: "rgba(35,41,45,0.4)" }}>Orange County, CA</p>
-                </div>
+
+        {/* ROW 1: Wide hero post + tall reel side by side */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
+
+          {/* POST 1 — Wide brand awareness (spans 2 cols) */}
+          <div style={{ background: C.paper, border: `1px solid #EAE5DB`, borderRadius: 20, overflow: "hidden" }} className="md:col-span-2">
+            <IGHeader />
+            <div style={{ position: "relative", background: `linear-gradient(135deg, ${C.ink} 0%, #1B3040 100%)`, aspectRatio: "2/1", overflow: "hidden" }}>
+              {/* Diagonal stripe accent */}
+              <div style={{ position: "absolute", inset: 0, background: `linear-gradient(145deg, transparent 55%, ${C.coral}18 55%)` }} />
+              {/* Big mark right */}
+              <div style={{ position: "absolute", right: "-4%", top: "50%", transform: "translateY(-50%)", opacity: 0.85 }}>
+                <Mark size={280} variant="dim" />
               </div>
-              {/* Post image rendered in-browser */}
-              <div style={{ position: "relative", background: p.bg, aspectRatio: i === 0 ? "2/1" : "1/1", overflow: "hidden", display: "flex", alignItems: "flex-end" }}>
-                {/* Large mark watermark right side */}
-                <div style={{ position: "absolute", right: i === 0 ? "-2%" : "-8%", top: "50%", transform: "translateY(-50%)", opacity: 0.9 }}>
-                  <Mark size={i === 0 ? 260 : 200} variant={p.accentMark as "dim" | "white" | "twilight" | "tangerine"} />
+              {/* Text left */}
+              <div style={{ position: "relative", zIndex: 2, padding: "44px 48px", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+                <p style={{ fontFamily: F.ui, fontSize: "0.62rem", letterSpacing: "0.25em", color: C.teal, fontWeight: 700, marginBottom: 10, textTransform: "uppercase" }}>Orange County, CA</p>
+                <h3 style={{ fontFamily: F.serif, fontSize: "clamp(2rem,4vw,3.2rem)", lineHeight: 1.0, letterSpacing: "-0.025em", color: C.paper, marginBottom: 14 }}>A safe place<br />to <em style={{ color: C.gold }}>land.</em></h3>
+                <div style={{ width: 36, height: 2.5, background: C.coral, borderRadius: 2, marginBottom: 12 }} />
+                <p style={{ fontFamily: F.body, fontSize: "0.88rem", color: C.tangerine, lineHeight: 1.5 }}>Medically supervised teen detox, Orange County.</p>
+                <div style={{ marginTop: 32 }}>
+                  <img src={LOCKUP_LIGHT} alt="Flightpath" style={{ height: 22, objectFit: "contain", opacity: 0.9 }} />
                 </div>
-                {/* Text content */}
-                <div style={{ position: "relative", zIndex: 2, padding: i === 0 ? "40px 44px" : "28px 28px", width: "100%" }}>
-                  <h3 style={{
-                    fontFamily: F.serif,
-                    fontSize: i === 0 ? "clamp(2rem,4vw,3rem)" : "1.55rem",
-                    lineHeight: 1.05,
-                    letterSpacing: "-0.02em",
-                    color: "#FCFBF8",
-                    whiteSpace: "pre-line",
-                    marginBottom: 16,
-                  }}>{p.headline}</h3>
-                  {/* Coral rule */}
-                  <div style={{ width: 32, height: 2, background: C.coral, marginBottom: 14, borderRadius: 2 }} />
-                  <p style={{ fontFamily: F.body, fontSize: i === 0 ? "0.9rem" : "0.78rem", color: C.tangerine, lineHeight: 1.5, whiteSpace: "pre-line" }}>{p.sub}</p>
-                  {/* Lockup bottom */}
-                  <div style={{ marginTop: i === 0 ? 36 : 24 }}>
-                    <img src={LOCKUP_LIGHT} alt="Flightpath Teen Detox" style={{ height: i === 0 ? 22 : 18, objectFit: "contain", opacity: 0.9 }} />
-                  </div>
-                </div>
-              </div>
-              {/* Caption */}
-              <div style={{ padding: "14px 16px" }}>
-                <span style={{ fontFamily: F.ui, fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.15em", color: p.typeColor, background: `${p.typeColor}15`, border: `1px solid ${p.typeColor}30`, padding: "2px 8px", borderRadius: 999 }} className="uppercase">{p.type}</span>
-                <p style={{ fontFamily: F.body, fontSize: "0.76rem", color: "rgba(35,41,45,0.6)", lineHeight: 1.65, marginTop: 9, whiteSpace: "pre-line" }}>{p.caption}</p>
               </div>
             </div>
-          ))}
+            <IGCaption label="Brand Awareness" labelColor={C.teal} text={"Recovery isn't a fall from grace.\n\nIt's a flight path. A departure, a climb, and a safe place to land. Flightpath Teen Detox is Orange County's only dedicated adolescent medical detox.\n\n#FlightpathTeenDetox #TeenRecovery #OrangeCounty"} />
+          </div>
+
+          {/* POST 2 — Vertical Reel/Story format */}
+          <div style={{ background: C.paper, border: `1px solid #EAE5DB`, borderRadius: 20, overflow: "hidden" }}>
+            <IGHeader platform="Reels" />
+            <div style={{ position: "relative", background: `linear-gradient(180deg, #0F1A22 0%, ${C.coral} 60%, ${C.gold} 100%)`, aspectRatio: "9/16", overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "space-between", padding: 24 }}>
+              {/* Top: Reel label */}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span style={{ fontFamily: F.ui, fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.15em", color: "rgba(252,251,248,0.5)", textTransform: "uppercase" }}>Reel</span>
+                <div style={{ width: 28, height: 28, borderRadius: "50%", background: "rgba(255,255,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <Mark size={16} variant="white" />
+                </div>
+              </div>
+              {/* Center: Big mark */}
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flex: 1 }}>
+                <Mark size={120} variant="white" />
+              </div>
+              {/* Bottom: Text */}
+              <div>
+                <h3 style={{ fontFamily: F.serif, fontSize: "1.9rem", lineHeight: 1.05, color: C.paper, marginBottom: 8 }}>Your teen<br /><em style={{ color: C.ink }}>deserves</em><br />this.</h3>
+                <div style={{ width: 28, height: 2, background: "rgba(20,32,40,0.5)", borderRadius: 2, marginBottom: 10 }} />
+                <p style={{ fontFamily: F.body, fontSize: "0.75rem", color: "rgba(20,32,40,0.7)", lineHeight: 1.5 }}>Swipe up. We pick up 24/7.</p>
+                <div style={{ marginTop: 16 }}>
+                  <img src={LOCKUP_DARK} alt="Flightpath" style={{ height: 18, objectFit: "contain", opacity: 0.85 }} />
+                </div>
+              </div>
+            </div>
+            <IGCaption label="Reels" labelColor={C.coral} text={"This one's for the parents up at 3am.\n\nYou're not alone. We're here. Link in bio.\n\n#FlightpathTeenDetox #ForFamilies #TeenDetox #OC"} />
+          </div>
         </div>
-        {/* Monthly calendar preview */}
-        <div style={{ background: C.ink, borderRadius: 20, padding: 32, marginTop: 24 }}>
+
+        {/* ROW 2: Three square posts */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
+
+          {/* POST 3 — Coral education */}
+          <div style={{ background: C.paper, border: `1px solid #EAE5DB`, borderRadius: 20, overflow: "hidden" }}>
+            <IGHeader />
+            <div style={{ position: "relative", background: `linear-gradient(145deg, ${C.coral} 0%, ${C.tangerine} 100%)`, aspectRatio: "1/1", overflow: "hidden" }}>
+              <div style={{ position: "absolute", right: "-10%", bottom: "-10%", opacity: 0.3 }}>
+                <Mark size={220} variant="white" />
+              </div>
+              <div style={{ position: "relative", zIndex: 2, padding: 28, height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+                <p style={{ fontFamily: F.ui, fontSize: "0.58rem", letterSpacing: "0.2em", color: "rgba(20,32,40,0.6)", fontWeight: 700, marginBottom: 8, textTransform: "uppercase" }}>Did you know</p>
+                <h3 style={{ fontFamily: F.serif, fontSize: "1.65rem", lineHeight: 1.05, color: C.ink, marginBottom: 12 }}>Teen withdrawal needs its own protocol.</h3>
+                <div style={{ width: 28, height: 2, background: "rgba(20,32,40,0.4)", borderRadius: 2, marginBottom: 10 }} />
+                <p style={{ fontFamily: F.body, fontSize: "0.78rem", color: "rgba(20,32,40,0.65)", lineHeight: 1.5 }}>Adolescent physiology is different. So is our approach.</p>
+                <div style={{ marginTop: 20 }}>
+                  <img src={LOCKUP_DARK} alt="Flightpath" style={{ height: 18, objectFit: "contain", opacity: 0.75 }} />
+                </div>
+              </div>
+            </div>
+            <IGCaption label="Education" labelColor={C.tangerine} text={"Withdrawal looks different for every teenager.\n\nFlightpath uses individualized protocols, not a one-size approach. 24/7 medical supervision. Comfort-first care.\n\n#FlightpathTeenDetox #AdolescentDetox #TeenRecovery"} />
+          </div>
+
+          {/* POST 4 — Dark quote / hope */}
+          <div style={{ background: C.paper, border: `1px solid #EAE5DB`, borderRadius: 20, overflow: "hidden" }}>
+            <IGHeader />
+            <div style={{ position: "relative", background: `linear-gradient(160deg, #142028 0%, #1B3040 60%, #0F1A22 100%)`, aspectRatio: "1/1", overflow: "hidden" }}>
+              {/* Subtle grid lines */}
+              <div style={{ position: "absolute", inset: 0, backgroundImage: `linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)`, backgroundSize: "40px 40px" }} />
+              <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", opacity: 0.06 }}>
+                <Mark size={240} variant="white" />
+              </div>
+              <div style={{ position: "relative", zIndex: 2, padding: 28, height: "100%", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                <div style={{ width: 28, height: 2, background: C.gold, borderRadius: 2, marginBottom: 18 }} />
+                <h3 style={{ fontFamily: F.serif, fontSize: "1.7rem", lineHeight: 1.1, color: C.paper, marginBottom: 16, fontStyle: "italic" }}>"Every step forward is a waypoint."</h3>
+                <p style={{ fontFamily: F.body, fontSize: "0.78rem", color: "rgba(252,251,248,0.45)", lineHeight: 1.5 }}>Recovery is navigation, not punishment.</p>
+                <div style={{ marginTop: 28 }}>
+                  <img src={LOCKUP_LIGHT} alt="Flightpath" style={{ height: 18, objectFit: "contain", opacity: 0.7 }} />
+                </div>
+              </div>
+            </div>
+            <IGCaption label="Hope" labelColor={C.gold} text={"Recovery isn't a destination. It's a direction.\n\nEvery step forward is a waypoint on the path. We chart the course together.\n\n#FlightpathTeenDetox #TeenRecovery #OrangeCounty"} />
+          </div>
+
+          {/* POST 5 — Stat / trust builder */}
+          <div style={{ background: C.paper, border: `1px solid #EAE5DB`, borderRadius: 20, overflow: "hidden" }}>
+            <IGHeader />
+            <div style={{ position: "relative", background: C.slate, aspectRatio: "1/1", overflow: "hidden" }}>
+              <div style={{ position: "absolute", top: 0, right: 0, width: "60%", height: "100%", background: `linear-gradient(135deg, ${C.teal}22, ${C.teal}08)`, borderLeft: `1px solid ${C.teal}20` }} />
+              <div style={{ position: "absolute", bottom: "-8%", right: "-8%", opacity: 0.15 }}>
+                <Mark size={200} variant="white" />
+              </div>
+              <div style={{ position: "relative", zIndex: 2, padding: 28, height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                <p style={{ fontFamily: F.ui, fontSize: "0.58rem", letterSpacing: "0.2em", color: C.teal, fontWeight: 700, textTransform: "uppercase" }}>By the numbers</p>
+                <div>
+                  {[
+                    { num: "24/7", label: "Medical supervision" },
+                    { num: "13–17", label: "Age-specific care" },
+                    { num: "100%", label: "Family-integrated" },
+                  ].map((s) => (
+                    <div key={s.num} style={{ borderTop: `1px solid rgba(255,255,255,0.07)`, paddingTop: 12, marginTop: 12 }}>
+                      <p style={{ fontFamily: F.ui, fontSize: "1.6rem", fontWeight: 800, color: C.gold, lineHeight: 1 }}>{s.num}</p>
+                      <p style={{ fontFamily: F.body, fontSize: "0.72rem", color: "rgba(252,251,248,0.45)", marginTop: 2 }}>{s.label}</p>
+                    </div>
+                  ))}
+                </div>
+                <img src={LOCKUP_LIGHT} alt="Flightpath" style={{ height: 18, objectFit: "contain", opacity: 0.7 }} />
+              </div>
+            </div>
+            <IGCaption label="Trust" labelColor={C.teal} text={"Orange County's dedicated adolescent medical detox.\n\nBuilt for teens. Staffed 24/7. Family-integrated from day one.\n\n#FlightpathTeenDetox #OrangeCounty #TeenDetox"} />
+          </div>
+        </div>
+
+        {/* ROW 3: Wide LinkedIn + square action */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
+
+          {/* POST 6 — LinkedIn referral (wide) */}
+          <div style={{ background: C.paper, border: `1px solid #EAE5DB`, borderRadius: 20, overflow: "hidden" }} className="md:col-span-2">
+            <IGHeader platform="LinkedIn" />
+            <div style={{ position: "relative", background: `linear-gradient(135deg, #0F1A22 0%, #142028 50%, #1B2A33 100%)`, aspectRatio: "2/1", overflow: "hidden" }}>
+              {/* Left accent bar */}
+              <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 4, background: `linear-gradient(180deg,${C.coral},${C.gold})` }} />
+              <div style={{ position: "absolute", right: "-5%", top: "50%", transform: "translateY(-50%)", opacity: 0.12 }}>
+                <Mark size={320} variant="white" />
+              </div>
+              <div style={{ position: "relative", zIndex: 2, padding: "36px 44px", height: "100%", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                <p style={{ fontFamily: F.ui, fontSize: "0.6rem", letterSpacing: "0.2em", color: C.teal, fontWeight: 700, marginBottom: 12, textTransform: "uppercase" }}>For Clinicians + Referral Partners</p>
+                <h3 style={{ fontFamily: F.serif, fontSize: "clamp(1.4rem,3vw,2.2rem)", lineHeight: 1.1, color: C.paper, marginBottom: 14 }}>Your adolescent patients need a dedicated detox. <em style={{ color: C.gold }}>We built it.</em></h3>
+                <div style={{ width: 36, height: 2, background: C.coral, borderRadius: 2, marginBottom: 14 }} />
+                <p style={{ fontFamily: F.body, fontSize: "0.82rem", color: "rgba(252,251,248,0.5)", lineHeight: 1.6, maxWidth: 420 }}>Flightpath Teen Detox is Orange County's first adolescent-specific medical detox. HIPAA-compliant referral process. Direct clinical communication. Family-integrated care.</p>
+                <div style={{ marginTop: 24 }}>
+                  <img src={LOCKUP_LIGHT} alt="Flightpath" style={{ height: 20, objectFit: "contain", opacity: 0.85 }} />
+                </div>
+              </div>
+            </div>
+            <IGCaption label="Referral Partners" labelColor={C.teal} text={"Therapists, pediatricians, school counselors: we want to be your go-to adolescent detox referral in Orange County.\n\nDirect intake line. Clinical communication. Family updates throughout.\n\n#FlightpathTeenDetox #AdolescentCare #ReferralPartners #OC"} />
+          </div>
+
+          {/* POST 7 — Insurance CTA */}
+          <div style={{ background: C.paper, border: `1px solid #EAE5DB`, borderRadius: 20, overflow: "hidden" }}>
+            <IGHeader />
+            <div style={{ position: "relative", background: `linear-gradient(145deg, #1B2A33 0%, #142028 100%)`, aspectRatio: "1/1", overflow: "hidden" }}>
+              {/* Tangerine mark */}
+              <div style={{ position: "absolute", right: "-12%", top: "-12%", opacity: 0.7 }}>
+                <Mark size={200} variant="tangerine" />
+              </div>
+              <div style={{ position: "relative", zIndex: 2, padding: 28, height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+                <p style={{ fontFamily: F.ui, fontSize: "0.58rem", letterSpacing: "0.2em", color: C.tangerine, fontWeight: 700, marginBottom: 8, textTransform: "uppercase" }}>Insurance</p>
+                <h3 style={{ fontFamily: F.serif, fontSize: "1.65rem", lineHeight: 1.05, color: C.paper, marginBottom: 12 }}>Verified in minutes.<br /><em style={{ color: C.gold }}>Not days.</em></h3>
+                <div style={{ width: 28, height: 2, background: C.coral, borderRadius: 2, marginBottom: 12 }} />
+                <p style={{ fontFamily: F.body, fontSize: "0.78rem", color: "rgba(252,251,248,0.5)", lineHeight: 1.5 }}>Most major plans accepted. Link in bio.</p>
+                <div style={{ marginTop: 20 }}>
+                  <img src={LOCKUP_LIGHT} alt="Flightpath" style={{ height: 18, objectFit: "contain", opacity: 0.8 }} />
+                </div>
+              </div>
+            </div>
+            <IGCaption label="Action" labelColor={C.coral} text={"Don't let insurance questions stop you from making the call.\n\nOur team verifies benefits fast so families can focus on what matters.\n\n#FlightpathTeenDetox #InsuranceCovered #TeenDetox"} />
+          </div>
+        </div>
+
+        {/* POST 8 — Full-width Facebook community post */}
+        <div style={{ background: C.paper, border: `1px solid #EAE5DB`, borderRadius: 20, overflow: "hidden", marginBottom: 24 }}>
+          <IGHeader platform="Facebook" />
+          <div style={{ position: "relative", background: `linear-gradient(100deg, ${C.ink} 0%, #1B3040 40%, ${C.slate} 100%)`, overflow: "hidden" }}>
+            <div style={{ position: "absolute", right: "5%", top: "50%", transform: "translateY(-50%)", opacity: 0.08 }}>
+              <Mark size={500} variant="white" />
+            </div>
+            <div style={{ position: "relative", zIndex: 2, padding: "48px 56px", display: "flex", flexDirection: "column", gap: 24 }}>
+              <div>
+                <p style={{ fontFamily: F.ui, fontSize: "0.62rem", letterSpacing: "0.22em", color: C.teal, fontWeight: 700, marginBottom: 12, textTransform: "uppercase" }}>For Parents</p>
+                <h3 style={{ fontFamily: F.serif, fontSize: "clamp(1.8rem,4vw,3rem)", lineHeight: 1.05, color: C.paper, maxWidth: 600 }}>The hardest part is the call.<br /><em style={{ color: C.gold }}>We make everything after easier.</em></h3>
+              </div>
+              <div style={{ display: "flex", gap: 40, flexWrap: "wrap" }}>
+                {[
+                  { icon: "✈", label: "24/7 Admissions", sub: "No hold music. Real people." },
+                  { icon: "🛡", label: "Insurance Verified", sub: "Most major plans accepted." },
+                  { icon: "📍", label: "Orange County", sub: "Local. Accessible. Trusted." },
+                ].map((f) => (
+                  <div key={f.label} style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
+                    <div style={{ width: 36, height: 36, borderRadius: 10, background: `${C.coral}20`, border: `1px solid ${C.coral}30`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem", flexShrink: 0 }}>{f.icon}</div>
+                    <div>
+                      <p style={{ fontFamily: F.ui, fontSize: "0.75rem", fontWeight: 700, color: C.paper }}>{f.label}</p>
+                      <p style={{ fontFamily: F.body, fontSize: "0.7rem", color: "rgba(252,251,248,0.4)", marginTop: 2 }}>{f.sub}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderTop: `1px solid ${C.border}`, paddingTop: 20, flexWrap: "wrap", gap: 16 }}>
+                <img src={LOCKUP_LIGHT} alt="Flightpath" style={{ height: 22, objectFit: "contain", opacity: 0.85 }} />
+                <span style={{ fontFamily: F.ui, fontSize: "0.7rem", fontWeight: 700, color: C.tangerine }}>flightpathteendetox.com</span>
+              </div>
+            </div>
+          </div>
+          <IGCaption label="For Families" labelColor={C.gold} text={"You don't need to have it figured out. You just need to make the call.\n\nOur admissions team is available around the clock. We handle insurance, intake, and every question in between.\n\n#FlightpathTeenDetox #ForFamilies #TeenDetox #OrangeCounty #AdolescentCare"} />
+        </div>
+
+        {/* Monthly calendar */}
+        <div style={{ background: C.ink, borderRadius: 20, padding: 32 }}>
           <div className="flex items-center justify-between mb-6">
             <p style={{ fontFamily: F.ui, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", color: C.teal }} className="uppercase">Sample Monthly Content Calendar</p>
             <div className="flex items-center gap-2">
@@ -754,10 +920,10 @@ function ContentExamples() {
               { day: 12, type: "Trust", post: "Meet the team" },
               { day: 13, type: "Education", post: "Talking to your teen" },
               { day: 14, type: null, post: null },
-            ].map((item, i) => {
+            ].map((item, idx) => {
               const colorMap: Record<string, string> = { Education: C.tangerine, Hope: C.gold, Trust: C.teal, Action: C.coral };
               return (
-                <div key={i} style={{ background: item.type ? `${colorMap[item.type]}15` : "rgba(255,255,255,0.03)", border: `1px solid ${item.type ? colorMap[item.type] + "30" : C.border}`, borderRadius: 10, padding: "8px 6px", minHeight: 64 }}>
+                <div key={idx} style={{ background: item.type ? `${colorMap[item.type]}15` : "rgba(255,255,255,0.03)", border: `1px solid ${item.type ? colorMap[item.type] + "30" : C.border}`, borderRadius: 10, padding: "8px 6px", minHeight: 64 }}>
                   <p style={{ fontFamily: F.ui, fontSize: "0.65rem", fontWeight: 700, color: item.type ? colorMap[item.type] : "rgba(252,251,248,0.15)" }}>{item.day}</p>
                   {item.post && <p style={{ fontFamily: F.body, fontSize: "0.6rem", color: "rgba(252,251,248,0.5)", marginTop: 3, lineHeight: 1.3 }}>{item.post}</p>}
                 </div>
