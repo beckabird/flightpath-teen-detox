@@ -31,6 +31,16 @@ const SOCIAL_1 = "https://d2xsxph8kpxj0f.cloudfront.net/310519663488423210/SUVBo
 const SOCIAL_2 = "https://d2xsxph8kpxj0f.cloudfront.net/310519663488423210/SUVBoqZCLc2b3z93g2JT8w/fp_social_2-jv5qezLBqwg4vBuDJ7KSbe.webp";
 const SOCIAL_3 = "https://d2xsxph8kpxj0f.cloudfront.net/310519663488423210/SUVBoqZCLc2b3z93g2JT8w/fp_social_3-CUKPfrGwxZ4xxdutxduNJL.webp";
 
+// Real brand assets
+const MARK_DIM = "/manus-storage/mark-dimensional-sunrise_b2715a6f.png";
+const MARK_WHITE = "/manus-storage/mark-white_06b1e798.png";
+const MARK_TWILIGHT = "/manus-storage/mark-twilight_90ce8a22.png";
+const MARK_TANGERINE = "/manus-storage/mark-flat-tangerine_3975cc7b.png";
+const LOCKUP_DARK = "/manus-storage/lockup-horizontal-dark-text_a1fd4083.webp";
+const LOCKUP_LIGHT = "/manus-storage/lockup-horizontal-light-text_adf4120e.webp";
+const LOCKUP_STACKED_DARK = "/manus-storage/lockup-stacked-dark-text_69a5ec39.png";
+const LOCKUP_STACKED_LIGHT = "/manus-storage/lockup-stacked-light-text_b52603be.png";
+
 // ─── Design tokens ────────────────────────────────────────────────────────────
 const C = {
   ink: "#142028",
@@ -52,23 +62,10 @@ const F = {
   body: "'Hanken Grotesk', sans-serif",
 };
 
-// ─── Delta SVG ────────────────────────────────────────────────────────────────
-function Delta({ size = 28 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 80 80" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
-      <defs>
-        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor={C.gold}/><stop offset="100%" stopColor={C.tangerine}/></linearGradient>
-        <linearGradient id="g2" x1="1" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#FFB259"/><stop offset="100%" stopColor={C.coral}/></linearGradient>
-        <linearGradient id="g3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stopColor="#C2421F"/><stop offset="100%" stopColor={C.coral}/></linearGradient>
-        <linearGradient id="g4" x1="1" y1="1" x2="0" y2="0"><stop offset="0%" stopColor="#8B2A0F"/><stop offset="100%" stopColor="#C2421F"/></linearGradient>
-      </defs>
-      <polygon points="40,6 6,68 40,50" fill="url(#g1)"/>
-      <polygon points="40,6 74,68 40,50" fill="url(#g2)"/>
-      <polygon points="40,50 6,68 26,74" fill="url(#g3)"/>
-      <polygon points="40,50 74,68 54,74" fill="url(#g4)"/>
-      <line x1="40" y1="6" x2="40" y2="50" stroke="#FFC65C" strokeWidth="1.2" opacity="0.55"/>
-    </svg>
-  );
+// ─── Mark component (uses real brand asset) ───────────────────────────────────
+function Mark({ size = 28, variant = "dim" }: { size?: number; variant?: "dim" | "white" | "twilight" | "tangerine" }) {
+  const src = variant === "white" ? MARK_WHITE : variant === "twilight" ? MARK_TWILIGHT : variant === "tangerine" ? MARK_TANGERINE : MARK_DIM;
+  return <img src={src} alt="" aria-hidden="true" style={{ width: size, height: size, objectFit: "contain", flexShrink: 0 }} />;
 }
 
 // ─── Shared primitives ────────────────────────────────────────────────────────
@@ -139,11 +136,8 @@ function Nav() {
     <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={{ background: scrolled ? "rgba(20,32,40,0.97)" : "transparent", backdropFilter: scrolled ? "blur(14px)" : "none", borderBottom: scrolled ? `1px solid ${C.border}` : "none" }}>
       <div className="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <Delta size={22} />
-          <span style={{ fontFamily: F.ui, color: C.paper, fontWeight: 700, fontSize: "0.9rem", letterSpacing: "-0.01em" }}>
-            Flightpath <span style={{ color: C.tangerine }}>Teen Detox</span>
-          </span>
+        <div className="flex items-center gap-2">
+          <img src={LOCKUP_LIGHT} alt="Flightpath Teen Detox" style={{ height: 28, objectFit: "contain" }} />
         </div>
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-0.5">
@@ -198,7 +192,7 @@ function Hero() {
             A safe place<br />to <em style={{ color: C.gold }}>land.</em>
           </h1>
           <p style={{ fontFamily: F.body, fontSize: "1.15rem", lineHeight: 1.7, color: "rgba(252,251,248,0.6)", maxWidth: 520, marginTop: 20 }}>
-            This document is the brand. Everything you're reading — the type, the colors, the voice, the layout — is the Flightpath Teen Detox identity, built and ready to deploy.
+            This document is the brand. Everything you're reading, the type, the colors, the voice, the layout, is the Flightpath Teen Detox identity, built and ready to deploy.
           </p>
           <div className="flex flex-wrap gap-3 mt-8">
             <button onClick={() => document.getElementById("project-plan")?.scrollIntoView({ behavior: "smooth" })}
@@ -230,13 +224,13 @@ function Mission() {
           <div>
             <Tag>The Mission</Tag>
             <Rule />
-            <H2 light>Recovery as a flight path — not a fall from grace.</H2>
+              <H2 light>Recovery as a flight path, not a fall from grace.</H2>
             <div className="mt-6 space-y-4">
               <Body light>
-                Orange County has no shortage of adult treatment. It has almost no dedicated adolescent medical detox. Flightpath fills that gap — a program built specifically for teens, with clinical protocols, family systems, and a brand that speaks to both the 16-year-old in crisis and the parent who just made the hardest call of their life.
+                Orange County has no shortage of adult treatment. It has almost no dedicated adolescent medical detox. Flightpath fills that gap. A program built specifically for teens, with clinical protocols, family systems, and a brand that speaks to both the 16-year-old in crisis and the parent who just made the hardest call of their life.
               </Body>
               <Body light>
-                The name is intentional. A flight path isn't a fall. It's a charted course — a departure, a climb, and a safe place to land. For a teenager, that reframe matters. Recovery isn't punishment. It's navigation.
+                The name is intentional. A flight path is not a fall. It is a charted course: a departure, a climb, and a safe place to land. For a teenager, that reframe matters. Recovery is not punishment. It is navigation.
               </Body>
             </div>
           </div>
@@ -285,7 +279,7 @@ function Brand() {
   const voices = [
     { label: "Hero headline", text: "A safe place to land." },
     { label: "For families", text: "The hardest part is the call. We'll take it from there." },
-    { label: "Admissions CTA", text: "Today recovery has a starting point. This is a good one." },
+    { label: "Admissions CTA", text: "Today recovery has a starting point. This is it." },
     { label: "About the program", text: "Medically supervised adolescent detox and stabilization. Genuinely human care for teens and the families who love them." },
     { label: "Instagram caption", text: "Recovery isn't a destination. It's a direction. Every step forward is a waypoint on the path. #FlightpathTeenDetox #TeenRecovery #OrangeCounty" },
   ];
@@ -312,47 +306,28 @@ function Brand() {
         {tab === "logo" && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="col-span-2 rounded-2xl p-10 flex flex-col items-center justify-center gap-4" style={{ background: C.ink }}>
-              <div className="flex items-center gap-3">
-                <Delta size={52} />
-                <div>
-                  <p style={{ fontFamily: F.ui, color: C.paper, fontWeight: 700, fontSize: "1.6rem", letterSpacing: "-0.01em" }}>Flightpath</p>
-                  <p style={{ fontFamily: F.ui, color: C.tangerine, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.2em" }}>TEEN DETOX</p>
-                </div>
-              </div>
+              <img src={LOCKUP_STACKED_LIGHT} alt="Flightpath Teen Detox lockup light" style={{ height: 120, objectFit: "contain" }} />
               <p style={{ fontFamily: F.ui, color: "rgba(252,251,248,0.2)", fontSize: "0.62rem", letterSpacing: "0.2em" }}>PRIMARY — DARK</p>
             </div>
             <div className="col-span-2 rounded-2xl p-10 flex flex-col items-center justify-center gap-4" style={{ background: C.paper, border: `1px solid #EAE5DB` }}>
-              <div className="flex items-center gap-3">
-                <Delta size={52} />
-                <div>
-                  <p style={{ fontFamily: F.ui, color: C.ink, fontWeight: 700, fontSize: "1.6rem", letterSpacing: "-0.01em" }}>Flightpath</p>
-                  <p style={{ fontFamily: F.ui, color: C.coral, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.2em" }}>TEEN DETOX</p>
-                </div>
-              </div>
+              <img src={LOCKUP_STACKED_DARK} alt="Flightpath Teen Detox lockup dark" style={{ height: 120, objectFit: "contain" }} />
               <p style={{ fontFamily: F.ui, color: "rgba(35,41,45,0.2)", fontSize: "0.62rem", letterSpacing: "0.2em" }}>PRIMARY — LIGHT</p>
             </div>
             <div className="rounded-2xl p-8 flex flex-col items-center justify-center gap-3" style={{ background: C.slate }}>
-              <Delta size={56} />
+              <Mark size={56} variant="white" />
               <p style={{ fontFamily: F.ui, color: "rgba(252,251,248,0.25)", fontSize: "0.62rem", letterSpacing: "0.2em" }}>ICON MARK</p>
             </div>
             <div className="rounded-2xl p-8 flex flex-col items-center justify-center gap-3" style={{ background: `linear-gradient(135deg,${C.coral},${C.tangerine},${C.gold})` }}>
-              <Delta size={56} />
+              <Mark size={56} variant="dim" />
               <p style={{ fontFamily: F.ui, color: "rgba(20,32,40,0.4)", fontSize: "0.62rem", letterSpacing: "0.2em" }}>SUNRISE</p>
             </div>
             <div className="rounded-2xl p-8 flex flex-col items-center justify-center gap-3" style={{ background: C.coral }}>
-              <svg width="52" height="52" viewBox="0 0 80 80" fill="none">
-                <polygon points="40,6 6,68 40,50 74,68" fill="rgba(255,255,255,0.9)"/>
-                <polygon points="40,50 6,68 26,74" fill="rgba(255,255,255,0.5)"/>
-                <polygon points="40,50 74,68 54,74" fill="rgba(255,255,255,0.65)"/>
-              </svg>
+              <Mark size={56} variant="white" />
               <p style={{ fontFamily: F.ui, color: "rgba(255,255,255,0.4)", fontSize: "0.62rem", letterSpacing: "0.2em" }}>REVERSED</p>
             </div>
             <div className="rounded-2xl p-8 flex flex-col items-center justify-center gap-3" style={{ background: C.paper, border: `1px solid #EAE5DB` }}>
-              <div className="flex items-center gap-1.5">
-                <Delta size={20} />
-                <span style={{ fontFamily: F.ui, color: C.ink, fontWeight: 700, fontSize: "0.85rem" }}>Flightpath</span>
-              </div>
-              <p style={{ fontFamily: F.ui, color: "rgba(35,41,45,0.2)", fontSize: "0.62rem", letterSpacing: "0.2em" }}>COMPACT</p>
+              <img src={LOCKUP_DARK} alt="Flightpath horizontal lockup" style={{ height: 36, objectFit: "contain" }} />
+              <p style={{ fontFamily: F.ui, color: "rgba(35,41,45,0.2)", fontSize: "0.62rem", letterSpacing: "0.2em" }}>HORIZONTAL</p>
             </div>
           </div>
         )}
@@ -479,7 +454,7 @@ function ProjectPlan() {
             <div key={p.num} style={{ background: C.slate, border: `1px solid ${C.border}`, borderRadius: 20, overflow: "hidden" }}>
               <div style={{ borderBottom: `1px solid ${C.border}`, padding: "20px 24px" }}>
                 <div className="flex items-center justify-between mb-3">
-                  <span style={{ fontFamily: F.ui, fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.2em", color: p.color }} className="uppercase">Phase {p.num} · {p.phase}</span>
+                  <span style={{ fontFamily: F.ui, fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.2em", color: p.color }} className="uppercase">Phase {p.num} {p.phase}</span>
                   <span style={{ fontFamily: F.ui, fontSize: "0.62rem", color: "rgba(252,251,248,0.3)", background: "rgba(255,255,255,0.05)", padding: "3px 10px", borderRadius: 999 }}>{p.weeks}</span>
                 </div>
                 <p style={{ fontFamily: F.serif, fontSize: "1.4rem", color: C.paper }}>{p.title}</p>
@@ -638,21 +613,51 @@ function SocialStrategy() {
 
 // ─── 7. Content Examples ──────────────────────────────────────────────────────
 function ContentExamples() {
-  const captions = [
-    {
-      type: "Education Post",
-      img: SOCIAL_3,
-      caption: "What actually happens during teen medical detox?\n\nWithdrawal looks different for every teenager. That's why Flightpath uses individualized protocols — not a one-size approach.\n\nHere's what families can expect:\n→ 24/7 medical supervision\n→ Comfort-focused medication management\n→ Daily check-ins with our clinical team\n→ Family communication throughout\n\nYou don't have to figure this out alone.\n\n#FlightpathTeenDetox #TeenRecovery #AdolescentDetox #OrangeCounty",
-    },
+  const posts = [
     {
       type: "Brand Awareness",
-      img: SOCIAL_1,
-      caption: "Recovery isn't a fall from grace.\n\nIt's a flight path.\n\nA departure. A climb. A safe place to land.\n\nFlightpath Teen Detox is Orange County's dedicated adolescent medical detox — built specifically for teens, with the clinical protocols and human care that families deserve.\n\nLink in bio to verify insurance.\n\n#FlightpathTeenDetox #TeenRecovery #OrangeCounty #AdolescentCare",
+      typeColor: C.teal,
+      headline: "A safe place\nto land.",
+      sub: "Medically supervised\nteen detox, Orange County.",
+      caption: "Recovery isn't a fall from grace.\n\nIt's a flight path. A departure, a climb, and a safe place to land.\n\nFlightpath Teen Detox is Orange County's dedicated adolescent medical detox, built specifically for teens.\n\n#FlightpathTeenDetox #TeenRecovery #OrangeCounty",
+      bg: `linear-gradient(135deg, ${C.ink} 0%, ${C.slate} 100%)`,
+      accentMark: "dim",
     },
     {
       type: "For Families",
-      img: SOCIAL_2,
-      caption: "The hardest part is the call.\n\nWe know. We've been on the other end of thousands of them.\n\nYou don't need to have it figured out. You just need to make the call.\n\nOur admissions team is available 24/7 — no judgment, no pressure, just answers.\n\nTap the link in bio or call us directly.\n\n#FlightpathTeenDetox #ForFamilies #TeenDetox #YouAreNotAlone",
+      typeColor: C.gold,
+      headline: "The hardest\npart is\nthe call.",
+      sub: "We're here 24/7.\nNo judgment. Just answers.",
+      caption: "You don't need to have it figured out. You just need to make the call.\n\nOur admissions team is available around the clock for families who need answers right now.\n\n#FlightpathTeenDetox #ForFamilies #TeenDetox",
+      bg: `linear-gradient(135deg, #0F1A22 0%, #1B2A33 100%)`,
+      accentMark: "white",
+    },
+    {
+      type: "Education",
+      typeColor: C.tangerine,
+      headline: "What teen\ndetox\nactually\nlooks like.",
+      sub: "24/7 medical supervision.\nIndividualized protocols.",
+      caption: "Withdrawal looks different for every teenager. That's why Flightpath uses individualized protocols, not a one-size approach.\n\n24/7 medical supervision. Comfort-focused care. Family communication throughout.\n\n#FlightpathTeenDetox #TeenRecovery #AdolescentDetox",
+      bg: `linear-gradient(135deg, ${C.coral} 0%, ${C.tangerine} 100%)`,
+      accentMark: "white",
+    },
+    {
+      type: "Hope",
+      typeColor: C.gold,
+      headline: "Every step\nforward is\na waypoint.",
+      sub: "Recovery is navigation,\nnot punishment.",
+      caption: "Recovery isn't a destination. It's a direction.\n\nEvery step forward is a waypoint on the path. We chart the course together.\n\n#FlightpathTeenDetox #TeenRecovery #OrangeCounty #AdolescentCare",
+      bg: `linear-gradient(160deg, #142028 0%, #1B3040 60%, #0F1A22 100%)`,
+      accentMark: "dim",
+    },
+    {
+      type: "Action",
+      typeColor: C.coral,
+      headline: "Insurance\nverified\nin minutes.",
+      sub: "Most major plans accepted.\nLink in bio.",
+      caption: "Don't let insurance questions stop you from making the call.\n\nOur team verifies benefits quickly so families can focus on what matters: getting their teen the help they need.\n\n#FlightpathTeenDetox #TeenDetox #InsuranceCovered",
+      bg: `linear-gradient(135deg, ${C.slate} 0%, ${C.ink} 100%)`,
+      accentMark: "tangerine",
     },
   ];
 
@@ -664,26 +669,58 @@ function ContentExamples() {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
           <H2>Real posts. Real voice. Ready to publish.</H2>
           <p style={{ fontFamily: F.body, fontSize: "0.85rem", color: "rgba(35,41,45,0.45)", maxWidth: 280 }}>
-            These are sample deliverables from Month 1 of the retainer.
+            Sample deliverables from Month 1 of the retainer.
           </p>
         </div>
-        <div className="grid md:grid-cols-3 gap-6">
-          {captions.map((c) => (
-            <div key={c.type} style={{ background: C.paper, border: `1px solid #EAE5DB`, borderRadius: 20, overflow: "hidden" }}>
-              {/* Instagram-style post header */}
-              <div style={{ padding: "12px 16px", borderBottom: `1px solid #EAE5DB`, display: "flex", alignItems: "center", gap: 10 }}>
-                <div style={{ width: 32, height: 32, borderRadius: "50%", background: `linear-gradient(135deg,${C.coral},${C.gold})`, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <Delta size={16} />
+        {/* 5 post cards in a masonry-style grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {posts.map((p, i) => (
+            <div key={p.type + i}
+              style={{ background: C.paper, border: `1px solid #EAE5DB`, borderRadius: 20, overflow: "hidden",
+                gridColumn: i === 0 ? "span 2" : "span 1",
+              }}
+              className={i === 0 ? "md:col-span-2" : ""}
+            >
+              {/* IG header */}
+              <div style={{ padding: "10px 14px", borderBottom: `1px solid #EAE5DB`, display: "flex", alignItems: "center", gap: 10 }}>
+                <div style={{ width: 30, height: 30, borderRadius: "50%", background: `linear-gradient(135deg,${C.coral},${C.gold})`, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden", padding: 3 }}>
+                  <Mark size={18} variant="white" />
                 </div>
                 <div>
-                  <p style={{ fontFamily: F.ui, fontSize: "0.75rem", fontWeight: 700, color: C.ink }}>flightpathteendetox</p>
-                  <p style={{ fontFamily: F.body, fontSize: "0.65rem", color: "rgba(35,41,45,0.4)" }}>Orange County, CA</p>
+                  <p style={{ fontFamily: F.ui, fontSize: "0.73rem", fontWeight: 700, color: C.ink }}>flightpathteendetox</p>
+                  <p style={{ fontFamily: F.body, fontSize: "0.62rem", color: "rgba(35,41,45,0.4)" }}>Orange County, CA</p>
                 </div>
               </div>
-              <img src={c.img} alt={c.type} className="w-full aspect-square object-cover" />
-              <div style={{ padding: 16 }}>
-                <span style={{ fontFamily: F.ui, fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.15em", color: C.teal, background: `${C.teal}15`, border: `1px solid ${C.teal}30`, padding: "2px 8px", borderRadius: 999 }} className="uppercase">{c.type}</span>
-                <p style={{ fontFamily: F.body, fontSize: "0.78rem", color: "rgba(35,41,45,0.65)", lineHeight: 1.6, marginTop: 10, whiteSpace: "pre-line" }}>{c.caption}</p>
+              {/* Post image rendered in-browser */}
+              <div style={{ position: "relative", background: p.bg, aspectRatio: i === 0 ? "2/1" : "1/1", overflow: "hidden", display: "flex", alignItems: "flex-end" }}>
+                {/* Large mark watermark right side */}
+                <div style={{ position: "absolute", right: i === 0 ? "-2%" : "-8%", top: "50%", transform: "translateY(-50%)", opacity: 0.9 }}>
+                  <Mark size={i === 0 ? 260 : 200} variant={p.accentMark as "dim" | "white" | "twilight" | "tangerine"} />
+                </div>
+                {/* Text content */}
+                <div style={{ position: "relative", zIndex: 2, padding: i === 0 ? "40px 44px" : "28px 28px", width: "100%" }}>
+                  <h3 style={{
+                    fontFamily: F.serif,
+                    fontSize: i === 0 ? "clamp(2rem,4vw,3rem)" : "1.55rem",
+                    lineHeight: 1.05,
+                    letterSpacing: "-0.02em",
+                    color: "#FCFBF8",
+                    whiteSpace: "pre-line",
+                    marginBottom: 16,
+                  }}>{p.headline}</h3>
+                  {/* Coral rule */}
+                  <div style={{ width: 32, height: 2, background: C.coral, marginBottom: 14, borderRadius: 2 }} />
+                  <p style={{ fontFamily: F.body, fontSize: i === 0 ? "0.9rem" : "0.78rem", color: C.tangerine, lineHeight: 1.5, whiteSpace: "pre-line" }}>{p.sub}</p>
+                  {/* Lockup bottom */}
+                  <div style={{ marginTop: i === 0 ? 36 : 24 }}>
+                    <img src={LOCKUP_LIGHT} alt="Flightpath Teen Detox" style={{ height: i === 0 ? 22 : 18, objectFit: "contain", opacity: 0.9 }} />
+                  </div>
+                </div>
+              </div>
+              {/* Caption */}
+              <div style={{ padding: "14px 16px" }}>
+                <span style={{ fontFamily: F.ui, fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.15em", color: p.typeColor, background: `${p.typeColor}15`, border: `1px solid ${p.typeColor}30`, padding: "2px 8px", borderRadius: 999 }} className="uppercase">{p.type}</span>
+                <p style={{ fontFamily: F.body, fontSize: "0.76rem", color: "rgba(35,41,45,0.6)", lineHeight: 1.65, marginTop: 9, whiteSpace: "pre-line" }}>{p.caption}</p>
               </div>
             </div>
           ))}
@@ -817,7 +854,7 @@ function PaidAds() {
 const TIERS = [
   {
     id: "phase1", phase: "Phase 1 · Departure", name: "Brand Buildout", price: "$5,000", unit: "one-time",
-    note: "50% on approval · 50% on delivery", recommended: false,
+    note: "50% on approval, 50% on delivery", recommended: false,
     deliverables: [
       ["Brand strategy + positioning","Audience, competitive landscape"],
       ["Logo system","Primary, icon, reversed, compact"],
@@ -830,7 +867,7 @@ const TIERS = [
   },
   {
     id: "phase2", phase: "Phase 2 · Climb", name: "Contract Retainer", price: "$3.5–5K", unit: "/mo",
-    note: "After Phase 1 · 3-month minimum", recommended: true,
+    note: "After Phase 1, 3-month minimum", recommended: true,
     deliverables: [
       ["Monthly content calendar","Social + blog"],
       ["Social media management","IG, FB, LinkedIn, Google"],
@@ -841,7 +878,7 @@ const TIERS = [
   },
   {
     id: "phase3", phase: "Phase 3 · Cruise", name: "Part-Time Role", price: "$90–115K", unit: "/yr",
-    note: "Director of Marketing · with benefits", recommended: false,
+    note: "Director of Marketing, with benefits", recommended: false,
     deliverables: [
       ["Director of Marketing title","With benefits"],
       ["Full marketing ownership","Strategy to execution"],
@@ -865,7 +902,7 @@ function Investment({ onSelect }: { onSelect: (t: typeof TIERS[0]) => void }) {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-4">
           <H2>Below-rate pricing for the mission.</H2>
           <p style={{ fontFamily: F.body, fontSize: "0.85rem", color: "rgba(35,41,45,0.45)", maxWidth: 300 }}>
-            Standard brand buildouts run $8–12K. This is mission-driven pricing. Select a tier — it carries into the approval form below.
+            Standard brand buildouts run $8 to 12K. This is mission-driven pricing. Select a tier and it carries into the approval form below.
           </p>
         </div>
         <p style={{ fontFamily: F.ui, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.15em", color: C.teal, display: "flex", alignItems: "center", gap: 8, marginBottom: 32 }}>
@@ -905,7 +942,7 @@ function Investment({ onSelect }: { onSelect: (t: typeof TIERS[0]) => void }) {
                     </div>
                   ))}
                   <div style={{ marginTop: 16, borderRadius: 999, padding: "8px 0", textAlign: "center", fontFamily: F.ui, fontSize: "0.72rem", fontWeight: 700, background: sel ? `linear-gradient(90deg,${C.coral},${C.tangerine})` : "rgba(255,255,255,0.05)", color: sel ? C.ink : "rgba(252,251,248,0.25)" }}>
-                    {sel ? "Selected — scroll to approve" : "Click to select"}
+                    {sel ? "Selected, scroll to approve" : "Click to select"}
                   </div>
                 </div>
               </button>
@@ -1020,7 +1057,7 @@ function Approval({ tier }: { tier: typeof TIERS[0] }) {
               ))}
             </div>
             <div className="flex items-center gap-2.5 mt-8">
-              <Delta size={20} />
+              <Mark size={20} variant="tangerine" />
               <span style={{ fontFamily: F.ui, fontSize: "0.8rem", fontWeight: 700, color: "rgba(252,251,248,0.4)" }}>Karle <span style={{ color: C.tangerine }}>Kreatives</span></span>
             </div>
           </div>
@@ -1068,7 +1105,7 @@ function Approval({ tier }: { tier: typeof TIERS[0] }) {
                 </div>
                 <p style={{ fontFamily: F.serif, fontSize: "1.8rem", color: C.paper, marginBottom: 8 }}>Cleared for takeoff.</p>
                 <p style={{ fontFamily: F.body, fontSize: "0.9rem", color: "rgba(252,251,248,0.5)", marginBottom: 4 }}>Approved by <span style={{ color: "rgba(252,251,248,0.8)" }}>{name}</span></p>
-                <p style={{ fontFamily: F.ui, fontSize: "0.75rem", fontWeight: 700, color: C.tangerine, marginBottom: 12 }}>{tier.name} · {tier.price}{tier.unit}</p>
+                <p style={{ fontFamily: F.ui, fontSize: "0.75rem", fontWeight: 700, color: C.tangerine, marginBottom: 12 }}>{tier.name} at {tier.price}{tier.unit}</p>
                 <p style={{ fontFamily: F.body, fontSize: "0.78rem", color: "rgba(252,251,248,0.3)" }}>Karle Kreatives will follow up with a formal contract within 24 hours.</p>
               </div>
             )}
@@ -1085,11 +1122,11 @@ function Footer() {
     <footer style={{ background: C.deep, borderTop: `1px solid ${C.border}` }} className="py-8">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-2">
-          <Delta size={16} />
+          <Mark size={16} variant="tangerine" />
           <span style={{ fontFamily: F.ui, fontSize: "0.8rem", fontWeight: 700, color: "rgba(252,251,248,0.3)" }}>Karle <span style={{ color: `${C.tangerine}70` }}>Kreatives</span></span>
         </div>
         <p style={{ fontFamily: F.body, fontSize: "0.72rem", color: "rgba(252,251,248,0.15)", textAlign: "center" }}>
-          Confidential proposal prepared for Flightpath Teen Detox · © 2026 Karle Kreatives · Not for distribution
+          Confidential proposal prepared for Flightpath Teen Detox. 2026 Karle Kreatives. Not for distribution.
         </p>
         <p style={{ fontFamily: F.ui, fontSize: "0.72rem", color: "rgba(252,251,248,0.15)" }}>HDG 015</p>
       </div>
