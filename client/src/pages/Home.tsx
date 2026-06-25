@@ -135,9 +135,9 @@ function Nav() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={{ background: scrolled ? "rgba(20,32,40,0.97)" : "transparent", backdropFilter: scrolled ? "blur(14px)" : "none", borderBottom: scrolled ? `1px solid ${C.border}` : "none" }}>
-      <div className="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <img src={LOCKUP_LIGHT} alt="Flightpath Teen Detox" style={{ height: 28, objectFit: "contain" }} />
+          <img src={LOCKUP_LIGHT} alt="Flightpath Teen Detox" style={{ height: 52, objectFit: "contain" }} />
         </div>
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-0.5">
