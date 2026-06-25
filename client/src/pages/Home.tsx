@@ -1,389 +1,256 @@
 /**
- * KARLE KREATIVES — Flightpath Teen Detox Brand Proposal
- * A proposal site, not the client's live site.
- * Presents: brand concept, deliverables, three engagement paths, pricing, and approval CTA.
- * Type: Instrument Serif (display) · Bricolage Grotesque (UI) · Hanken Grotesk (body)
- * Palette: Sunrise coral/tangerine/gold on twilight ink + warm paper
+ * FLIGHTPATH TEEN DETOX — Brand + Marketing Proposal
+ * Presented by Karle Kreatives
+ *
+ * This site IS the brand. The client experiences Flightpath's visual identity
+ * while reading the proposal for building it. Every section uses Flightpath's
+ * own design language: twilight navy, sunrise coral/gold, Instrument Serif,
+ * Bricolage Grotesque, Hanken Grotesk, delta mark.
+ *
+ * Sections:
+ *  0. Nav (sticky, Flightpath-branded)
+ *  1. Hero (full-bleed OC aerial, Flightpath headline)
+ *  2. The Mission (why this brand exists)
+ *  3. Brand Identity Breakdown (logo, color, type, voice)
+ *  4. Project Plan (phased timeline with deliverables)
+ *  5. Website Plan (page structure + features)
+ *  6. Social Media Strategy (platforms, cadence, pillars)
+ *  7. Content Examples (real posts, captions, stories)
+ *  8. Paid Ads Strategy
+ *  9. Investment / Pricing (interactive tier selector)
+ * 10. Approval (name + canvas signature)
+ * 11. Footer
  */
 
-import { useState } from "react";
-import { Check, ChevronDown, ArrowRight } from "lucide-react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { Check, ArrowRight, Pen, RotateCcw, ChevronDown, Instagram, Globe, Search, Target, Calendar, BarChart2, Megaphone } from "lucide-react";
 
-// ─── Delta Mark ───────────────────────────────────────────────────────────────
-function Delta({ size = 28, style }: { size?: number; style?: React.CSSProperties }) {
+// ─── Asset URLs ───────────────────────────────────────────────────────────────
+const HERO_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663488423210/SUVBoqZCLc2b3z93g2JT8w/fp_hero_proposal-gD3yAcc2CauK4R25MehWdE.webp";
+const SOCIAL_1 = "https://d2xsxph8kpxj0f.cloudfront.net/310519663488423210/SUVBoqZCLc2b3z93g2JT8w/fp_social_1-9wzdcbsHnCWmCXYhidpLv7.webp";
+const SOCIAL_2 = "https://d2xsxph8kpxj0f.cloudfront.net/310519663488423210/SUVBoqZCLc2b3z93g2JT8w/fp_social_2-jv5qezLBqwg4vBuDJ7KSbe.webp";
+const SOCIAL_3 = "https://d2xsxph8kpxj0f.cloudfront.net/310519663488423210/SUVBoqZCLc2b3z93g2JT8w/fp_social_3-CUKPfrGwxZ4xxdutxduNJL.webp";
+
+// ─── Design tokens ────────────────────────────────────────────────────────────
+const C = {
+  ink: "#142028",
+  slate: "#1B2A33",
+  deep: "#0F1A22",
+  coral: "#E0561F",
+  tangerine: "#FF8A4C",
+  gold: "#FFD36B",
+  teal: "#2FB6A6",
+  paper: "#FCFBF8",
+  cream: "#F4F0E7",
+  border: "rgba(255,255,255,0.07)",
+};
+
+// ─── Fonts ────────────────────────────────────────────────────────────────────
+const F = {
+  serif: "'Instrument Serif', Georgia, serif",
+  ui: "'Bricolage Grotesque', sans-serif",
+  body: "'Hanken Grotesk', sans-serif",
+};
+
+// ─── Delta SVG ────────────────────────────────────────────────────────────────
+function Delta({ size = 28 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 80 80" fill="none" aria-hidden="true" style={style}>
+    <svg width={size} height={size} viewBox="0 0 80 80" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
       <defs>
-        <linearGradient id="pTL" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#FFD36B" />
-          <stop offset="100%" stopColor="#FF8A4C" />
-        </linearGradient>
-        <linearGradient id="pTR" x1="1" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#FFB259" />
-          <stop offset="100%" stopColor="#E0561F" />
-        </linearGradient>
-        <linearGradient id="pBL" x1="0" y1="1" x2="1" y2="0">
-          <stop offset="0%" stopColor="#C2421F" />
-          <stop offset="100%" stopColor="#E0561F" />
-        </linearGradient>
-        <linearGradient id="pBR" x1="1" y1="1" x2="0" y2="0">
-          <stop offset="0%" stopColor="#8B2A0F" />
-          <stop offset="100%" stopColor="#C2421F" />
-        </linearGradient>
+        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor={C.gold}/><stop offset="100%" stopColor={C.tangerine}/></linearGradient>
+        <linearGradient id="g2" x1="1" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#FFB259"/><stop offset="100%" stopColor={C.coral}/></linearGradient>
+        <linearGradient id="g3" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stopColor="#C2421F"/><stop offset="100%" stopColor={C.coral}/></linearGradient>
+        <linearGradient id="g4" x1="1" y1="1" x2="0" y2="0"><stop offset="0%" stopColor="#8B2A0F"/><stop offset="100%" stopColor="#C2421F"/></linearGradient>
       </defs>
-      <polygon points="40,6 6,68 40,50" fill="url(#pTL)" />
-      <polygon points="40,6 74,68 40,50" fill="url(#pTR)" />
-      <polygon points="40,50 6,68 26,74" fill="url(#pBL)" />
-      <polygon points="40,50 74,68 54,74" fill="url(#pBR)" />
-      <line x1="40" y1="6" x2="40" y2="50" stroke="#FFC65C" strokeWidth="1.2" opacity="0.55" />
+      <polygon points="40,6 6,68 40,50" fill="url(#g1)"/>
+      <polygon points="40,6 74,68 40,50" fill="url(#g2)"/>
+      <polygon points="40,50 6,68 26,74" fill="url(#g3)"/>
+      <polygon points="40,50 74,68 54,74" fill="url(#g4)"/>
+      <line x1="40" y1="6" x2="40" y2="50" stroke="#FFC65C" strokeWidth="1.2" opacity="0.55"/>
     </svg>
   );
 }
 
-// ─── Eyebrow ──────────────────────────────────────────────────────────────────
-function Eyebrow({ children, light = false, gold = false }: { children: React.ReactNode; light?: boolean; gold?: boolean }) {
+// ─── Shared primitives ────────────────────────────────────────────────────────
+function Tag({ children, light }: { children: React.ReactNode; light?: boolean }) {
   return (
-    <p
-      style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "0.65rem", letterSpacing: "0.24em" }}
-      className={`font-semibold uppercase ${light ? "text-[#2FB6A6]" : gold ? "text-[#FFD36B]" : "text-[#2FB6A6]"}`}
-    >
+    <p style={{ fontFamily: F.ui, fontSize: "0.65rem", letterSpacing: "0.22em", color: light ? C.teal : C.teal }}
+      className="font-bold uppercase">
       {children}
     </p>
   );
 }
 
-// ─── Section Divider ─────────────────────────────────────────────────────────
-function Divider() {
-  return <div className="h-px w-12 bg-gradient-to-r from-[#FF8A4C] to-transparent my-5" />;
+function Rule() {
+  return <div style={{ height: 1, width: 48, background: `linear-gradient(90deg, ${C.tangerine}, transparent)`, margin: "18px 0" }} />;
 }
 
-// ─── 1. Cover / Hero ─────────────────────────────────────────────────────────
-function Cover() {
+function H2({ children, light }: { children: React.ReactNode; light?: boolean }) {
   return (
-    <section className="bg-[#142028] min-h-screen flex flex-col relative overflow-hidden">
-      {/* Top bar */}
-      <div className="border-b border-white/[0.07] px-8 py-4 flex items-center justify-between">
+    <h2 style={{ fontFamily: F.serif, fontSize: "clamp(2rem,3.5vw,3rem)", lineHeight: 1.1, letterSpacing: "-0.02em", color: light ? C.paper : C.ink }}>
+      {children}
+    </h2>
+  );
+}
+
+function Body({ children, muted, light }: { children: React.ReactNode; muted?: boolean; light?: boolean }) {
+  return (
+    <p style={{ fontFamily: F.body, fontSize: "1rem", lineHeight: 1.7, color: light ? "rgba(252,251,248,0.55)" : muted ? "rgba(35,41,45,0.55)" : C.ink }}>
+      {children}
+    </p>
+  );
+}
+
+// ─── 0. Sticky Nav ────────────────────────────────────────────────────────────
+const NAV_LINKS = [
+  { id: "mission", label: "Mission" },
+  { id: "brand", label: "Brand" },
+  { id: "project-plan", label: "Project Plan" },
+  { id: "website", label: "Website" },
+  { id: "social", label: "Social" },
+  { id: "content", label: "Content" },
+  { id: "ads", label: "Ads" },
+  { id: "investment", label: "Investment" },
+];
+
+function Nav() {
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const fn = () => {
+      setScrolled(window.scrollY > 80);
+      for (let i = NAV_LINKS.length - 1; i >= 0; i--) {
+        const el = document.getElementById(NAV_LINKS[i].id);
+        if (el && el.getBoundingClientRect().top <= 90) { setActive(NAV_LINKS[i].id); break; }
+      }
+    };
+    window.addEventListener("scroll", fn, { passive: true });
+    return () => window.removeEventListener("scroll", fn);
+  }, []);
+
+  const go = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setMenuOpen(false);
+  };
+
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+      style={{ background: scrolled ? "rgba(20,32,40,0.97)" : "transparent", backdropFilter: scrolled ? "blur(14px)" : "none", borderBottom: scrolled ? `1px solid ${C.border}` : "none" }}>
+      <div className="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <Delta size={22} />
-          <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/80 text-sm font-bold tracking-tight">
-            Karle <span className="text-[#FF8A4C]">Kreatives</span>
+          <span style={{ fontFamily: F.ui, color: C.paper, fontWeight: 700, fontSize: "0.9rem", letterSpacing: "-0.01em" }}>
+            Flightpath <span style={{ color: C.tangerine }}>Teen Detox</span>
           </span>
         </div>
-        <div className="flex items-center gap-6">
-          <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/25 text-xs tracking-widest uppercase">Brand Proposal</span>
-          <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/25 text-xs">Prepared for Flightpath Teen Detox</span>
-        </div>
-      </div>
-
-      {/* Hero content */}
-      <div className="flex-1 flex items-center">
-        <div className="max-w-6xl mx-auto px-8 w-full grid md:grid-cols-2 gap-16 items-center py-20">
-          <div>
-            <Eyebrow>Brand Identity + Proposal</Eyebrow>
-            <div className="mt-4 mb-6">
-              <h1
-                style={{ fontFamily: "'Instrument Serif', Georgia, serif", fontSize: "clamp(3rem, 6vw, 5.5rem)", lineHeight: 1.06, letterSpacing: "-0.02em" }}
-                className="text-[#FCFBF8]"
-              >
-                Flightpath<br />
-                <em style={{ color: "#FFD36B" }}>Teen Detox.</em>
-              </h1>
-            </div>
-            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/50 text-base leading-relaxed max-w-md mb-8">
-              A complete brand foundation and a phased plan to launch it — visual identity, voice, and the marketing structure to carry it from opening day to a program at scale.
-            </p>
-            <div className="flex flex-wrap gap-3 text-xs" style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}>
-              <div className="flex items-center gap-2 text-white/40">
-                <span className="text-[#2FB6A6]">Karla &amp; Tyler</span>
-                <span className="text-white/15">·</span>
-                <span>Karle Kreatives</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Brand preview card */}
-          <div className="relative">
-            <div
-              className="absolute inset-0 rounded-3xl"
-              style={{ background: "radial-gradient(ellipse at 60% 40%, rgba(224,86,31,0.18) 0%, transparent 65%)" }}
-              aria-hidden="true"
-            />
-            <div className="relative bg-[#1B2A33] border border-white/[0.08] rounded-3xl p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <Delta size={40} />
-                <div>
-                  <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#FCFBF8] font-bold text-lg tracking-tight">Flightpath</p>
-                  <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#FF8A4C] text-xs font-semibold tracking-widest uppercase">Teen Detox</p>
-                </div>
-              </div>
-              <p style={{ fontFamily: "'Instrument Serif', serif" }} className="text-[#FCFBF8] text-xl italic leading-snug mb-5">
-                "Recovery as a <span style={{ color: "#FF8A4C" }}>flight path</span> — a departure, a climb, and a safe place to land."
-              </p>
-              <div className="flex gap-2 flex-wrap">
-                {["Safe", "Hopeful", "Grounded", "Human"].map((p) => (
-                  <span key={p} style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[0.65rem] font-semibold tracking-widest uppercase text-white/40 border border-white/10 rounded-full px-3 py-1">{p}</span>
-                ))}
-              </div>
-              {/* Color swatches */}
-              <div className="flex gap-1.5 mt-5">
-                {["#FF8A4C","#FFD36B","#E0561F","#C2421F","#142028","#1B2A33","#FCFBF8","#F4F0E7"].map((c) => (
-                  <div key={c} className="w-7 h-7 rounded-full border border-white/10 flex-shrink-0" style={{ background: c }} />
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Scroll cue */}
-      <div className="flex flex-col items-center gap-1.5 pb-8 animate-bounce" aria-hidden="true">
-        <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/20 text-[0.6rem] tracking-widest uppercase">Scroll to explore</span>
-        <ChevronDown size={14} className="text-white/20" />
-      </div>
-    </section>
-  );
-}
-
-// ─── 2. Inside This Document (nav) ───────────────────────────────────────────
-function InsideDoc() {
-  const sections = ["The Brand", "Logo", "Color", "Type", "Voice", "Applications", "Engagement", "Investment"];
-  return (
-    <div className="bg-[#FCFBF8] border-b border-[#EAE5DB] py-3 overflow-x-auto">
-      <div className="max-w-6xl mx-auto px-8 flex items-center gap-1">
-        <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#23292D]/30 text-[0.65rem] font-semibold tracking-widest uppercase mr-3 flex-shrink-0">Inside this document</span>
-        {sections.map((s, i) => (
-          <span key={s} className="flex items-center gap-1 flex-shrink-0">
-            <a href={`#section-${s.toLowerCase().replace(/\s+/g, "-")}`} style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#23292D]/50 hover:text-[#E0561F] text-[0.72rem] font-medium tracking-wide transition-colors no-underline">{s}</a>
-            {i < sections.length - 1 && <span className="text-[#EAE5DB] mx-1">·</span>}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// ─── 3. The Brand Concept ─────────────────────────────────────────────────────
-function TheBrand() {
-  const pillars = [
-    { name: "Safe", desc: "Medical safety is non-negotiable. Every protocol is designed to minimize risk and maximize comfort during withdrawal." },
-    { name: "Hopeful", desc: "We speak about the future with teens, not just the present crisis. Recovery has a destination — we help them see it." },
-    { name: "Grounded", desc: "No promises we can't keep. Honest, evidence-informed care from day one." },
-    { name: "Human", desc: "Behind every chart is a teenager with a story. Our staff are trained to see the person, not just the presenting problem." },
-  ];
-  return (
-    <section id="section-the-brand" className="bg-[#F4F0E7] py-20 md:py-28">
-      <div className="max-w-6xl mx-auto px-8">
-        <div className="grid md:grid-cols-2 gap-16 items-start">
-          <div>
-            <Eyebrow>The Brand</Eyebrow>
-            <Divider />
-            <h2
-              style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(2.2rem, 4vw, 3.4rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }}
-              className="text-[#142028] mb-6"
-            >
-              Recovery as a <em style={{ color: "#E0561F" }}>flight path</em> — a departure, a climb, and a safe place to land.
-            </h2>
-            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/60 text-base leading-relaxed mb-4">
-              Flightpath leans into the idea that recovery isn't a fall from grace — it's a journey with a destination. For an adolescent, it positions a new kind of power: the teen isn't just a passenger. They're learning to navigate.
-            </p>
-            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/60 text-base leading-relaxed">
-              This identity is sophisticated but never clinical — an ascending delta wing, warm sunrise colors, and an editorial voice that reads more trustworthy than clinical, human enough for families.
-            </p>
-          </div>
-          <div className="bg-[#142028] rounded-2xl p-7">
-            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-[0.2em] uppercase mb-5">Brand Pillars</p>
-            <div className="flex flex-col gap-0">
-              {pillars.map((p, i) => (
-                <div key={p.name} className={`py-4 ${i < pillars.length - 1 ? "border-b border-white/[0.06]" : ""}`}>
-                  <p style={{ fontFamily: "'Instrument Serif', serif" }} className="text-[#FCFBF8] text-lg mb-1">{p.name}</p>
-                  <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/40 text-sm leading-relaxed">{p.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─── 4. Logo ──────────────────────────────────────────────────────────────────
-function LogoSection() {
-  return (
-    <section id="section-logo" className="bg-[#FCFBF8] py-20 md:py-28">
-      <div className="max-w-6xl mx-auto px-8">
-        <Eyebrow>Logo Design</Eyebrow>
-        <Divider />
-        <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(2rem, 3.5vw, 3rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }} className="text-[#142028] mb-12">
-          The mark. The lockup. The system.
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {/* Primary lockup — dark */}
-          <div className="col-span-2 bg-[#142028] rounded-2xl p-10 flex flex-col items-center justify-center gap-4">
-            <div className="flex items-center gap-3">
-              <Delta size={48} />
-              <div>
-                <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#FCFBF8] font-bold text-2xl tracking-tight">Flightpath</p>
-                <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#FF8A4C] text-xs font-semibold tracking-[0.2em] uppercase">Teen Detox</p>
-              </div>
-            </div>
-            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/25 text-[0.65rem] tracking-widest uppercase">Primary — Dark</p>
-          </div>
-          {/* Primary lockup — light */}
-          <div className="col-span-2 bg-[#F4F0E7] rounded-2xl p-10 flex flex-col items-center justify-center gap-4 border border-[#EAE5DB]">
-            <div className="flex items-center gap-3">
-              <Delta size={48} />
-              <div>
-                <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#142028] font-bold text-2xl tracking-tight">Flightpath</p>
-                <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#E0561F] text-xs font-semibold tracking-[0.2em] uppercase">Teen Detox</p>
-              </div>
-            </div>
-            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#23292D]/25 text-[0.65rem] tracking-widest uppercase">Primary — Light</p>
-          </div>
-          {/* Icon only — dark */}
-          <div className="bg-[#1B2A33] rounded-2xl p-8 flex flex-col items-center justify-center gap-3">
-            <Delta size={52} />
-            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/25 text-[0.65rem] tracking-widest uppercase">Icon</p>
-          </div>
-          {/* Icon — sunrise bg */}
-          <div className="rounded-2xl p-8 flex flex-col items-center justify-center gap-3" style={{ background: "linear-gradient(135deg, #E0561F, #FF8A4C, #FFD36B)" }}>
-            <Delta size={52} />
-            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#142028]/40 text-[0.65rem] tracking-widest uppercase">Sunrise</p>
-          </div>
-          {/* Reversed white */}
-          <div className="bg-[#E0561F] rounded-2xl p-8 flex flex-col items-center justify-center gap-3">
-            <svg width="52" height="52" viewBox="0 0 80 80" fill="none" aria-hidden="true">
-              <polygon points="40,6 6,68 40,50 74,68" fill="rgba(255,255,255,0.9)" />
-              <polygon points="40,50 6,68 26,74" fill="rgba(255,255,255,0.5)" />
-              <polygon points="40,50 74,68 54,74" fill="rgba(255,255,255,0.65)" />
-            </svg>
-            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/40 text-[0.65rem] tracking-widest uppercase">Reversed</p>
-          </div>
-          {/* 3-color label */}
-          <div className="bg-[#FCFBF8] border border-[#EAE5DB] rounded-2xl p-8 flex flex-col items-center justify-center gap-3">
-            <div className="flex items-center gap-1.5">
-              <Delta size={20} />
-              <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#142028] font-bold text-sm">Flightpath</span>
-            </div>
-            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#23292D]/25 text-[0.65rem] tracking-widest uppercase">3-Color Label</p>
-          </div>
-        </div>
-        <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/40 text-sm mt-6 leading-relaxed max-w-2xl">
-          Clear space equal to the width of the delta mark on all sides. Minimum display size 24px. The faceted delta references both the aviation delta wing and the mathematical symbol for change — appropriate for a program built around transformation.
-        </p>
-      </div>
-    </section>
-  );
-}
-
-// ─── 5. Color ─────────────────────────────────────────────────────────────────
-function ColorSection() {
-  const palette = [
-    { name: "Tangerine", hex: "#FF8A4C", role: "Primary brand" },
-    { name: "Sand", hex: "#FFD36B", role: "Accent / Gold" },
-    { name: "Coral", hex: "#E0561F", role: "CTA / Emphasis" },
-    { name: "Ember", hex: "#C2421F", role: "Deep accent" },
-    { name: "Twilight", hex: "#142028", role: "Primary dark" },
-    { name: "Slate", hex: "#1B2A33", role: "Secondary dark" },
-    { name: "Paper", hex: "#FCFBF8", role: "Light base" },
-    { name: "Cream", hex: "#F4F0E7", role: "Warm background" },
-  ];
-  return (
-    <section id="section-color" className="bg-[#142028] py-20 md:py-28">
-      <div className="max-w-6xl mx-auto px-8">
-        <Eyebrow light>Color</Eyebrow>
-        <Divider />
-        <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(2rem, 3.5vw, 3rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }} className="text-[#FCFBF8] mb-4">
-          A sunrise palette. Warm structure and a deep twilight base.
-        </h2>
-        <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/45 text-base leading-relaxed mb-10 max-w-xl">
-          The signature gradient turns ember into gold — the light of a runway at sunrise. For a teen, it doesn't look clinical. For a parent, it looks trustworthy.
-        </p>
-        {/* Gradient bar */}
-        <div className="h-14 rounded-xl mb-8" style={{ background: "linear-gradient(90deg, #C2421F 0%, #E0561F 20%, #FF8A4C 45%, #FFB259 65%, #FFD36B 100%)" }} />
-        <div className="grid grid-cols-4 md:grid-cols-8 gap-3">
-          {palette.map((c) => (
-            <div key={c.name}>
-              <div className="h-16 rounded-xl mb-2 border border-white/[0.07]" style={{ background: c.hex }} />
-              <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#FCFBF8] text-xs font-semibold">{c.name}</p>
-              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/30 text-[0.65rem]">{c.hex}</p>
-              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/25 text-[0.6rem]">{c.role}</p>
-            </div>
+        {/* Desktop links */}
+        <div className="hidden md:flex items-center gap-0.5">
+          {NAV_LINKS.map((l) => (
+            <button key={l.id} onClick={() => go(l.id)}
+              style={{ fontFamily: F.ui, fontSize: "0.72rem", fontWeight: 500, letterSpacing: "0.04em", color: active === l.id ? C.tangerine : "rgba(252,251,248,0.45)", padding: "4px 10px", borderRadius: 6, transition: "color 0.15s" }}
+              className="hover:text-white">
+              {l.label}
+            </button>
           ))}
         </div>
+        <button onClick={() => go("investment")}
+          style={{ fontFamily: F.ui, fontSize: "0.72rem", fontWeight: 700, background: `linear-gradient(90deg,${C.coral},${C.tangerine})`, color: C.ink, padding: "8px 18px", borderRadius: 999, letterSpacing: "0.04em" }}
+          className="hidden md:flex items-center gap-1.5 hover:opacity-90 active:scale-95 transition-all">
+          View Pricing <ArrowRight size={12} />
+        </button>
+        {/* Mobile hamburger */}
+        <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden flex flex-col gap-1 p-2">
+          {[0,1,2].map(i => <span key={i} style={{ display: "block", width: 20, height: 1.5, background: C.paper, borderRadius: 2 }} />)}
+        </button>
       </div>
-    </section>
+      {menuOpen && (
+        <div style={{ background: C.slate, borderTop: `1px solid ${C.border}` }} className="md:hidden px-6 py-4 flex flex-col gap-3">
+          {NAV_LINKS.map((l) => (
+            <button key={l.id} onClick={() => go(l.id)}
+              style={{ fontFamily: F.ui, fontSize: "0.85rem", color: active === l.id ? C.tangerine : "rgba(252,251,248,0.6)", textAlign: "left" }}>
+              {l.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </nav>
   );
 }
 
-// ─── 6. Typography ────────────────────────────────────────────────────────────
-function TypeSection() {
+// ─── 1. Hero ──────────────────────────────────────────────────────────────────
+function Hero() {
   return (
-    <section id="section-type" className="bg-[#FCFBF8] py-20 md:py-28">
-      <div className="max-w-6xl mx-auto px-8">
-        <Eyebrow>Typography</Eyebrow>
-        <Divider />
-        <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(2rem, 3.5vw, 3rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }} className="text-[#142028] mb-12">
-          Three voices. One system.
-        </h2>
-        <div className="grid md:grid-cols-3 gap-6">
-          <div className="bg-[#F4F0E7] rounded-2xl p-7 border border-[#EAE5DB]">
-            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-widest uppercase mb-4">Display</p>
-            <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: "3.5rem", lineHeight: 1 }} className="text-[#142028] mb-4">Aa</p>
-            <p style={{ fontFamily: "'Instrument Serif', serif" }} className="text-[#142028] text-lg mb-3">Flightpath</p>
-            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#23292D]/50 text-xs font-semibold">Instrument Serif</p>
-            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/35 text-xs mt-1">Headlines, hero text, pull quotes</p>
+    <section className="relative min-h-screen flex flex-col justify-end overflow-hidden">
+      <div className="absolute inset-0">
+        <img src={HERO_IMG} alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(20,32,40,0.3) 0%, rgba(20,32,40,0.5) 40%, rgba(20,32,40,0.92) 80%, #142028 100%)" }} />
+      </div>
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pb-20 pt-40 w-full">
+        <div className="max-w-3xl">
+          <div className="flex items-center gap-2 mb-5">
+            <span style={{ fontFamily: F.ui, fontSize: "0.65rem", letterSpacing: "0.22em", color: C.teal, fontWeight: 700 }} className="uppercase">Brand + Marketing Proposal</span>
+            <span style={{ color: C.border }}>·</span>
+            <span style={{ fontFamily: F.ui, fontSize: "0.65rem", letterSpacing: "0.22em", color: "rgba(252,251,248,0.3)", fontWeight: 600 }} className="uppercase">Prepared by Karle Kreatives</span>
           </div>
-          <div className="bg-[#F4F0E7] rounded-2xl p-7 border border-[#EAE5DB]">
-            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-widest uppercase mb-4">UI / Eyebrows</p>
-            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif", fontSize: "3.5rem", lineHeight: 1, fontWeight: 700 }} className="text-[#142028] mb-4">Aa</p>
-            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#142028] text-lg font-bold mb-3">Flightpath</p>
-            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#23292D]/50 text-xs font-semibold">Bricolage Grotesque</p>
-            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/35 text-xs mt-1">Labels, buttons, navigation, eyebrows</p>
-          </div>
-          <div className="bg-[#F4F0E7] rounded-2xl p-7 border border-[#EAE5DB]">
-            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-widest uppercase mb-4">Body</p>
-            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif", fontSize: "3.5rem", lineHeight: 1, fontWeight: 400 }} className="text-[#142028] mb-4">Aa</p>
-            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#142028] text-lg mb-3">Flightpath</p>
-            <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#23292D]/50 text-xs font-semibold">Hanken Grotesk</p>
-            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/35 text-xs mt-1">Body copy, descriptions, legal</p>
+          <h1 style={{ fontFamily: F.serif, fontSize: "clamp(3.2rem,7vw,6rem)", lineHeight: 1.0, letterSpacing: "-0.025em", color: C.paper }}>
+            A safe place<br />to <em style={{ color: C.gold }}>land.</em>
+          </h1>
+          <p style={{ fontFamily: F.body, fontSize: "1.15rem", lineHeight: 1.7, color: "rgba(252,251,248,0.6)", maxWidth: 520, marginTop: 20 }}>
+            This document is the brand. Everything you're reading — the type, the colors, the voice, the layout — is the Flightpath Teen Detox identity, built and ready to deploy.
+          </p>
+          <div className="flex flex-wrap gap-3 mt-8">
+            <button onClick={() => document.getElementById("project-plan")?.scrollIntoView({ behavior: "smooth" })}
+              style={{ fontFamily: F.ui, fontSize: "0.8rem", fontWeight: 700, background: `linear-gradient(90deg,${C.coral},${C.tangerine},${C.gold})`, color: C.ink, padding: "12px 24px", borderRadius: 999 }}
+              className="flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all">
+              View the Project Plan <ArrowRight size={14} />
+            </button>
+            <button onClick={() => document.getElementById("investment")?.scrollIntoView({ behavior: "smooth" })}
+              style={{ fontFamily: F.ui, fontSize: "0.8rem", fontWeight: 600, border: `1px solid rgba(252,251,248,0.2)`, color: "rgba(252,251,248,0.7)", padding: "12px 24px", borderRadius: 999, background: "transparent" }}
+              className="hover:border-white/40 hover:text-white transition-all">
+              Skip to Pricing
+            </button>
           </div>
         </div>
       </div>
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 animate-bounce z-10">
+        <ChevronDown size={16} style={{ color: "rgba(252,251,248,0.25)" }} />
+      </div>
     </section>
   );
 }
 
-// ─── 7. Voice & Messaging ─────────────────────────────────────────────────────
-function VoiceSection() {
-  const examples = [
-    { label: "Hero headline", text: "A safe place to land." },
-    { label: "Subhead", text: "Medically supervised adolescent detox and stabilization. Genuinely human care for teens and the families who love them." },
-    { label: "For families", text: "The hardest part is the call. We'll take it from there." },
-    { label: "Admissions CTA", text: "Today recovery has a starting point. This is a good one." },
-  ];
+// ─── 2. Mission ───────────────────────────────────────────────────────────────
+function Mission() {
   return (
-    <section id="section-voice" className="bg-[#1B2A33] py-20 md:py-28">
-      <div className="max-w-6xl mx-auto px-8">
-        <Eyebrow light>Voice &amp; Messaging</Eyebrow>
-        <Divider />
-        <div className="grid md:grid-cols-2 gap-12 items-start">
+    <section id="mission" style={{ background: C.ink }} className="py-24 md:py-32">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
           <div>
-            <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(2rem, 3.5vw, 3rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }} className="text-[#FCFBF8] mb-5">
-              Warm, plain-spoken, and <em style={{ color: "#FF8A4C" }}>outcome-first.</em>
-            </h2>
-            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/50 text-base leading-relaxed mb-4">
-              We speak to the parent who is scared and the teen who is exhausted, and the clinician who needs to trust us. No jargon. No false hope. No language that overstates outcomes.
-            </p>
-            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/50 text-base leading-relaxed">
-              Lead with more than the teen. Lead with the family. Sentences that feel like a hand on the shoulder, not a brochure. Confident without being clinical. Structured without being cold.
-            </p>
+            <Tag>The Mission</Tag>
+            <Rule />
+            <H2 light>Recovery as a flight path — not a fall from grace.</H2>
+            <div className="mt-6 space-y-4">
+              <Body light>
+                Orange County has no shortage of adult treatment. It has almost no dedicated adolescent medical detox. Flightpath fills that gap — a program built specifically for teens, with clinical protocols, family systems, and a brand that speaks to both the 16-year-old in crisis and the parent who just made the hardest call of their life.
+              </Body>
+              <Body light>
+                The name is intentional. A flight path isn't a fall. It's a charted course — a departure, a climb, and a safe place to land. For a teenager, that reframe matters. Recovery isn't punishment. It's navigation.
+              </Body>
+            </div>
           </div>
-          <div className="flex flex-col gap-4">
-            {examples.map((e) => (
-              <div key={e.label} className="bg-[#142028] rounded-xl p-5 border border-white/[0.06]">
-                <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.62rem] font-bold tracking-widest uppercase mb-2">{e.label}</p>
-                <p style={{ fontFamily: "'Instrument Serif', serif" }} className="text-[#FCFBF8] text-base italic leading-snug">"{e.text}"</p>
+          <div className="grid grid-cols-2 gap-4">
+            {[
+              { num: "13–17", label: "Target age range", sub: "Adolescent-specific care" },
+              { num: "OC", label: "Orange County", sub: "Underserved market" },
+              { num: "24/7", label: "Medical supervision", sub: "Comfort-first protocols" },
+              { num: "100%", label: "Family-integrated", sub: "Parents are part of the plan" },
+            ].map((s) => (
+              <div key={s.num} style={{ background: C.slate, border: `1px solid ${C.border}`, borderRadius: 16, padding: 24 }}>
+                <p style={{ fontFamily: F.ui, fontSize: "2rem", fontWeight: 800, color: C.gold, lineHeight: 1 }}>{s.num}</p>
+                <p style={{ fontFamily: F.ui, fontSize: "0.75rem", fontWeight: 700, color: C.paper, marginTop: 6 }}>{s.label}</p>
+                <p style={{ fontFamily: F.body, fontSize: "0.72rem", color: "rgba(252,251,248,0.35)", marginTop: 2 }}>{s.sub}</p>
               </div>
             ))}
           </div>
@@ -393,95 +260,240 @@ function VoiceSection() {
   );
 }
 
-// ─── 8. Applications ─────────────────────────────────────────────────────────
-function Applications() {
+// ─── 3. Brand Identity ────────────────────────────────────────────────────────
+function Brand() {
+  const [tab, setTab] = useState<"logo"|"color"|"type"|"voice">("logo");
+
+  const tabs: { id: "logo"|"color"|"type"|"voice"; label: string }[] = [
+    { id: "logo", label: "Logo" },
+    { id: "color", label: "Color" },
+    { id: "type", label: "Typography" },
+    { id: "voice", label: "Voice" },
+  ];
+
+  const palette = [
+    { name: "Tangerine", hex: "#FF8A4C", role: "Primary" },
+    { name: "Gold", hex: "#FFD36B", role: "Accent" },
+    { name: "Coral", hex: "#E0561F", role: "CTA" },
+    { name: "Ember", hex: "#C2421F", role: "Deep" },
+    { name: "Twilight", hex: "#142028", role: "Dark base" },
+    { name: "Slate", hex: "#1B2A33", role: "Secondary" },
+    { name: "Paper", hex: "#FCFBF8", role: "Light" },
+    { name: "Cream", hex: "#F4F0E7", role: "Warm bg" },
+  ];
+
+  const voices = [
+    { label: "Hero headline", text: "A safe place to land." },
+    { label: "For families", text: "The hardest part is the call. We'll take it from there." },
+    { label: "Admissions CTA", text: "Today recovery has a starting point. This is a good one." },
+    { label: "About the program", text: "Medically supervised adolescent detox and stabilization. Genuinely human care for teens and the families who love them." },
+    { label: "Instagram caption", text: "Recovery isn't a destination. It's a direction. Every step forward is a waypoint on the path. #FlightpathTeenDetox #TeenRecovery #OrangeCounty" },
+  ];
+
   return (
-    <section id="section-applications" className="bg-[#F4F0E7] py-20 md:py-28">
-      <div className="max-w-6xl mx-auto px-8">
-        <Eyebrow>Applications</Eyebrow>
-        <Divider />
-        <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(2rem, 3.5vw, 3rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }} className="text-[#142028] mb-12">
-          How the brand lives in the world.
-        </h2>
-        <div className="grid md:grid-cols-3 gap-5">
-          {/* Website preview */}
-          <div className="md:col-span-2 bg-[#142028] rounded-2xl overflow-hidden border border-white/[0.07]">
-            <div className="bg-[#0F1A22] px-4 py-2.5 flex items-center gap-2 border-b border-white/[0.06]">
-              <div className="flex gap-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-                <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
-              </div>
-              <div className="flex-1 bg-white/[0.06] rounded-full px-3 py-0.5 mx-2">
-                <span style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/20 text-[0.6rem]">flightpathteendetox.com</span>
-              </div>
-            </div>
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-5">
-                <div className="flex items-center gap-2">
-                  <Delta size={18} />
-                  <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white text-xs font-bold">Flightpath <span className="text-[#FF8A4C]">Teen Detox</span></span>
-                </div>
-                <div className="rounded-full px-3 py-1 text-[0.6rem] font-bold" style={{ background: "linear-gradient(90deg, #E0561F, #FF8A4C, #FFD36B)", color: "#142028", fontFamily: "'Bricolage Grotesque', sans-serif" }}>Verify your benefits</div>
-              </div>
-              <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: "1.8rem", lineHeight: 1.1 }} className="text-[#FCFBF8] mb-2">A safe place<br />to <em style={{ color: "#FFD36B" }}>land.</em></p>
-              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/40 text-xs leading-relaxed mb-4">Medically supervised adolescent detox and stabilization. Genuinely human care.</p>
-              <div className="flex gap-2">
-                <div className="rounded-full px-3 py-1.5 text-[0.65rem] font-bold" style={{ background: "linear-gradient(90deg, #E0561F, #FF8A4C)", color: "#142028", fontFamily: "'Bricolage Grotesque', sans-serif" }}>Talk to our team</div>
-                <div className="rounded-full px-3 py-1.5 text-[0.65rem] font-semibold border border-white/20 text-white/60" style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}>How it works</div>
-              </div>
-            </div>
-          </div>
-          {/* Icon / badge */}
-          <div className="flex flex-col gap-4">
-            <div className="bg-[#142028] rounded-2xl p-6 flex flex-col items-center justify-center gap-3 flex-1">
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center" style={{ background: "linear-gradient(135deg, #E0561F, #FF8A4C, #FFD36B)" }}>
-                <Delta size={36} />
-              </div>
-              <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/30 text-[0.65rem] tracking-widest uppercase">App Icon / Favicon</p>
-            </div>
-            <div className="bg-[#E0561F] rounded-2xl p-6 flex flex-col items-center justify-center gap-2">
-              <svg width="36" height="36" viewBox="0 0 80 80" fill="none" aria-hidden="true">
-                <polygon points="40,6 6,68 40,50 74,68" fill="rgba(255,255,255,0.9)" />
-                <polygon points="40,50 6,68 26,74" fill="rgba(255,255,255,0.5)" />
-                <polygon points="40,50 74,68 54,74" fill="rgba(255,255,255,0.65)" />
-              </svg>
-              <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/50 text-[0.65rem] tracking-widest uppercase">Reversed / Coral</p>
-            </div>
+    <section id="brand" style={{ background: C.cream }} className="py-24 md:py-32">
+      <div className="max-w-7xl mx-auto px-6">
+        <Tag>Brand Identity</Tag>
+        <Rule />
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
+          <H2>The complete visual system.</H2>
+          <div className="flex gap-1 p-1 rounded-xl" style={{ background: C.ink }}>
+            {tabs.map((t) => (
+              <button key={t.id} onClick={() => setTab(t.id)}
+                style={{ fontFamily: F.ui, fontSize: "0.72rem", fontWeight: 700, padding: "7px 16px", borderRadius: 10, transition: "all 0.2s",
+                  background: tab === t.id ? `linear-gradient(90deg,${C.coral},${C.tangerine})` : "transparent",
+                  color: tab === t.id ? C.ink : "rgba(252,251,248,0.4)" }}>
+                {t.label}
+              </button>
+            ))}
           </div>
         </div>
+
+        {tab === "logo" && (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="col-span-2 rounded-2xl p-10 flex flex-col items-center justify-center gap-4" style={{ background: C.ink }}>
+              <div className="flex items-center gap-3">
+                <Delta size={52} />
+                <div>
+                  <p style={{ fontFamily: F.ui, color: C.paper, fontWeight: 700, fontSize: "1.6rem", letterSpacing: "-0.01em" }}>Flightpath</p>
+                  <p style={{ fontFamily: F.ui, color: C.tangerine, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.2em" }}>TEEN DETOX</p>
+                </div>
+              </div>
+              <p style={{ fontFamily: F.ui, color: "rgba(252,251,248,0.2)", fontSize: "0.62rem", letterSpacing: "0.2em" }}>PRIMARY — DARK</p>
+            </div>
+            <div className="col-span-2 rounded-2xl p-10 flex flex-col items-center justify-center gap-4" style={{ background: C.paper, border: `1px solid #EAE5DB` }}>
+              <div className="flex items-center gap-3">
+                <Delta size={52} />
+                <div>
+                  <p style={{ fontFamily: F.ui, color: C.ink, fontWeight: 700, fontSize: "1.6rem", letterSpacing: "-0.01em" }}>Flightpath</p>
+                  <p style={{ fontFamily: F.ui, color: C.coral, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.2em" }}>TEEN DETOX</p>
+                </div>
+              </div>
+              <p style={{ fontFamily: F.ui, color: "rgba(35,41,45,0.2)", fontSize: "0.62rem", letterSpacing: "0.2em" }}>PRIMARY — LIGHT</p>
+            </div>
+            <div className="rounded-2xl p-8 flex flex-col items-center justify-center gap-3" style={{ background: C.slate }}>
+              <Delta size={56} />
+              <p style={{ fontFamily: F.ui, color: "rgba(252,251,248,0.25)", fontSize: "0.62rem", letterSpacing: "0.2em" }}>ICON MARK</p>
+            </div>
+            <div className="rounded-2xl p-8 flex flex-col items-center justify-center gap-3" style={{ background: `linear-gradient(135deg,${C.coral},${C.tangerine},${C.gold})` }}>
+              <Delta size={56} />
+              <p style={{ fontFamily: F.ui, color: "rgba(20,32,40,0.4)", fontSize: "0.62rem", letterSpacing: "0.2em" }}>SUNRISE</p>
+            </div>
+            <div className="rounded-2xl p-8 flex flex-col items-center justify-center gap-3" style={{ background: C.coral }}>
+              <svg width="52" height="52" viewBox="0 0 80 80" fill="none">
+                <polygon points="40,6 6,68 40,50 74,68" fill="rgba(255,255,255,0.9)"/>
+                <polygon points="40,50 6,68 26,74" fill="rgba(255,255,255,0.5)"/>
+                <polygon points="40,50 74,68 54,74" fill="rgba(255,255,255,0.65)"/>
+              </svg>
+              <p style={{ fontFamily: F.ui, color: "rgba(255,255,255,0.4)", fontSize: "0.62rem", letterSpacing: "0.2em" }}>REVERSED</p>
+            </div>
+            <div className="rounded-2xl p-8 flex flex-col items-center justify-center gap-3" style={{ background: C.paper, border: `1px solid #EAE5DB` }}>
+              <div className="flex items-center gap-1.5">
+                <Delta size={20} />
+                <span style={{ fontFamily: F.ui, color: C.ink, fontWeight: 700, fontSize: "0.85rem" }}>Flightpath</span>
+              </div>
+              <p style={{ fontFamily: F.ui, color: "rgba(35,41,45,0.2)", fontSize: "0.62rem", letterSpacing: "0.2em" }}>COMPACT</p>
+            </div>
+          </div>
+        )}
+
+        {tab === "color" && (
+          <div>
+            <div className="h-16 rounded-2xl mb-8" style={{ background: `linear-gradient(90deg,#C2421F 0%,${C.coral} 20%,${C.tangerine} 45%,#FFB259 65%,${C.gold} 100%)` }} />
+            <div className="grid grid-cols-4 md:grid-cols-8 gap-3">
+              {palette.map((c) => (
+                <div key={c.name}>
+                  <div className="h-20 rounded-xl mb-2" style={{ background: c.hex, border: `1px solid rgba(0,0,0,0.06)` }} />
+                  <p style={{ fontFamily: F.ui, fontSize: "0.72rem", fontWeight: 700, color: C.ink }}>{c.name}</p>
+                  <p style={{ fontFamily: F.body, fontSize: "0.65rem", color: "rgba(35,41,45,0.45)" }}>{c.hex}</p>
+                  <p style={{ fontFamily: F.body, fontSize: "0.6rem", color: "rgba(35,41,45,0.3)" }}>{c.role}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {tab === "type" && (
+          <div className="grid md:grid-cols-3 gap-5">
+            {[
+              { role: "Display", font: F.serif, name: "Instrument Serif", usage: "Headlines, hero text, pull quotes", weight: 400 },
+              { role: "UI + Labels", font: F.ui, name: "Bricolage Grotesque", usage: "Buttons, nav, eyebrows, tags", weight: 700 },
+              { role: "Body", font: F.body, name: "Hanken Grotesk", usage: "Body copy, descriptions, captions", weight: 400 },
+            ].map((t) => (
+              <div key={t.name} style={{ background: C.paper, border: `1px solid #EAE5DB`, borderRadius: 16, padding: 28 }}>
+                <p style={{ fontFamily: F.ui, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", color: C.teal }} className="uppercase mb-4">{t.role}</p>
+                <p style={{ fontFamily: t.font, fontSize: "3.5rem", lineHeight: 1, fontWeight: t.weight, color: C.ink }} className="mb-3">Aa</p>
+                <p style={{ fontFamily: t.font, fontWeight: t.weight, fontSize: "1.2rem", color: C.ink }} className="mb-3">Flightpath</p>
+                <p style={{ fontFamily: F.ui, fontSize: "0.72rem", fontWeight: 700, color: "rgba(35,41,45,0.5)" }}>{t.name}</p>
+                <p style={{ fontFamily: F.body, fontSize: "0.7rem", color: "rgba(35,41,45,0.35)", marginTop: 4 }}>{t.usage}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {tab === "voice" && (
+          <div className="grid md:grid-cols-2 gap-5">
+            <div style={{ background: C.ink, borderRadius: 16, padding: 28 }}>
+              <p style={{ fontFamily: F.ui, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", color: C.teal }} className="uppercase mb-4">Voice Principles</p>
+              {[
+                ["Warm, not clinical", "We sound like a hand on the shoulder, not a brochure."],
+                ["Plain-spoken", "No jargon. No false hope. No language that overstates outcomes."],
+                ["Outcome-first", "Lead with where they're going, not where they've been."],
+                ["Family-aware", "We speak to the parent as much as the teen."],
+              ].map(([h, b]) => (
+                <div key={h} style={{ borderBottom: `1px solid ${C.border}`, paddingBottom: 14, marginBottom: 14 }}>
+                  <p style={{ fontFamily: F.ui, fontSize: "0.8rem", fontWeight: 700, color: C.paper }}>{h}</p>
+                  <p style={{ fontFamily: F.body, fontSize: "0.8rem", color: "rgba(252,251,248,0.4)", marginTop: 3 }}>{b}</p>
+                </div>
+              ))}
+            </div>
+            <div className="flex flex-col gap-4">
+              {voices.map((v) => (
+                <div key={v.label} style={{ background: C.paper, border: `1px solid #EAE5DB`, borderRadius: 14, padding: 20 }}>
+                  <p style={{ fontFamily: F.ui, fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.2em", color: C.teal }} className="uppercase mb-2">{v.label}</p>
+                  <p style={{ fontFamily: F.serif, fontSize: "1rem", fontStyle: "italic", color: C.ink, lineHeight: 1.5 }}>"{v.text}"</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
 }
 
-// ─── 9. Engagement Paths ─────────────────────────────────────────────────────
-function Engagement() {
+// ─── 4. Project Plan ──────────────────────────────────────────────────────────
+function ProjectPlan() {
+  const phases = [
+    {
+      num: "01", phase: "Departure", weeks: "Weeks 1–3", color: C.coral,
+      title: "Brand Foundation",
+      deliverables: [
+        "Brand strategy document (positioning, audience, competitive landscape)",
+        "Name finalization + trademark screening",
+        "Logo system (primary, icon, reversed, compact)",
+        "Full color palette + typography system",
+        "Brand voice guide + messaging framework",
+        "Brand guidelines PDF (print-ready)",
+      ],
+    },
+    {
+      num: "02", phase: "Climb", weeks: "Weeks 4–7", color: C.tangerine,
+      title: "Digital Presence",
+      deliverables: [
+        "Website design + development (5–7 pages)",
+        "Google Business Profile setup + optimization",
+        "Google Analytics 4 + Search Console configuration",
+        "Email signature templates",
+        "Social media profile setup (Instagram, Facebook, LinkedIn)",
+        "HIPAA-compliant contact form + admissions flow",
+      ],
+    },
+    {
+      num: "03", phase: "Cruise", weeks: "Weeks 8–10", color: C.gold,
+      title: "Launch + Marketing",
+      deliverables: [
+        "30-day content calendar (social + blog)",
+        "Launch campaign (organic + paid)",
+        "Referral outreach kit (for therapists, schools, pediatricians)",
+        "Google Ads setup (branded + non-branded)",
+        "Meta Ads setup (awareness + retargeting)",
+        "Baseline analytics report + 90-day roadmap",
+      ],
+    },
+  ];
+
   return (
-    <section id="section-engagement" className="bg-[#142028] py-20 md:py-28">
-      <div className="max-w-6xl mx-auto px-8">
-        <Eyebrow gold>Engagement</Eyebrow>
-        <Divider />
-        <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(2rem, 3.5vw, 3rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }} className="text-[#FCFBF8] mb-4">
-          A full-stack marketing engagement — not a monthly retainer.
-        </h2>
-        <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/45 text-base leading-relaxed mb-12 max-w-2xl">
-          Direction: brand strategy, brand creation, and hands-on execution, structured to start here and scale into a full-time role as the program grows.
-        </p>
-        {/* Three phases */}
-        <div className="grid md:grid-cols-3 gap-1 mb-12">
-          {[
-            { num: "Phase 1", label: "Departure", sub: "Brand Buildout", desc: "Identity to launch. One-time engagement to build the full brand foundation and get the program to market." },
-            { num: "Phase 2", label: "Climb", sub: "Contract Retainer", desc: "Monthly marketing, social, SEO, and outreach. Ongoing execution structured to grow census." },
-            { num: "Phase 3", label: "Cruise", sub: "Part-Time Role", desc: "Embedded Director of Marketing with benefits. Strategy to systems, full ownership of the marketing function." },
-          ].map((p, i) => (
-            <div key={p.num} className={`p-6 ${i === 0 ? "rounded-l-2xl" : i === 2 ? "rounded-r-2xl" : ""} ${i === 1 ? "bg-[#1B2A33]" : "bg-[#1B2A33]/60"} border border-white/[0.06]`}>
-              <div className="w-10 h-10 rounded-full flex items-center justify-center mb-4" style={{ background: "linear-gradient(135deg, #E0561F, #FF8A4C, #FFD36B)" }}>
-                <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#142028] text-xs font-extrabold">{i + 1}</span>
+    <section id="project-plan" style={{ background: C.ink }} className="py-24 md:py-32">
+      <div className="max-w-7xl mx-auto px-6">
+        <Tag>Project Plan</Tag>
+        <Rule />
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+          <H2 light>10-week launch plan. Three phases.</H2>
+          <p style={{ fontFamily: F.body, fontSize: "0.85rem", color: "rgba(252,251,248,0.35)", maxWidth: 280 }}>
+            From signed proposal to live program, fully branded and market-ready.
+          </p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-5">
+          {phases.map((p) => (
+            <div key={p.num} style={{ background: C.slate, border: `1px solid ${C.border}`, borderRadius: 20, overflow: "hidden" }}>
+              <div style={{ borderBottom: `1px solid ${C.border}`, padding: "20px 24px" }}>
+                <div className="flex items-center justify-between mb-3">
+                  <span style={{ fontFamily: F.ui, fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.2em", color: p.color }} className="uppercase">Phase {p.num} · {p.phase}</span>
+                  <span style={{ fontFamily: F.ui, fontSize: "0.62rem", color: "rgba(252,251,248,0.3)", background: "rgba(255,255,255,0.05)", padding: "3px 10px", borderRadius: 999 }}>{p.weeks}</span>
+                </div>
+                <p style={{ fontFamily: F.serif, fontSize: "1.4rem", color: C.paper }}>{p.title}</p>
               </div>
-              <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-widest uppercase mb-1">{p.num} · {p.label}</p>
-              <p style={{ fontFamily: "'Instrument Serif', serif" }} className="text-[#FCFBF8] text-xl mb-3">{p.sub}</p>
-              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/40 text-sm leading-relaxed">{p.desc}</p>
+              <div style={{ padding: "20px 24px" }}>
+                {p.deliverables.map((d) => (
+                  <div key={d} className="flex items-start gap-2.5 mb-3">
+                    <div style={{ width: 16, height: 16, borderRadius: "50%", background: `${p.color}22`, border: `1px solid ${p.color}55`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 2 }}>
+                      <Check size={8} style={{ color: p.color }} />
+                    </div>
+                    <p style={{ fontFamily: F.body, fontSize: "0.82rem", color: "rgba(252,251,248,0.65)", lineHeight: 1.5 }}>{d}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
@@ -490,130 +502,68 @@ function Engagement() {
   );
 }
 
-// ─── 10. Investment / Pricing ─────────────────────────────────────────────────
-function Investment() {
-  const phase1Deliverables = [
-    ["Brand strategy", "Name, messaging, guidelines"],
-    ["Website", "Design + development"],
-    ["Logo + visual system", "Full asset suite"],
-    ["Messaging", "Voice, copy framework"],
-    ["Digital presence", "Google setup, email signature templates"],
-    ["Marketing strategy", "Launch plan"],
-    ["Reporting", "Baseline analytics setup"],
+// ─── 5. Website Plan ──────────────────────────────────────────────────────────
+function WebsitePlan() {
+  const pages = [
+    { name: "Home", path: "/", desc: "Hero with OC aerial, program overview, trust signals, insurance CTA", priority: "Launch" },
+    { name: "About", path: "/about", desc: "Our story, clinical philosophy, team bios, facility photos", priority: "Launch" },
+    { name: "Teen Medical Detox", path: "/detox", desc: "What it is, what to expect, safety protocols, comfort-first approach", priority: "Launch" },
+    { name: "For Families", path: "/families", desc: "What parents need to know, how to start, FAQ, support resources", priority: "Launch" },
+    { name: "Admissions", path: "/admissions", desc: "Insurance verification form, intake checklist, what to bring", priority: "Launch" },
+    { name: "Blog / Resources", path: "/resources", desc: "SEO-driven educational content for parents and teens", priority: "Phase 2" },
+    { name: "Dual Diagnosis", path: "/dual-diagnosis", desc: "Co-occurring mental health + substance use in adolescents", priority: "Phase 2" },
+    { name: "Contact", path: "/contact", desc: "24/7 admissions line, map, HIPAA-compliant contact form", priority: "Launch" },
   ];
-  const phase2Deliverables = [
-    ["Content creation", "Monthly content calendar"],
-    ["Ads management", "Paid social + search"],
-    ["Social media management", "SEO, Google Business"],
-    ["Monthly outreach", "Campaigns, teen plan"],
-    ["Monthly SEO reporting", "Rankings + traffic"],
-  ];
-  const phase3Deliverables = [
-    ["Director of Marketing title", "With benefits"],
-    ["Ongoing strategy", "Systems to scale"],
-    ["Social media management", "SEO, Google Business"],
-    ["Monthly outreach campaigns", "Teen plan"],
-    ["Monthly SEO reporting", "Full analytics"],
+
+  const features = [
+    "HIPAA-compliant contact + admissions forms",
+    "Insurance verification widget",
+    "24/7 admissions phone number (click-to-call mobile)",
+    "Google Analytics 4 + conversion tracking",
+    "Live chat integration (optional)",
+    "SEO-optimized page structure + schema markup",
+    "Mobile-first responsive design",
+    "Page speed optimized (Core Web Vitals)",
   ];
 
   return (
-    <section id="section-investment" className="bg-[#FCFBF8] py-20 md:py-28">
-      <div className="max-w-6xl mx-auto px-8">
-        <Eyebrow>Investment</Eyebrow>
-        <Divider />
-        <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(2rem, 3.5vw, 3rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }} className="text-[#142028] mb-4">
-          All three reflect a <em style={{ color: "#E0561F" }}>below-rate discount</em> for the mission.
-        </h2>
-        <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-[#23292D]/55 text-base leading-relaxed mb-12 max-w-2xl">
-          Standard rates for three-piece brand buildouts range from $8,000–$12,000. This is mission-driven pricing. An intentional decision to build something that matters at a rate that makes it possible.
-        </p>
-
-        <div className="grid md:grid-cols-3 gap-5">
-          {/* Phase 1 */}
-          <div className="bg-[#142028] rounded-2xl overflow-hidden">
-            <div className="p-6 border-b border-white/[0.07]">
-              <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-widest uppercase mb-2">Phase 1 · Departure</p>
-              <p style={{ fontFamily: "'Instrument Serif', serif" }} className="text-[#FCFBF8] text-xl mb-1">Brand Buildout</p>
-              <div className="flex items-baseline gap-1 mt-3">
-                <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#FFD36B] text-4xl font-extrabold">$5,000</span>
-                <span style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/30 text-sm">one-time</span>
+    <section id="website" style={{ background: C.cream }} className="py-24 md:py-32">
+      <div className="max-w-7xl mx-auto px-6">
+        <Tag>Website Plan</Tag>
+        <Rule />
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+          <H2>Built to convert. Designed to trust.</H2>
+          <p style={{ fontFamily: F.body, fontSize: "0.85rem", color: "rgba(35,41,45,0.45)", maxWidth: 280 }}>
+            5–7 pages at launch. Structured for SEO and admissions from day one.
+          </p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-5 mb-10">
+          {pages.map((p) => (
+            <div key={p.name} style={{ background: C.paper, border: `1px solid #EAE5DB`, borderRadius: 14, padding: 20 }}>
+              <div className="flex items-center justify-between mb-2">
+                <p style={{ fontFamily: F.ui, fontSize: "0.85rem", fontWeight: 700, color: C.ink }}>{p.name}</p>
+                <span style={{ fontFamily: F.ui, fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.15em",
+                  background: p.priority === "Launch" ? `${C.coral}18` : `${C.teal}18`,
+                  color: p.priority === "Launch" ? C.coral : C.teal,
+                  border: `1px solid ${p.priority === "Launch" ? C.coral : C.teal}33`,
+                  padding: "2px 8px", borderRadius: 999 }} className="uppercase">{p.priority}</span>
               </div>
-              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/35 text-xs mt-1">50% on approval · 50% on delivery</p>
+              <p style={{ fontFamily: F.body, fontSize: "0.72rem", color: "rgba(35,41,45,0.4)", marginBottom: 6 }}>{p.path}</p>
+              <p style={{ fontFamily: F.body, fontSize: "0.8rem", color: "rgba(35,41,45,0.6)", lineHeight: 1.5 }}>{p.desc}</p>
             </div>
-            <div className="p-6">
-              <div className="flex flex-col gap-2.5">
-                {phase1Deliverables.map(([item, sub]) => (
-                  <div key={item} className="flex items-start gap-2.5">
-                    <div className="w-4 h-4 rounded-full bg-[#2FB6A6]/20 border border-[#2FB6A6]/40 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Check size={8} className="text-[#2FB6A6]" />
-                    </div>
-                    <div>
-                      <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/80 text-sm font-medium">{item}</p>
-                      <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/30 text-xs">{sub}</p>
-                    </div>
-                  </div>
-                ))}
+          ))}
+        </div>
+        <div style={{ background: C.ink, borderRadius: 20, padding: 32 }}>
+          <p style={{ fontFamily: F.ui, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", color: C.teal }} className="uppercase mb-5">Technical Features</p>
+          <div className="grid md:grid-cols-2 gap-3">
+            {features.map((f) => (
+              <div key={f} className="flex items-center gap-2.5">
+                <div style={{ width: 16, height: 16, borderRadius: "50%", background: `${C.teal}22`, border: `1px solid ${C.teal}55`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <Check size={8} style={{ color: C.teal }} />
+                </div>
+                <p style={{ fontFamily: F.body, fontSize: "0.82rem", color: "rgba(252,251,248,0.65)" }}>{f}</p>
               </div>
-            </div>
-          </div>
-
-          {/* Phase 2 */}
-          <div className="bg-[#1B2A33] rounded-2xl overflow-hidden border-2 border-[#FF8A4C]/40 relative">
-            <div className="absolute top-4 right-4">
-              <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[0.6rem] font-bold tracking-widest uppercase bg-[#FF8A4C]/20 text-[#FF8A4C] border border-[#FF8A4C]/30 rounded-full px-2.5 py-0.5">Recommended</span>
-            </div>
-            <div className="p-6 border-b border-white/[0.07]">
-              <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-widest uppercase mb-2">Phase 2 · Climb</p>
-              <p style={{ fontFamily: "'Instrument Serif', serif" }} className="text-[#FCFBF8] text-xl mb-1">Contract Retainer</p>
-              <div className="flex items-baseline gap-1 mt-3">
-                <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#FFD36B] text-4xl font-extrabold">$3.5–5K</span>
-                <span style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/30 text-sm">/mo</span>
-              </div>
-              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/35 text-xs mt-1">After Phase 1 · 3-month minimum</p>
-            </div>
-            <div className="p-6">
-              <div className="flex flex-col gap-2.5">
-                {phase2Deliverables.map(([item, sub]) => (
-                  <div key={item} className="flex items-start gap-2.5">
-                    <div className="w-4 h-4 rounded-full bg-[#2FB6A6]/20 border border-[#2FB6A6]/40 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Check size={8} className="text-[#2FB6A6]" />
-                    </div>
-                    <div>
-                      <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/80 text-sm font-medium">{item}</p>
-                      <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/30 text-xs">{sub}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Phase 3 */}
-          <div className="bg-[#142028] rounded-2xl overflow-hidden">
-            <div className="p-6 border-b border-white/[0.07]">
-              <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-widest uppercase mb-2">Phase 3 · Cruise</p>
-              <p style={{ fontFamily: "'Instrument Serif', serif" }} className="text-[#FCFBF8] text-xl mb-1">Part-Time Role</p>
-              <div className="flex items-baseline gap-1 mt-3">
-                <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#FFD36B] text-4xl font-extrabold">$90–115K</span>
-                <span style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/30 text-sm">/yr</span>
-              </div>
-              <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/35 text-xs mt-1">Director of Marketing · with benefits</p>
-            </div>
-            <div className="p-6">
-              <div className="flex flex-col gap-2.5">
-                {phase3Deliverables.map(([item, sub]) => (
-                  <div key={item} className="flex items-start gap-2.5">
-                    <div className="w-4 h-4 rounded-full bg-[#2FB6A6]/20 border border-[#2FB6A6]/40 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Check size={8} className="text-[#2FB6A6]" />
-                    </div>
-                    <div>
-                      <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/80 text-sm font-medium">{item}</p>
-                      <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/30 text-xs">{sub}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
@@ -621,83 +571,505 @@ function Investment() {
   );
 }
 
-// ─── 11. Approval / Close ─────────────────────────────────────────────────────
-function Approval() {
-  const [name, setName] = useState("");
-  const [approved, setApproved] = useState(false);
+// ─── 6. Social Media Strategy ─────────────────────────────────────────────────
+function SocialStrategy() {
+  const platforms = [
+    { icon: <Instagram size={20} />, name: "Instagram", handle: "@flightpathteendetox", freq: "5x/week", audience: "Parents 35–55, teens 16–19", focus: "Brand awareness, trust-building, education" },
+    { icon: <Globe size={20} />, name: "Facebook", handle: "Flightpath Teen Detox", freq: "3x/week", audience: "Parents 35–60, referral partners", focus: "Community, family resources, event sharing" },
+    { icon: <Search size={20} />, name: "Google Business", handle: "Flightpath Teen Detox", freq: "Weekly updates", audience: "Active searchers, local", focus: "Reviews, Q&A, admissions hours, photos" },
+    { icon: <Target size={20} />, name: "LinkedIn", handle: "Flightpath Teen Detox", freq: "2x/week", audience: "Therapists, pediatricians, schools", focus: "Referral relationships, clinical credibility" },
+  ];
+
+  const pillars = [
+    { name: "Education", pct: 35, color: C.tangerine, desc: "What is teen detox? Signs of withdrawal. How to talk to your teen about treatment." },
+    { name: "Hope", pct: 25, color: C.gold, desc: "Recovery stories (with consent), milestone moments, staff spotlights." },
+    { name: "Trust", pct: 20, color: C.teal, desc: "Behind-the-scenes facility, clinical team introductions, safety protocols." },
+    { name: "Action", pct: 20, color: C.coral, desc: "Insurance verification, admissions CTAs, 24/7 line reminders." },
+  ];
 
   return (
-    <section
-      id="section-approval"
-      className="relative py-20 md:py-28 overflow-hidden"
-      style={{ background: "linear-gradient(135deg, #1B2A33 0%, #142028 60%, #0F1A22 100%)" }}
-    >
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at 30% 60%, rgba(224,86,31,0.12) 0%, transparent 60%)" }}
-        aria-hidden="true"
-      />
-      <div className="max-w-6xl mx-auto px-8 relative z-10">
+    <section id="social" style={{ background: C.ink }} className="py-24 md:py-32">
+      <div className="max-w-7xl mx-auto px-6">
+        <Tag>Social Media Strategy</Tag>
+        <Rule />
+        <H2 light>Four platforms. One consistent voice.</H2>
+        <p style={{ fontFamily: F.body, fontSize: "1rem", color: "rgba(252,251,248,0.5)", maxWidth: 560, marginTop: 12, marginBottom: 40, lineHeight: 1.7 }}>
+          Social media for a teen detox isn't about virality. It's about being findable, credible, and human when a parent searches at 2am.
+        </p>
+        <div className="grid md:grid-cols-2 gap-5 mb-12">
+          {platforms.map((p) => (
+            <div key={p.name} style={{ background: C.slate, border: `1px solid ${C.border}`, borderRadius: 16, padding: 24 }}>
+              <div className="flex items-center gap-3 mb-4">
+                <div style={{ width: 40, height: 40, borderRadius: 10, background: `linear-gradient(135deg,${C.coral},${C.tangerine})`, display: "flex", alignItems: "center", justifyContent: "center", color: C.ink }}>
+                  {p.icon}
+                </div>
+                <div>
+                  <p style={{ fontFamily: F.ui, fontSize: "0.9rem", fontWeight: 700, color: C.paper }}>{p.name}</p>
+                  <p style={{ fontFamily: F.body, fontSize: "0.72rem", color: "rgba(252,251,248,0.35)" }}>{p.handle}</p>
+                </div>
+                <span style={{ marginLeft: "auto", fontFamily: F.ui, fontSize: "0.65rem", fontWeight: 700, color: C.gold, background: `${C.gold}15`, border: `1px solid ${C.gold}30`, padding: "3px 10px", borderRadius: 999 }}>{p.freq}</span>
+              </div>
+              <p style={{ fontFamily: F.body, fontSize: "0.78rem", color: "rgba(252,251,248,0.4)", marginBottom: 6 }}>Audience: {p.audience}</p>
+              <p style={{ fontFamily: F.body, fontSize: "0.82rem", color: "rgba(252,251,248,0.6)", lineHeight: 1.5 }}>{p.focus}</p>
+            </div>
+          ))}
+        </div>
+        <div style={{ background: C.slate, border: `1px solid ${C.border}`, borderRadius: 20, padding: 32 }}>
+          <p style={{ fontFamily: F.ui, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", color: C.teal }} className="uppercase mb-6">Content Pillars</p>
+          <div className="grid md:grid-cols-4 gap-5">
+            {pillars.map((p) => (
+              <div key={p.name}>
+                <div className="flex items-center justify-between mb-2">
+                  <p style={{ fontFamily: F.ui, fontSize: "0.8rem", fontWeight: 700, color: C.paper }}>{p.name}</p>
+                  <p style={{ fontFamily: F.ui, fontSize: "0.8rem", fontWeight: 800, color: p.color }}>{p.pct}%</p>
+                </div>
+                <div style={{ height: 4, background: "rgba(255,255,255,0.08)", borderRadius: 2, marginBottom: 10 }}>
+                  <div style={{ height: "100%", width: `${p.pct * 2.5}%`, background: p.color, borderRadius: 2 }} />
+                </div>
+                <p style={{ fontFamily: F.body, fontSize: "0.75rem", color: "rgba(252,251,248,0.4)", lineHeight: 1.5 }}>{p.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── 7. Content Examples ──────────────────────────────────────────────────────
+function ContentExamples() {
+  const captions = [
+    {
+      type: "Education Post",
+      img: SOCIAL_3,
+      caption: "What actually happens during teen medical detox?\n\nWithdrawal looks different for every teenager. That's why Flightpath uses individualized protocols — not a one-size approach.\n\nHere's what families can expect:\n→ 24/7 medical supervision\n→ Comfort-focused medication management\n→ Daily check-ins with our clinical team\n→ Family communication throughout\n\nYou don't have to figure this out alone.\n\n#FlightpathTeenDetox #TeenRecovery #AdolescentDetox #OrangeCounty",
+    },
+    {
+      type: "Brand Awareness",
+      img: SOCIAL_1,
+      caption: "Recovery isn't a fall from grace.\n\nIt's a flight path.\n\nA departure. A climb. A safe place to land.\n\nFlightpath Teen Detox is Orange County's dedicated adolescent medical detox — built specifically for teens, with the clinical protocols and human care that families deserve.\n\nLink in bio to verify insurance.\n\n#FlightpathTeenDetox #TeenRecovery #OrangeCounty #AdolescentCare",
+    },
+    {
+      type: "For Families",
+      img: SOCIAL_2,
+      caption: "The hardest part is the call.\n\nWe know. We've been on the other end of thousands of them.\n\nYou don't need to have it figured out. You just need to make the call.\n\nOur admissions team is available 24/7 — no judgment, no pressure, just answers.\n\nTap the link in bio or call us directly.\n\n#FlightpathTeenDetox #ForFamilies #TeenDetox #YouAreNotAlone",
+    },
+  ];
+
+  return (
+    <section id="content" style={{ background: C.cream }} className="py-24 md:py-32">
+      <div className="max-w-7xl mx-auto px-6">
+        <Tag>Content Examples</Tag>
+        <Rule />
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+          <H2>Real posts. Real voice. Ready to publish.</H2>
+          <p style={{ fontFamily: F.body, fontSize: "0.85rem", color: "rgba(35,41,45,0.45)", maxWidth: 280 }}>
+            These are sample deliverables from Month 1 of the retainer.
+          </p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-6">
+          {captions.map((c) => (
+            <div key={c.type} style={{ background: C.paper, border: `1px solid #EAE5DB`, borderRadius: 20, overflow: "hidden" }}>
+              {/* Instagram-style post header */}
+              <div style={{ padding: "12px 16px", borderBottom: `1px solid #EAE5DB`, display: "flex", alignItems: "center", gap: 10 }}>
+                <div style={{ width: 32, height: 32, borderRadius: "50%", background: `linear-gradient(135deg,${C.coral},${C.gold})`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <Delta size={16} />
+                </div>
+                <div>
+                  <p style={{ fontFamily: F.ui, fontSize: "0.75rem", fontWeight: 700, color: C.ink }}>flightpathteendetox</p>
+                  <p style={{ fontFamily: F.body, fontSize: "0.65rem", color: "rgba(35,41,45,0.4)" }}>Orange County, CA</p>
+                </div>
+              </div>
+              <img src={c.img} alt={c.type} className="w-full aspect-square object-cover" />
+              <div style={{ padding: 16 }}>
+                <span style={{ fontFamily: F.ui, fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.15em", color: C.teal, background: `${C.teal}15`, border: `1px solid ${C.teal}30`, padding: "2px 8px", borderRadius: 999 }} className="uppercase">{c.type}</span>
+                <p style={{ fontFamily: F.body, fontSize: "0.78rem", color: "rgba(35,41,45,0.65)", lineHeight: 1.6, marginTop: 10, whiteSpace: "pre-line" }}>{c.caption}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        {/* Monthly calendar preview */}
+        <div style={{ background: C.ink, borderRadius: 20, padding: 32, marginTop: 24 }}>
+          <div className="flex items-center justify-between mb-6">
+            <p style={{ fontFamily: F.ui, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", color: C.teal }} className="uppercase">Sample Monthly Content Calendar</p>
+            <div className="flex items-center gap-2">
+              {[["Education", C.tangerine], ["Hope", C.gold], ["Trust", C.teal], ["Action", C.coral]].map(([l, c]) => (
+                <span key={l as string} style={{ fontFamily: F.ui, fontSize: "0.6rem", fontWeight: 700, color: c as string, background: `${c as string}18`, border: `1px solid ${c as string}30`, padding: "2px 8px", borderRadius: 999 }}>{l as string}</span>
+              ))}
+            </div>
+          </div>
+          <div className="grid grid-cols-7 gap-2">
+            {["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map(d => (
+              <p key={d} style={{ fontFamily: F.ui, fontSize: "0.62rem", fontWeight: 700, color: "rgba(252,251,248,0.25)", textAlign: "center" }}>{d}</p>
+            ))}
+            {[
+              { day: 1, type: "Education", post: "What is teen detox?" },
+              { day: 2, type: null, post: null },
+              { day: 3, type: "Hope", post: "Staff spotlight" },
+              { day: 4, type: "Trust", post: "Facility tour" },
+              { day: 5, type: "Action", post: "Verify benefits" },
+              { day: 6, type: null, post: null },
+              { day: 7, type: null, post: null },
+              { day: 8, type: "Education", post: "Signs of withdrawal" },
+              { day: 9, type: "Action", post: "24/7 admissions" },
+              { day: 10, type: null, post: null },
+              { day: 11, type: "Hope", post: "Recovery milestone" },
+              { day: 12, type: "Trust", post: "Meet the team" },
+              { day: 13, type: "Education", post: "Talking to your teen" },
+              { day: 14, type: null, post: null },
+            ].map((item, i) => {
+              const colorMap: Record<string, string> = { Education: C.tangerine, Hope: C.gold, Trust: C.teal, Action: C.coral };
+              return (
+                <div key={i} style={{ background: item.type ? `${colorMap[item.type]}15` : "rgba(255,255,255,0.03)", border: `1px solid ${item.type ? colorMap[item.type] + "30" : C.border}`, borderRadius: 10, padding: "8px 6px", minHeight: 64 }}>
+                  <p style={{ fontFamily: F.ui, fontSize: "0.65rem", fontWeight: 700, color: item.type ? colorMap[item.type] : "rgba(252,251,248,0.15)" }}>{item.day}</p>
+                  {item.post && <p style={{ fontFamily: F.body, fontSize: "0.6rem", color: "rgba(252,251,248,0.5)", marginTop: 3, lineHeight: 1.3 }}>{item.post}</p>}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── 8. Paid Ads ──────────────────────────────────────────────────────────────
+function PaidAds() {
+  const campaigns = [
+    {
+      platform: "Google Search",
+      icon: <Search size={18} />,
+      budget: "$800–1,200/mo",
+      targeting: "High-intent keywords: 'teen detox Orange County', 'adolescent detox near me', 'teen drug treatment OC'",
+      format: "Text ads + call extensions",
+      goal: "Direct admissions inquiries",
+    },
+    {
+      platform: "Meta (Facebook + Instagram)",
+      icon: <Instagram size={18} />,
+      budget: "$600–900/mo",
+      targeting: "Parents 30–55 in OC/LA, interests: parenting teens, mental health, addiction recovery",
+      format: "Awareness video + retargeting carousel",
+      goal: "Brand awareness + website traffic",
+    },
+    {
+      platform: "Google Display + YouTube",
+      icon: <Megaphone size={18} />,
+      budget: "$400–600/mo",
+      targeting: "Retargeting website visitors + lookalike audiences from admissions inquiries",
+      format: "Display banners + 15-sec pre-roll",
+      goal: "Retargeting + top-of-funnel",
+    },
+  ];
+
+  return (
+    <section id="ads" style={{ background: C.ink }} className="py-24 md:py-32">
+      <div className="max-w-7xl mx-auto px-6">
+        <Tag>Paid Advertising</Tag>
+        <Rule />
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
+          <H2 light>Be findable when it matters most.</H2>
+          <p style={{ fontFamily: F.body, fontSize: "0.85rem", color: "rgba(252,251,248,0.35)", maxWidth: 280 }}>
+            Included in the retainer. Managed monthly with performance reporting.
+          </p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-5 mb-10">
+          {campaigns.map((c) => (
+            <div key={c.platform} style={{ background: C.slate, border: `1px solid ${C.border}`, borderRadius: 18, padding: 24 }}>
+              <div className="flex items-center gap-3 mb-5">
+                <div style={{ width: 40, height: 40, borderRadius: 10, background: `linear-gradient(135deg,${C.coral},${C.tangerine})`, display: "flex", alignItems: "center", justifyContent: "center", color: C.ink }}>
+                  {c.icon}
+                </div>
+                <div>
+                  <p style={{ fontFamily: F.ui, fontSize: "0.85rem", fontWeight: 700, color: C.paper }}>{c.platform}</p>
+                  <p style={{ fontFamily: F.ui, fontSize: "0.7rem", fontWeight: 700, color: C.gold }}>{c.budget}</p>
+                </div>
+              </div>
+              {[["Targeting", c.targeting], ["Format", c.format], ["Goal", c.goal]].map(([l, v]) => (
+                <div key={l} style={{ borderTop: `1px solid ${C.border}`, paddingTop: 12, marginTop: 12 }}>
+                  <p style={{ fontFamily: F.ui, fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.15em", color: C.teal }} className="uppercase mb-1">{l}</p>
+                  <p style={{ fontFamily: F.body, fontSize: "0.8rem", color: "rgba(252,251,248,0.55)", lineHeight: 1.5 }}>{v}</p>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+        <div style={{ background: C.slate, border: `1px solid ${C.border}`, borderRadius: 18, padding: 28 }}>
+          <div className="flex items-center gap-3 mb-4">
+            <BarChart2 size={18} style={{ color: C.teal }} />
+            <p style={{ fontFamily: F.ui, fontSize: "0.75rem", fontWeight: 700, color: C.paper }}>Monthly Reporting Includes</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-3">
+            {["Impressions + reach by platform","Click-through rates + cost per click","Admissions inquiry volume + source attribution","Keyword ranking report (organic + paid)","Social engagement rate + follower growth","Monthly recommendations + budget adjustments"].map((r) => (
+              <div key={r} className="flex items-start gap-2">
+                <Check size={12} style={{ color: C.teal, marginTop: 3, flexShrink: 0 }} />
+                <p style={{ fontFamily: F.body, fontSize: "0.78rem", color: "rgba(252,251,248,0.55)" }}>{r}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── 9. Investment ────────────────────────────────────────────────────────────
+const TIERS = [
+  {
+    id: "phase1", phase: "Phase 1 · Departure", name: "Brand Buildout", price: "$5,000", unit: "one-time",
+    note: "50% on approval · 50% on delivery", recommended: false,
+    deliverables: [
+      ["Brand strategy + positioning","Audience, competitive landscape"],
+      ["Logo system","Primary, icon, reversed, compact"],
+      ["Color + typography system","Full brand guidelines PDF"],
+      ["Website (5–7 pages)","Design + development"],
+      ["Messaging framework","Voice guide + copy"],
+      ["Digital presence setup","Google, social profiles"],
+      ["Launch marketing plan","30-day roadmap"],
+    ],
+  },
+  {
+    id: "phase2", phase: "Phase 2 · Climb", name: "Contract Retainer", price: "$3.5–5K", unit: "/mo",
+    note: "After Phase 1 · 3-month minimum", recommended: true,
+    deliverables: [
+      ["Monthly content calendar","Social + blog"],
+      ["Social media management","IG, FB, LinkedIn, Google"],
+      ["Paid ads management","Google + Meta"],
+      ["SEO + Google Business","Rankings + local visibility"],
+      ["Monthly performance report","Data + recommendations"],
+    ],
+  },
+  {
+    id: "phase3", phase: "Phase 3 · Cruise", name: "Part-Time Role", price: "$90–115K", unit: "/yr",
+    note: "Director of Marketing · with benefits", recommended: false,
+    deliverables: [
+      ["Director of Marketing title","With benefits"],
+      ["Full marketing ownership","Strategy to execution"],
+      ["All retainer deliverables","Ongoing"],
+      ["Census growth strategy","Referral + paid + organic"],
+      ["Quarterly board reporting","KPIs + growth metrics"],
+    ],
+  },
+];
+
+function Investment({ onSelect }: { onSelect: (t: typeof TIERS[0]) => void }) {
+  const [selected, setSelected] = useState("phase1");
+
+  const pick = (t: typeof TIERS[0]) => { setSelected(t.id); onSelect(t); };
+
+  return (
+    <section id="investment" style={{ background: C.cream }} className="py-24 md:py-32">
+      <div className="max-w-7xl mx-auto px-6">
+        <Tag>Investment</Tag>
+        <Rule />
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-4">
+          <H2>Below-rate pricing for the mission.</H2>
+          <p style={{ fontFamily: F.body, fontSize: "0.85rem", color: "rgba(35,41,45,0.45)", maxWidth: 300 }}>
+            Standard brand buildouts run $8–12K. This is mission-driven pricing. Select a tier — it carries into the approval form below.
+          </p>
+        </div>
+        <p style={{ fontFamily: F.ui, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.15em", color: C.teal, display: "flex", alignItems: "center", gap: 8, marginBottom: 32 }}>
+          <span style={{ width: 6, height: 6, borderRadius: "50%", background: C.teal, display: "inline-block", animation: "pulse 2s infinite" }} />
+          SELECT A TIER TO APPROVE
+        </p>
+        <div className="grid md:grid-cols-3 gap-5">
+          {TIERS.map((t) => {
+            const sel = selected === t.id;
+            return (
+              <button key={t.id} onClick={() => pick(t)} className="text-left transition-all duration-200 focus:outline-none"
+                style={{ background: C.ink, borderRadius: 20, overflow: "hidden", border: sel ? `2px solid ${C.tangerine}` : t.recommended ? `2px solid rgba(255,138,76,0.2)` : `2px solid transparent`, boxShadow: sel ? `0 0 0 4px rgba(255,138,76,0.1)` : "none", transform: sel ? "translateY(-4px)" : "none" }}>
+                {t.recommended && (
+                  <div style={{ padding: "12px 24px 0", display: "flex", justifyContent: "flex-end" }}>
+                    <span style={{ fontFamily: F.ui, fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.15em", background: `${C.tangerine}20`, color: C.tangerine, border: `1px solid ${C.tangerine}30`, padding: "2px 10px", borderRadius: 999 }} className="uppercase">Recommended</span>
+                  </div>
+                )}
+                <div style={{ padding: `${t.recommended ? "8px" : "24px"} 24px 20px`, borderBottom: `1px solid ${C.border}` }}>
+                  <p style={{ fontFamily: F.ui, fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.2em", color: C.teal }} className="uppercase mb-2">{t.phase}</p>
+                  <p style={{ fontFamily: F.serif, fontSize: "1.3rem", color: C.paper, marginBottom: 8 }}>{t.name}</p>
+                  <div className="flex items-baseline gap-1">
+                    <span style={{ fontFamily: F.ui, fontSize: "2.4rem", fontWeight: 800, color: C.gold }}>{t.price}</span>
+                    <span style={{ fontFamily: F.body, fontSize: "0.85rem", color: "rgba(252,251,248,0.3)" }}>{t.unit}</span>
+                  </div>
+                  <p style={{ fontFamily: F.body, fontSize: "0.72rem", color: "rgba(252,251,248,0.3)", marginTop: 4 }}>{t.note}</p>
+                </div>
+                <div style={{ padding: 24 }}>
+                  {t.deliverables.map(([item, sub]) => (
+                    <div key={item} className="flex items-start gap-2.5 mb-3">
+                      <div style={{ width: 16, height: 16, borderRadius: "50%", background: sel ? `${C.tangerine}20` : `${C.teal}20`, border: `1px solid ${sel ? C.tangerine : C.teal}50`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 2 }}>
+                        <Check size={8} style={{ color: sel ? C.tangerine : C.teal }} />
+                      </div>
+                      <div>
+                        <p style={{ fontFamily: F.body, fontSize: "0.82rem", fontWeight: 600, color: "rgba(252,251,248,0.8)" }}>{item}</p>
+                        <p style={{ fontFamily: F.body, fontSize: "0.72rem", color: "rgba(252,251,248,0.3)" }}>{sub}</p>
+                      </div>
+                    </div>
+                  ))}
+                  <div style={{ marginTop: 16, borderRadius: 999, padding: "8px 0", textAlign: "center", fontFamily: F.ui, fontSize: "0.72rem", fontWeight: 700, background: sel ? `linear-gradient(90deg,${C.coral},${C.tangerine})` : "rgba(255,255,255,0.05)", color: sel ? C.ink : "rgba(252,251,248,0.25)" }}>
+                    {sel ? "Selected — scroll to approve" : "Click to select"}
+                  </div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── 10. Signature Pad ────────────────────────────────────────────────────────
+function SigPad({ onSign }: { onSign: (d: string | null) => void }) {
+  const ref = useRef<HTMLCanvasElement>(null);
+  const drawing = useRef(false);
+  const last = useRef<{ x: number; y: number } | null>(null);
+  const [has, setHas] = useState(false);
+
+  const pos = (e: React.MouseEvent | React.TouchEvent, c: HTMLCanvasElement) => {
+    const r = c.getBoundingClientRect();
+    const sx = c.width / r.width, sy = c.height / r.height;
+    if ("touches" in e) return { x: (e.touches[0].clientX - r.left) * sx, y: (e.touches[0].clientY - r.top) * sy };
+    return { x: (e.clientX - r.left) * sx, y: (e.clientY - r.top) * sy };
+  };
+
+  const start = useCallback((e: React.MouseEvent | React.TouchEvent) => {
+    e.preventDefault(); drawing.current = true; last.current = pos(e, ref.current!);
+  }, []);
+
+  const move = useCallback((e: React.MouseEvent | React.TouchEvent) => {
+    if (!drawing.current || !ref.current) return; e.preventDefault();
+    const ctx = ref.current.getContext("2d")!;
+    const p = pos(e, ref.current);
+    ctx.beginPath(); ctx.moveTo(last.current!.x, last.current!.y); ctx.lineTo(p.x, p.y);
+    ctx.strokeStyle = C.tangerine; ctx.lineWidth = 2.5; ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.stroke();
+    last.current = p; setHas(true); onSign(ref.current.toDataURL());
+  }, [onSign]);
+
+  const stop = useCallback(() => { drawing.current = false; last.current = null; }, []);
+
+  const clear = () => {
+    const c = ref.current; if (!c) return;
+    c.getContext("2d")!.clearRect(0, 0, c.width, c.height);
+    setHas(false); onSign(null);
+  };
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-1.5">
+        <label style={{ fontFamily: F.ui, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", color: "rgba(252,251,248,0.35)", display: "flex", alignItems: "center", gap: 6 }} className="uppercase">
+          <Pen size={10} style={{ color: C.tangerine }} /> Draw your signature
+        </label>
+        {has && (
+          <button onClick={clear} style={{ fontFamily: F.ui, fontSize: "0.65rem", color: "rgba(252,251,248,0.3)", display: "flex", alignItems: "center", gap: 4 }} className="hover:text-white/60 transition-colors">
+            <RotateCcw size={10} /> Clear
+          </button>
+        )}
+      </div>
+      <div style={{ position: "relative", borderRadius: 12, overflow: "hidden", border: `1px solid rgba(255,255,255,0.1)`, background: C.ink, touchAction: "none" }}>
+        {!has && (
+          <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", pointerEvents: "none" }}>
+            <p style={{ fontFamily: F.serif, fontSize: "1.1rem", fontStyle: "italic", color: "rgba(252,251,248,0.12)" }}>Sign here</p>
+          </div>
+        )}
+        <canvas ref={ref} width={600} height={110} className="w-full cursor-crosshair block" style={{ height: 90 }}
+          onMouseDown={start} onMouseMove={move} onMouseUp={stop} onMouseLeave={stop}
+          onTouchStart={start} onTouchMove={move} onTouchEnd={stop} />
+        <div style={{ position: "absolute", bottom: 16, left: 24, right: 24, height: 1, background: "rgba(255,255,255,0.06)" }} />
+      </div>
+    </div>
+  );
+}
+
+// ─── 11. Approval ─────────────────────────────────────────────────────────────
+function Approval({ tier }: { tier: typeof TIERS[0] }) {
+  const [name, setName] = useState("");
+  const [sig, setSig] = useState<string | null>(null);
+  const [done, setDone] = useState(false);
+  const ok = name.trim().length > 0 && sig !== null;
+
+  return (
+    <section id="approval" style={{ background: `linear-gradient(135deg,${C.slate} 0%,${C.ink} 60%,${C.deep} 100%)` }} className="py-24 md:py-32 relative overflow-hidden">
+      <div style={{ position: "absolute", inset: 0, background: `radial-gradient(ellipse at 30% 60%,rgba(224,86,31,0.1) 0%,transparent 60%)`, pointerEvents: "none" }} />
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div>
-            <Eyebrow gold>Next Steps</Eyebrow>
-            <Divider />
-            <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: "clamp(2.2rem, 4vw, 3.5rem)", lineHeight: 1.1, letterSpacing: "-0.02em" }} className="text-[#FCFBF8] mb-5">
-              Let's give it a <em style={{ color: "#FF8A4C" }}>place to land.</em>
-            </h2>
-            <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/50 text-base leading-relaxed mb-6">
-              An approval is the permission — verbal, written, or by signature — both parties confirm the scope, pricing, and terms outlined here. A formal contract follows.
-            </p>
-            <div className="flex items-center gap-3 mt-8">
-              <Delta size={22} />
-              <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/40 text-sm font-bold">Karle <span className="text-[#FF8A4C]">Kreatives</span></span>
+            <Tag>Next Steps</Tag>
+            <Rule />
+            <H2 light>Let's give it a <em style={{ color: C.tangerine }}>place to land.</em></H2>
+            <div className="mt-6 space-y-4">
+              <Body light>
+                Select your tier above, print your name, draw your signature, and click approve. A formal contract follows within 24 hours. Phase 1 kicks off the following Monday.
+              </Body>
+            </div>
+            <div style={{ marginTop: 32, background: C.slate, border: `1px solid ${C.border}`, borderRadius: 16, padding: 20 }}>
+              <p style={{ fontFamily: F.ui, fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.2em", color: C.teal }} className="uppercase mb-3">What happens after approval</p>
+              {[
+                ["Within 24 hours", "Formal contract sent for e-signature"],
+                ["Monday after signing", "Kickoff call — 60 min strategy session"],
+                ["Week 1", "Brand discovery + competitive research"],
+                ["Week 3", "Logo + brand system delivered for review"],
+                ["Week 7", "Website live + social profiles launched"],
+                ["Week 10", "Launch campaign live, reporting begins"],
+              ].map(([t, d]) => (
+                <div key={t} className="flex items-start gap-3 mb-3">
+                  <div style={{ width: 6, height: 6, borderRadius: "50%", background: C.tangerine, marginTop: 6, flexShrink: 0 }} />
+                  <div>
+                    <p style={{ fontFamily: F.ui, fontSize: "0.75rem", fontWeight: 700, color: C.paper }}>{t}</p>
+                    <p style={{ fontFamily: F.body, fontSize: "0.72rem", color: "rgba(252,251,248,0.4)" }}>{d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="flex items-center gap-2.5 mt-8">
+              <Delta size={20} />
+              <span style={{ fontFamily: F.ui, fontSize: "0.8rem", fontWeight: 700, color: "rgba(252,251,248,0.4)" }}>Karle <span style={{ color: C.tangerine }}>Kreatives</span></span>
             </div>
           </div>
 
-          <div className="bg-[#1B2A33] border border-white/[0.08] rounded-2xl p-7">
-            {!approved ? (
+          <div style={{ background: C.slate, border: `1px solid ${C.border}`, borderRadius: 24, padding: 32 }}>
+            {!done ? (
               <>
-                <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-[#2FB6A6] text-[0.65rem] font-bold tracking-widest uppercase mb-5">Approvals</p>
-                <div className="flex flex-col gap-4 mb-6">
+                <p style={{ fontFamily: F.ui, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", color: C.teal }} className="uppercase mb-6">Approval Form</p>
+                <div className="flex flex-col gap-5 mb-6">
+                  {/* Selected tier */}
                   <div>
-                    <label style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/35 text-xs font-semibold tracking-widest uppercase block mb-1.5">Client Name / Signature</label>
-                    <input
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="Type your full name"
-                      className="w-full bg-[#142028] border border-white/[0.1] rounded-xl px-4 py-3 text-[#FCFBF8] placeholder-white/20 text-sm focus:outline-none focus:border-[#FF8A4C]/50 transition-colors"
-                      style={{ fontFamily: "'Hanken Grotesk', sans-serif" }}
-                    />
-                  </div>
-                  <div>
-                    <label style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/35 text-xs font-semibold tracking-widest uppercase block mb-1.5">Approved Project</label>
-                    <div className="bg-[#142028] border border-white/[0.07] rounded-xl px-4 py-3">
-                      <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/50 text-sm">Flightpath Teen Detox — Phase 1 Brand Buildout</p>
+                    <label style={{ fontFamily: F.ui, fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.2em", color: "rgba(252,251,248,0.3)", display: "block", marginBottom: 6 }} className="uppercase">Selected Tier</label>
+                    <div style={{ background: C.ink, border: `1px solid ${C.tangerine}40`, borderRadius: 12, padding: "12px 16px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <div>
+                        <p style={{ fontFamily: F.body, fontSize: "0.85rem", fontWeight: 600, color: "rgba(252,251,248,0.8)" }}>{tier.name}</p>
+                        <p style={{ fontFamily: F.ui, fontSize: "0.72rem", fontWeight: 700, color: C.tangerine }}>{tier.price}{tier.unit}</p>
+                      </div>
+                      <Check size={14} style={{ color: C.tangerine }} />
                     </div>
                   </div>
+                  {/* Name */}
+                  <div>
+                    <label style={{ fontFamily: F.ui, fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.2em", color: "rgba(252,251,248,0.3)", display: "block", marginBottom: 6 }} className="uppercase">Print your full name</label>
+                    <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Full legal name"
+                      style={{ width: "100%", background: C.ink, border: `1px solid rgba(255,255,255,0.1)`, borderRadius: 12, padding: "12px 16px", color: C.paper, fontFamily: F.body, fontSize: "0.9rem", outline: "none" }}
+                      onFocus={e => (e.target.style.borderColor = `${C.tangerine}60`)}
+                      onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.1)")} />
+                  </div>
+                  {/* Signature */}
+                  <SigPad onSign={setSig} />
                 </div>
-                <button
-                  onClick={() => { if (name.trim()) setApproved(true); }}
-                  style={{ background: "linear-gradient(90deg, #E0561F, #FF8A4C, #FFD36B)", fontFamily: "'Bricolage Grotesque', sans-serif" }}
-                  className="w-full text-[#142028] text-sm font-bold tracking-wide py-3.5 rounded-full flex items-center justify-center gap-2 hover:opacity-90 active:scale-[0.97] transition-all disabled:opacity-40"
-                  disabled={!name.trim()}
-                >
-                  Approve &amp; Start Phase 1
+                <button onClick={() => { if (ok) setDone(true); }} disabled={!ok}
+                  style={{ width: "100%", background: ok ? `linear-gradient(90deg,${C.coral},${C.tangerine},${C.gold})` : "rgba(255,255,255,0.06)", fontFamily: F.ui, fontSize: "0.82rem", fontWeight: 700, letterSpacing: "0.04em", color: ok ? C.ink : "rgba(252,251,248,0.2)", padding: "14px 0", borderRadius: 999, display: "flex", alignItems: "center", justifyContent: "center", gap: 8, transition: "all 0.2s", cursor: ok ? "pointer" : "not-allowed" }}>
+                  Approve &amp; Start {tier.phase.split("·")[0].trim()}
                   <ArrowRight size={14} />
                 </button>
-                <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/20 text-xs mt-3 text-center leading-relaxed">
-                  Typing your name constitutes a digital signature confirming agreement to the scope and pricing outlined in this proposal. A formal contract will follow.
+                <p style={{ fontFamily: F.body, fontSize: "0.72rem", color: "rgba(252,251,248,0.2)", textAlign: "center", marginTop: 12, lineHeight: 1.6 }}>
+                  Your printed name and drawn signature constitute a digital approval confirming agreement to the scope and pricing outlined in this proposal. A formal contract will follow.
                 </p>
               </>
             ) : (
-              <div className="text-center py-6">
-                <div className="w-14 h-14 rounded-full bg-[#2FB6A6]/20 border border-[#2FB6A6]/40 flex items-center justify-center mx-auto mb-4">
-                  <Check size={24} className="text-[#2FB6A6]" />
+              <div style={{ textAlign: "center", padding: "24px 0" }}>
+                <div style={{ width: 56, height: 56, borderRadius: "50%", background: `${C.teal}20`, border: `1px solid ${C.teal}50`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
+                  <Check size={24} style={{ color: C.teal }} />
                 </div>
-                <p style={{ fontFamily: "'Instrument Serif', serif" }} className="text-[#FCFBF8] text-2xl mb-2">Cleared for takeoff.</p>
-                <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/45 text-sm leading-relaxed mb-1">Approved by <span className="text-white/70">{name}</span></p>
-                <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/30 text-xs">Karle Kreatives will follow up with a formal contract within 24 hours.</p>
+                <p style={{ fontFamily: F.serif, fontSize: "1.8rem", color: C.paper, marginBottom: 8 }}>Cleared for takeoff.</p>
+                <p style={{ fontFamily: F.body, fontSize: "0.9rem", color: "rgba(252,251,248,0.5)", marginBottom: 4 }}>Approved by <span style={{ color: "rgba(252,251,248,0.8)" }}>{name}</span></p>
+                <p style={{ fontFamily: F.ui, fontSize: "0.75rem", fontWeight: 700, color: C.tangerine, marginBottom: 12 }}>{tier.name} · {tier.price}{tier.unit}</p>
+                <p style={{ fontFamily: F.body, fontSize: "0.78rem", color: "rgba(252,251,248,0.3)" }}>Karle Kreatives will follow up with a formal contract within 24 hours.</p>
               </div>
             )}
           </div>
@@ -710,36 +1082,37 @@ function Approval() {
 // ─── Footer ───────────────────────────────────────────────────────────────────
 function Footer() {
   return (
-    <footer className="bg-[#0F1A22] border-t border-white/[0.05] py-6">
-      <div className="max-w-6xl mx-auto px-8 flex flex-col md:flex-row items-center justify-between gap-3">
+    <footer style={{ background: C.deep, borderTop: `1px solid ${C.border}` }} className="py-8">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-2">
           <Delta size={16} />
-          <span style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/30 text-xs font-bold">Karle <span className="text-[#FF8A4C]/50">Kreatives</span></span>
+          <span style={{ fontFamily: F.ui, fontSize: "0.8rem", fontWeight: 700, color: "rgba(252,251,248,0.3)" }}>Karle <span style={{ color: `${C.tangerine}70` }}>Kreatives</span></span>
         </div>
-        <p style={{ fontFamily: "'Hanken Grotesk', sans-serif" }} className="text-white/15 text-xs text-center">
+        <p style={{ fontFamily: F.body, fontSize: "0.72rem", color: "rgba(252,251,248,0.15)", textAlign: "center" }}>
           Confidential proposal prepared for Flightpath Teen Detox · © 2026 Karle Kreatives · Not for distribution
         </p>
-        <p style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }} className="text-white/15 text-xs">HDG 015</p>
+        <p style={{ fontFamily: F.ui, fontSize: "0.72rem", color: "rgba(252,251,248,0.15)" }}>HDG 015</p>
       </div>
     </footer>
   );
 }
 
-// ─── Main Export ──────────────────────────────────────────────────────────────
+// ─── Root ─────────────────────────────────────────────────────────────────────
 export default function Home() {
+  const [tier, setTier] = useState(TIERS[0]);
   return (
     <div className="min-h-screen">
-      <Cover />
-      <InsideDoc />
-      <TheBrand />
-      <LogoSection />
-      <ColorSection />
-      <TypeSection />
-      <VoiceSection />
-      <Applications />
-      <Engagement />
-      <Investment />
-      <Approval />
+      <Nav />
+      <Hero />
+      <Mission />
+      <Brand />
+      <ProjectPlan />
+      <WebsitePlan />
+      <SocialStrategy />
+      <ContentExamples />
+      <PaidAds />
+      <Investment onSelect={setTier} />
+      <Approval tier={tier} />
       <Footer />
     </div>
   );
