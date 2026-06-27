@@ -233,3 +233,146 @@
 @media (prefers-reduced-motion: reduce) {
   .ticker-track { animation: none; }
 }
+
+/* ============================================================
+   FLIGHTPATH TEEN — DEPTH & MOTION OVERHAUL
+   Adapted to brand palette:
+   coral #E0561F · tangerine #FF8A4C · gold #FFD36B · ink #142028 · teal #2FB6A6
+   ============================================================ */
+
+/* --- GRAIN TEXTURE OVERLAY (subtle filmic depth) --- */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 160px 160px;
+}
+
+/* --- HERO KEN BURNS (slow drift on background photo) --- */
+@keyframes fp-kenburns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.08); }
+}
+.fp-kenburns {
+  animation: fp-kenburns 22s ease-in-out infinite alternate;
+  transform-origin: 60% 40%;
+  will-change: transform;
+}
+
+/* --- HERO VIGNETTE (focus pull toward the headline) --- */
+.fp-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 120% 95% at 42% 70%, transparent 30%, rgba(15,26,34,0.55) 100%);
+}
+
+/* --- FLOAT LOOP (gentle ambient lift) --- */
+@keyframes fp-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+.fp-float { animation: fp-float 5s ease-in-out infinite; will-change: transform; }
+
+/* --- PULSE GLOW (nav CTA heartbeat) --- */
+@keyframes fp-pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 rgba(224,86,31,0); }
+  50%       { box-shadow: 0 0 18px rgba(255,138,76,0.55); }
+}
+.fp-pulse-glow { animation: fp-pulse-glow 3.4s ease-in-out infinite; }
+
+/* --- GLOW BUTTON (lift + sunrise shadow + shimmer sweep) --- */
+.fp-btn-glow {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(224,86,31,0.32);
+  transition: transform 0.3s cubic-bezier(0.23,1,0.32,1),
+              box-shadow 0.3s cubic-bezier(0.23,1,0.32,1);
+}
+.fp-btn-glow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 38px rgba(224,86,31,0.5);
+}
+.fp-btn-glow::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -120%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.28), transparent);
+  transform: skewX(-20deg);
+  pointer-events: none;
+}
+.fp-btn-glow:hover::after { animation: fp-btn-sweep 0.6s ease forwards; }
+@keyframes fp-btn-sweep {
+  from { left: -120%; }
+  to   { left: 170%; }
+}
+
+/* --- GHOST BUTTON HOVER FILL --- */
+.fp-btn-ghost {
+  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+.fp-btn-ghost:hover { transform: translateY(-2px); }
+
+/* --- CARD HOVER LIFT (shadow only; transform handled by framer whileHover) --- */
+.fp-lift {
+  transition: box-shadow 0.45s cubic-bezier(0.23,1,0.32,1),
+              border-color 0.45s cubic-bezier(0.23,1,0.32,1);
+}
+.fp-lift:hover {
+  box-shadow: 0 22px 60px rgba(20,32,40,0.16), 0 4px 16px rgba(224,86,31,0.12);
+}
+/* Dark-surface cards: warmer glow reads on navy */
+.fp-lift-dark {
+  transition: box-shadow 0.45s cubic-bezier(0.23,1,0.32,1),
+              border-color 0.45s cubic-bezier(0.23,1,0.32,1);
+}
+.fp-lift-dark:hover {
+  box-shadow: 0 22px 60px rgba(0,0,0,0.35), 0 4px 22px rgba(255,138,76,0.2);
+  border-color: rgba(255,138,76,0.28) !important;
+}
+
+/* --- NAV LINK UNDERLINE DRAW --- */
+.fp-nav-link {
+  position: relative;
+}
+.fp-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 10px; right: 10px;
+  height: 1.5px;
+  background: #FF8A4C;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s cubic-bezier(0.23,1,0.32,1);
+}
+.fp-nav-link:hover::after { transform: scaleX(1); }
+
+/* --- SECTION LABEL UNDERLINE DRAW-IN (toggled by IntersectionObserver) --- */
+.fp-label-underline {
+  position: relative;
+  display: inline-block;
+}
+.fp-label-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -6px; left: 0;
+  width: 0; height: 1.5px;
+  background: #FF8A4C;
+  transition: width 0.7s cubic-bezier(0.23,1,0.32,1);
+}
+.fp-label-underline.fp-in-view::after { width: 40px; }
+
+/* --- Respect reduced-motion: silence ambient loops & textures --- */
+@media (prefers-reduced-motion: reduce) {
+  .fp-kenburns,
+  .fp-float,
+  .fp-pulse-glow { animation: none !important; }
+  body::after { display: none; }
+  .fp-btn-glow:hover::after { animation: none; }
+}
