@@ -22,8 +22,24 @@
  *  9. Footer
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ArrowRight, ChevronDown } from "lucide-react";
+import { motion, MotionConfig, type Variants } from "framer-motion";
+
+// ─── Motion primitives ──────────────────────────────────────────────────────
+const EASE = [0.23, 1, 0.32, 1] as const;
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 36 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
+};
+
+const staggerParent: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } },
+};
+
+const VIEWPORT = { once: true, margin: "-70px" } as const;
 
 // ─── Asset URLs ───────────────────────────────────────────────────────────────
 const HERO_IMG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663488423210/SUVBoqZCLc2b3z93g2JT8w/fp_concept_hero-XoePf4pgXpujv7aREh4jNP.webp";
@@ -71,8 +87,22 @@ function Mark({ size = 28, variant = "dim" }: { size?: number; variant?: "dim" |
 }
 
 function Tag({ children, light }: { children: React.ReactNode; light?: boolean }) {
+  const ref = useRef<HTMLParagraphElement>(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setInView(true); obs.disconnect(); } },
+      { threshold: 0.6 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
   return (
-    <p style={{ fontFamily: F.ui, fontSize: "0.65rem", letterSpacing: "0.22em", color: light ? C.teal : C.teal, fontWeight: 700 }} className="uppercase">
+    <p ref={ref}
+      className={`uppercase fp-label-underline${inView ? " fp-in-view" : ""}`}
+      style={{ fontFamily: F.ui, fontSize: "0.65rem", letterSpacing: "0.22em", color: light ? C.teal : C.teal, fontWeight: 700 }}>
       {children}
     </p>
   );
@@ -84,9 +114,14 @@ function Rule() {
 
 function H2({ children, light }: { children: React.ReactNode; light?: boolean }) {
   return (
-    <h2 style={{ fontFamily: F.serif, fontSize: "clamp(2rem,3.5vw,3rem)", lineHeight: 1.1, letterSpacing: "-0.02em", color: light ? C.paper : C.ink }}>
+    <motion.h2
+      initial={{ opacity: 0, y: 44 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={VIEWPORT}
+      transition={{ duration: 0.75, ease: EASE }}
+      style={{ fontFamily: F.serif, fontSize: "clamp(2rem,3.5vw,3rem)", lineHeight: 1.1, letterSpacing: "-0.02em", color: light ? C.paper : C.ink }}>
       {children}
-    </h2>
+    </motion.h2>
   );
 }
 
@@ -136,20 +171,21 @@ function Nav() {
       style={{ background: scrolled ? "rgba(20,32,40,0.97)" : "transparent", backdropFilter: scrolled ? "blur(14px)" : "none", borderBottom: scrolled ? `1px solid ${C.border}` : "none" }}>
       <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <img src={LOCKUP_LIGHT} alt="Flightpath Teen" style={{ height: 52, objectFit: "contain" }} />
+          <img src={LOCKUP_LIGHT} alt="Flightpath Teen"
+            style={{ height: 52, width: "auto", objectFit: "contain", display: "block", background: "transparent", border: "none", outline: "none", boxShadow: "none" }} />
         </div>
         <div className="hidden md:flex items-center gap-0.5">
           {NAV_LINKS.map((l) => (
             <button key={l.id} onClick={() => go(l.id)}
-              style={{ fontFamily: F.ui, fontSize: "0.72rem", fontWeight: 500, letterSpacing: "0.04em", color: active === l.id ? C.tangerine : "rgba(252,251,248,0.45)", padding: "4px 10px", borderRadius: 6, transition: "color 0.15s" }}
-              className="hover:text-white">
+              style={{ fontFamily: F.ui, fontSize: "0.72rem", fontWeight: 500, letterSpacing: "0.04em", color: active === l.id ? C.tangerine : "rgba(252,251,248,0.45)", padding: "4px 10px", borderRadius: 6, transition: "color 0.2s" }}
+              className="fp-nav-link hover:text-white">
               {l.label}
             </button>
           ))}
         </div>
         <button onClick={() => go("why")}
           style={{ fontFamily: F.ui, fontSize: "0.72rem", fontWeight: 700, background: `linear-gradient(90deg,${C.coral},${C.tangerine})`, color: C.ink, padding: "8px 18px", borderRadius: 999, letterSpacing: "0.04em" }}
-          className="hidden md:flex items-center gap-1.5 hover:opacity-90 active:scale-95 transition-all">
+          className="fp-btn-glow fp-pulse-glow hidden md:flex items-center gap-1.5 active:scale-95">
           View the Concept <ArrowRight size={12} />
         </button>
         <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden flex flex-col gap-1 p-2">
@@ -175,13 +211,14 @@ function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col justify-end overflow-hidden">
       <div className="absolute inset-0">
-        <img src={HERO_IMG} alt="" className="w-full h-full object-cover" />
+        <img src={HERO_IMG} alt="" className="fp-kenburns w-full h-full object-cover" />
         <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(15,26,34,0.5) 0%, rgba(15,26,34,0.35) 30%, rgba(15,26,34,0.82) 65%, #0F1A22 100%)" }} />
+        <div className="fp-vignette" />
       </div>
 
       {/* Giant mark watermark right side */}
       <div className="absolute inset-0 flex items-center justify-end overflow-hidden pointer-events-none" style={{ zIndex: 1 }}>
-        <img src={MARK_DIM} alt="" style={{ width: "min(68vw, 660px)", opacity: 0.15, transform: "translateX(12%) translateY(-8%)", objectFit: "contain" }} />
+        <img src={MARK_DIM} alt="" className="fp-float" style={{ width: "min(68vw, 660px)", opacity: 0.15, transform: "translateX(12%) translateY(-8%)", objectFit: "contain" }} />
       </div>
 
       <div className="relative w-full" style={{ zIndex: 10 }}>
@@ -195,31 +232,55 @@ function Hero() {
 
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center gap-6 mb-4">
-            <img src={MARK_DIM} alt="" style={{ width: "clamp(64px,9vw,110px)", objectFit: "contain", flexShrink: 0 }} />
+            <motion.img src={MARK_DIM} alt=""
+              initial={{ opacity: 0, scale: 0.8, rotate: -6 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}
+              style={{ width: "clamp(64px,9vw,110px)", objectFit: "contain", flexShrink: 0 }} />
             <div>
-              <p style={{ fontFamily: F.ui, fontSize: "clamp(0.6rem,1vw,0.75rem)", letterSpacing: "0.35em", color: C.tangerine, fontWeight: 700, marginBottom: 4 }} className="uppercase">Flightpath Teen</p>
-              <h1 style={{ fontFamily: F.serif, fontSize: "clamp(4.5rem,11vw,10rem)", lineHeight: 0.92, letterSpacing: "-0.03em", color: C.paper, margin: 0 }}>
+              <motion.p
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: EASE, delay: 0.2 }}
+                style={{ fontFamily: F.ui, fontSize: "clamp(0.6rem,1vw,0.75rem)", letterSpacing: "0.35em", color: C.tangerine, fontWeight: 700, marginBottom: 4 }} className="uppercase">Flightpath Teen</motion.p>
+              <motion.h1
+                initial={{ opacity: 0, y: 34, filter: "blur(6px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ duration: 0.85, ease: EASE, delay: 0.3 }}
+                style={{ fontFamily: F.serif, fontSize: "clamp(4.5rem,11vw,10rem)", lineHeight: 0.92, letterSpacing: "-0.03em", color: C.paper, margin: 0 }}>
                 Flight<em style={{ color: C.gold, fontStyle: "italic" }}>path.</em>
-              </h1>
+              </motion.h1>
             </div>
           </div>
-          <div style={{ width: 64, height: 3, background: `linear-gradient(90deg,${C.coral},${C.tangerine})`, borderRadius: 2, marginBottom: 20, marginLeft: "calc(clamp(64px,9vw,110px) + 1.5rem)" }} />
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            transition={{ duration: 0.7, ease: EASE, delay: 0.6 }}
+            style={{ width: 64, height: 3, background: `linear-gradient(90deg,${C.coral},${C.tangerine})`, borderRadius: 2, marginBottom: 20, marginLeft: "calc(clamp(64px,9vw,110px) + 1.5rem)", transformOrigin: "left center" }} />
           <div style={{ marginLeft: "calc(clamp(64px,9vw,110px) + 1.5rem)" }}>
-            <p style={{ fontFamily: F.body, fontSize: "clamp(0.95rem,1.5vw,1.15rem)", lineHeight: 1.75, color: "rgba(252,251,248,0.5)", maxWidth: 520, marginBottom: 28 }}>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.65, ease: EASE, delay: 0.75 }}
+              style={{ fontFamily: F.body, fontSize: "clamp(0.95rem,1.5vw,1.15rem)", lineHeight: 1.75, color: "rgba(252,251,248,0.5)", maxWidth: 520, marginBottom: 28 }}>
               A proposed brand and program concept for adolescent behavioral health in Orange County. Built for the teen who needs a charted course, not a clinical corridor.
-            </p>
-            <div className="flex flex-wrap gap-3 pb-20">
-              <button onClick={() => document.getElementById("concept")?.scrollIntoView({ behavior: "smooth" })}
+            </motion.p>
+            <motion.div className="flex flex-wrap gap-3 pb-20"
+              initial="hidden" animate="visible"
+              variants={{ visible: { transition: { staggerChildren: 0.12, delayChildren: 0.95 } } }}>
+              <motion.button onClick={() => document.getElementById("concept")?.scrollIntoView({ behavior: "smooth" })}
+                variants={fadeUp}
                 style={{ fontFamily: F.ui, fontSize: "0.8rem", fontWeight: 700, background: `linear-gradient(90deg,${C.coral},${C.tangerine})`, color: C.paper, padding: "13px 26px", borderRadius: 999 }}
-                className="flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all">
+                className="fp-btn-glow flex items-center gap-2 active:scale-95">
                 Explore the Concept <ArrowRight size={14} />
-              </button>
-              <button onClick={() => document.getElementById("brand")?.scrollIntoView({ behavior: "smooth" })}
+              </motion.button>
+              <motion.button onClick={() => document.getElementById("brand")?.scrollIntoView({ behavior: "smooth" })}
+                variants={fadeUp}
                 style={{ fontFamily: F.ui, fontSize: "0.8rem", fontWeight: 600, border: `1px solid rgba(252,251,248,0.18)`, color: "rgba(252,251,248,0.65)", padding: "13px 26px", borderRadius: 999, background: "transparent" }}
-                className="hover:border-white/40 hover:text-white transition-all">
+                className="fp-btn-ghost hover:border-white/40 hover:text-white">
                 View the Brand System
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
           </div>
         </div>
       </div>
@@ -260,15 +321,18 @@ function TheProblem() {
               </Body>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4 md:pt-12">
+          <motion.div className="grid grid-cols-2 gap-4 md:pt-12"
+            initial="hidden" whileInView="visible" viewport={VIEWPORT} variants={staggerParent}>
             {stats.map((s) => (
-              <div key={s.num} style={{ background: C.slate, border: `1px solid ${C.border}`, borderRadius: 16, padding: 24 }}>
+              <motion.div key={s.num} variants={fadeUp} whileHover={{ y: -6 }}
+                className="fp-lift-dark"
+                style={{ background: C.slate, border: `1px solid ${C.border}`, borderRadius: 16, padding: 24 }}>
                 <p style={{ fontFamily: F.ui, fontSize: "2rem", fontWeight: 800, color: C.gold, lineHeight: 1 }}>{s.num}</p>
                 <p style={{ fontFamily: F.ui, fontSize: "0.75rem", fontWeight: 700, color: C.paper, marginTop: 6 }}>{s.label}</p>
                 <p style={{ fontFamily: F.body, fontSize: "0.72rem", color: "rgba(252,251,248,0.35)", marginTop: 2, lineHeight: 1.5 }}>{s.sub}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -317,7 +381,12 @@ function TheConcept() {
         </div>
 
         {/* Big concept statement */}
-        <div style={{ background: C.ink, borderRadius: 24, padding: "56px 48px", marginBottom: 24, position: "relative", overflow: "hidden" }}>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={VIEWPORT}
+          transition={{ duration: 0.75, ease: EASE }}
+          style={{ background: C.ink, borderRadius: 24, padding: "56px 48px", marginBottom: 24, position: "relative", overflow: "hidden" }}>
           <div style={{ position: "absolute", right: "-4%", top: "50%", transform: "translateY(-50%)", opacity: 0.08 }}>
             <img src={MARK_DIM} alt="" style={{ width: 480, objectFit: "contain" }} />
           </div>
@@ -328,20 +397,23 @@ function TheConcept() {
             </blockquote>
             <div style={{ width: 48, height: 2, background: `linear-gradient(90deg,${C.coral},${C.tangerine})`, borderRadius: 2, marginTop: 24 }} />
           </div>
-        </div>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-5">
+        <motion.div className="grid md:grid-cols-2 gap-5"
+          initial="hidden" whileInView="visible" viewport={VIEWPORT} variants={staggerParent}>
           {pillars.map((p) => (
-            <div key={p.num} style={{ background: C.paper, border: `1px solid #EAE5DB`, borderRadius: 20, padding: 32 }}>
+            <motion.div key={p.num} variants={fadeUp} whileHover={{ y: -8 }}
+              className="fp-lift"
+              style={{ background: C.paper, border: `1px solid #EAE5DB`, borderRadius: 20, padding: 32 }}>
               <div className="flex items-center gap-3 mb-4">
                 <span style={{ fontFamily: F.ui, fontSize: "0.65rem", fontWeight: 800, letterSpacing: "0.2em", color: p.color }} className="uppercase">{p.num}</span>
                 <div style={{ flex: 1, height: 1, background: `${p.color}30` }} />
               </div>
               <h3 style={{ fontFamily: F.serif, fontSize: "1.5rem", color: C.ink, marginBottom: 12 }}>{p.title}</h3>
               <p style={{ fontFamily: F.body, fontSize: "0.9rem", color: "rgba(35,41,45,0.6)", lineHeight: 1.75 }}>{p.body}</p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -531,9 +603,12 @@ function TheExperience() {
             The program model is designed as a single connected journey, not three separate programs.
           </p>
         </div>
-        <div className="grid md:grid-cols-3 gap-5">
+        <motion.div className="grid md:grid-cols-3 gap-5"
+          initial="hidden" whileInView="visible" viewport={VIEWPORT} variants={staggerParent}>
           {phases.map((p) => (
-            <div key={p.num} style={{ background: C.slate, border: `1px solid ${C.border}`, borderRadius: 20, overflow: "hidden" }}>
+            <motion.div key={p.num} variants={fadeUp} whileHover={{ y: -8 }}
+              className="fp-lift-dark"
+              style={{ background: C.slate, border: `1px solid ${C.border}`, borderRadius: 20, overflow: "hidden" }}>
               <div style={{ padding: "24px 24px 20px", borderBottom: `1px solid ${C.border}` }}>
                 <div className="flex items-center justify-between mb-3">
                   <span style={{ fontFamily: F.ui, fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.2em", color: p.color }} className="uppercase">Phase {p.num}</span>
@@ -551,9 +626,9 @@ function TheExperience() {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Website model */}
         <div style={{ marginTop: 24, background: C.deep, border: `1px solid ${C.border}`, borderRadius: 20, padding: 32 }}>
@@ -618,9 +693,12 @@ function TheAudience() {
             The brand must work for a teenager, a parent, and a clinician simultaneously. That is a difficult balance. This is how the concept approaches it.
           </p>
         </div>
-        <div className="grid md:grid-cols-3 gap-5">
+        <motion.div className="grid md:grid-cols-3 gap-5"
+          initial="hidden" whileInView="visible" viewport={VIEWPORT} variants={staggerParent}>
           {segments.map((s) => (
-            <div key={s.label} style={{ background: C.paper, border: `1px solid #EAE5DB`, borderRadius: 20, overflow: "hidden" }}>
+            <motion.div key={s.label} variants={fadeUp} whileHover={{ y: -8 }}
+              className="fp-lift"
+              style={{ background: C.paper, border: `1px solid #EAE5DB`, borderRadius: 20, overflow: "hidden" }}>
               <div style={{ padding: "24px 24px 20px", borderBottom: `1px solid #EAE5DB` }}>
                 <div style={{ width: 32, height: 3, background: s.color, borderRadius: 2, marginBottom: 14 }} />
                 <p style={{ fontFamily: F.ui, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", color: "rgba(35,41,45,0.4)", marginBottom: 4 }} className="uppercase">{s.age}</p>
@@ -636,9 +714,9 @@ function TheAudience() {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -902,21 +980,29 @@ function WhyItWorks() {
             This section is written for the stakeholder, founder, or partner reviewing the concept for the first time.
           </p>
         </div>
-        <div className="grid md:grid-cols-2 gap-5 mb-16">
+        <motion.div className="grid md:grid-cols-2 gap-5 mb-16"
+          initial="hidden" whileInView="visible" viewport={VIEWPORT} variants={staggerParent}>
           {reasons.map((r) => (
-            <div key={r.num} style={{ background: C.paper, border: `1px solid #EAE5DB`, borderRadius: 20, padding: 32 }}>
+            <motion.div key={r.num} variants={fadeUp} whileHover={{ y: -8 }}
+              className="fp-lift"
+              style={{ background: C.paper, border: `1px solid #EAE5DB`, borderRadius: 20, padding: 32 }}>
               <div className="flex items-center gap-3 mb-4">
                 <span style={{ fontFamily: F.ui, fontSize: "0.65rem", fontWeight: 800, letterSpacing: "0.2em", color: r.color }} className="uppercase">{r.num}</span>
                 <div style={{ flex: 1, height: 1, background: `${r.color}30` }} />
               </div>
               <h3 style={{ fontFamily: F.serif, fontSize: "1.3rem", color: C.ink, marginBottom: 12, lineHeight: 1.25 }}>{r.title}</h3>
               <p style={{ fontFamily: F.body, fontSize: "0.88rem", color: "rgba(35,41,45,0.6)", lineHeight: 1.75 }}>{r.body}</p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Closing statement */}
-        <div style={{ background: C.ink, borderRadius: 24, padding: "56px 48px", position: "relative", overflow: "hidden" }}>
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.8, ease: EASE }}
+          style={{ background: C.ink, borderRadius: 24, padding: "56px 48px", position: "relative", overflow: "hidden" }}>
           <div style={{ position: "absolute", right: "-4%", top: "50%", transform: "translateY(-50%)", opacity: 0.07 }}>
             <img src={MARK_DIM} alt="" style={{ width: 520, objectFit: "contain" }} />
           </div>
@@ -937,12 +1023,12 @@ function WhyItWorks() {
                 <div className="flex flex-wrap gap-3 mt-8">
                   <button onClick={() => document.getElementById("concept")?.scrollIntoView({ behavior: "smooth" })}
                     style={{ fontFamily: F.ui, fontSize: "0.8rem", fontWeight: 700, background: `linear-gradient(90deg,${C.coral},${C.tangerine})`, color: C.paper, padding: "13px 26px", borderRadius: 999 }}
-                    className="flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all">
+                    className="fp-btn-glow flex items-center gap-2 active:scale-95">
                     Review the Concept <ArrowRight size={14} />
                   </button>
                   <button onClick={() => document.getElementById("brand")?.scrollIntoView({ behavior: "smooth" })}
                     style={{ fontFamily: F.ui, fontSize: "0.8rem", fontWeight: 600, border: `1px solid rgba(252,251,248,0.18)`, color: "rgba(252,251,248,0.65)", padding: "13px 26px", borderRadius: 999, background: "transparent" }}
-                    className="hover:border-white/40 hover:text-white transition-all">
+                    className="fp-btn-ghost hover:border-white/40 hover:text-white">
                     View the Brand System
                   </button>
                 </div>
@@ -963,7 +1049,7 @@ function WhyItWorks() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -995,7 +1081,7 @@ function Footer() {
             This is a brand concept prototype. All program descriptions are proposed, not operational.
           </p>
           <p style={{ fontFamily: F.body, fontSize: "0.72rem", color: "rgba(252,251,248,0.15)" }}>
-            Flightpath Teen · Brand Concept · 2025
+            Flightpath Teen · Brand Concept · 2026
           </p>
         </div>
       </div>
@@ -1006,17 +1092,19 @@ function Footer() {
 // ─── Root ─────────────────────────────────────────────────────────────────────
 export default function Home() {
   return (
-    <div className="min-h-screen">
-      <Nav />
-      <Hero />
-      <TheProblem />
-      <TheConcept />
-      <BrandSystem />
-      <TheExperience />
-      <TheAudience />
-      <ContentDirection />
-      <WhyItWorks />
-      <Footer />
-    </div>
+    <MotionConfig reducedMotion="user">
+      <div className="min-h-screen">
+        <Nav />
+        <Hero />
+        <TheProblem />
+        <TheConcept />
+        <BrandSystem />
+        <TheExperience />
+        <TheAudience />
+        <ContentDirection />
+        <WhyItWorks />
+        <Footer />
+      </div>
+    </MotionConfig>
   );
 }
