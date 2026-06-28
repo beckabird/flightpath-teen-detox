@@ -2,7 +2,7 @@
  * FLIGHTPATH TEEN — Brand Concept Prototype
  *
  * This site presents the proposed brand vision, service model, and design
- * direction for Flightpath Teen. It is intended for stakeholders, founders,
+ * direction for Flight Path Teen. It is intended for stakeholders, founders,
  * operators, and strategic partners reviewing the concept.
  *
  * Design system: Twilight navy + sunrise coral/gold palette.
@@ -171,7 +171,7 @@ function Nav() {
       style={{ background: scrolled ? "rgba(20,32,40,0.97)" : "transparent", backdropFilter: scrolled ? "blur(14px)" : "none", borderBottom: scrolled ? `1px solid ${C.border}` : "none" }}>
       <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <img src={LOCKUP_LIGHT} alt="Flightpath Teen"
+          <img src={LOCKUP_LIGHT} alt="Flight Path Teen"
             style={{ height: 52, width: "auto", objectFit: "contain", display: "block", background: "transparent", border: "none", outline: "none", boxShadow: "none" }} />
         </div>
         <div className="hidden md:flex items-center gap-0.5">
@@ -242,13 +242,13 @@ function Hero() {
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: EASE, delay: 0.2 }}
-                style={{ fontFamily: F.ui, fontSize: "clamp(0.6rem,1vw,0.75rem)", letterSpacing: "0.35em", color: C.tangerine, fontWeight: 700, marginBottom: 4 }} className="uppercase">Flightpath Teen</motion.p>
+                style={{ fontFamily: F.ui, fontSize: "clamp(0.6rem,1vw,0.75rem)", letterSpacing: "0.35em", color: C.tangerine, fontWeight: 700, marginBottom: 4 }} className="uppercase">Flight Path Teen</motion.p>
               <motion.h1
                 initial={{ opacity: 0, y: 34, filter: "blur(6px)" }}
                 animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 transition={{ duration: 0.85, ease: EASE, delay: 0.3 }}
                 style={{ fontFamily: F.serif, fontSize: "clamp(4.5rem,11vw,10rem)", lineHeight: 0.92, letterSpacing: "-0.03em", color: C.paper, margin: 0 }}>
-                Flight<em style={{ color: C.gold, fontStyle: "italic" }}>path.</em>
+                Flight <em style={{ color: C.gold, fontStyle: "italic" }}>Path.</em>
               </motion.h1>
             </div>
           </div>
@@ -317,7 +317,7 @@ function TheProblem() {
                 Families are left choosing between adult programs that were never designed for a 15-year-old, or waiting lists for out-of-county facilities. The gap is real, documented, and largely unaddressed.
               </Body>
               <Body light>
-                Flightpath Teen is proposed as the answer to that gap. A program designed from the ground up for adolescents, with clinical protocols, family integration, and a brand identity that speaks to both the teen in crisis and the parent making the hardest call of their life.
+                Flight Path Teen is proposed as the answer to that gap. A program designed from the ground up for adolescents, with clinical protocols, family integration, and a brand identity that speaks to both the teen in crisis and the parent making the hardest call of their life.
               </Body>
             </div>
           </div>
@@ -357,7 +357,7 @@ function TheConcept() {
     {
       num: "03",
       title: "The Positioning",
-      body: "Not a rehab. Not a hospital. Not a boot camp. Flightpath Teen is positioned as a clinically rigorous, emotionally intelligent adolescent program that treats the teen as a capable person, not a problem to be managed.",
+      body: "Not a rehab. Not a hospital. Not a boot camp. Flight Path Teen is positioned as a clinically rigorous, emotionally intelligent adolescent program that treats the teen as a capable person, not a problem to be managed.",
       color: C.gold,
     },
     {
@@ -471,11 +471,11 @@ function BrandSystem() {
         {tab === "logo" && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="col-span-2 rounded-2xl p-10 flex flex-col items-center justify-center gap-4" style={{ background: C.ink }}>
-              <img src={LOCKUP_STACKED_LIGHT} alt="Flightpath Teen lockup light" style={{ height: 120, objectFit: "contain" }} />
+              <img src={LOCKUP_STACKED_LIGHT} alt="Flight Path Teen lockup light" style={{ height: 120, objectFit: "contain" }} />
               <p style={{ fontFamily: F.ui, color: "rgba(252,251,248,0.2)", fontSize: "0.62rem", letterSpacing: "0.2em" }}>PRIMARY — DARK BG</p>
             </div>
             <div className="col-span-2 rounded-2xl p-10 flex flex-col items-center justify-center gap-4" style={{ background: C.paper, border: `1px solid #EAE5DB` }}>
-              <img src={LOCKUP_STACKED_DARK} alt="Flightpath Teen lockup dark" style={{ height: 120, objectFit: "contain" }} />
+              <img src={LOCKUP_STACKED_DARK} alt="Flight Path Teen lockup dark" style={{ height: 120, objectFit: "contain" }} />
               <p style={{ fontFamily: F.ui, color: "rgba(35,41,45,0.2)", fontSize: "0.62rem", letterSpacing: "0.2em" }}>PRIMARY — LIGHT BG</p>
             </div>
             <div className="rounded-2xl p-8 flex flex-col items-center justify-center gap-3" style={{ background: C.slate }}>
@@ -491,7 +491,7 @@ function BrandSystem() {
               <p style={{ fontFamily: F.ui, color: "rgba(255,255,255,0.4)", fontSize: "0.62rem", letterSpacing: "0.2em" }}>REVERSED</p>
             </div>
             <div className="rounded-2xl p-8 flex flex-col items-center justify-center gap-3" style={{ background: C.paper, border: `1px solid #EAE5DB` }}>
-              <img src={LOCKUP_DARK} alt="Flightpath horizontal lockup" style={{ height: 36, objectFit: "contain" }} />
+              <img src={LOCKUP_DARK} alt="Flight Path Teen horizontal lockup" style={{ height: 36, objectFit: "contain" }} />
               <p style={{ fontFamily: F.ui, color: "rgba(35,41,45,0.2)", fontSize: "0.62rem", letterSpacing: "0.2em" }}>HORIZONTAL</p>
             </div>
           </div>
@@ -587,7 +587,7 @@ function TheExperience() {
     {
       num: "03", name: "Cruise Altitude", color: C.gold,
       sub: "Aftercare and Reintegration",
-      desc: "The final phase is the transition back. Structured step-down, outpatient support, and a continuing care plan that does not disappear when the teen walks out the door. The flightpath does not end at discharge.",
+      desc: "The final phase is the transition back. Structured step-down, outpatient support, and a continuing care plan that does not disappear when the teen walks out the door. The flight path does not end at discharge.",
       details: ["Step-down outpatient programming", "Continuing care planning", "School reintegration support", "Alumni peer connection", "Family aftercare resources"],
     },
   ];
@@ -730,7 +730,7 @@ function IGHeader({ platform = "Instagram" }: { platform?: string }) {
         <Mark size={18} variant="white" />
       </div>
       <div>
-        <p style={{ fontFamily: F.ui, fontSize: "0.75rem", fontWeight: 700, color: C.ink }}>flightpathteen</p>
+        <p style={{ fontFamily: F.ui, fontSize: "0.75rem", fontWeight: 700, color: C.ink }}>flightpathtd</p>
         <p style={{ fontFamily: F.body, fontSize: "0.65rem", color: "rgba(35,41,45,0.4)" }}>{platform} · Orange County, CA</p>
       </div>
     </div>
@@ -775,11 +775,11 @@ function ContentDirection() {
                 <div style={{ width: 32, height: 2, background: C.coral, borderRadius: 2, marginBottom: 12 }} />
                 <p style={{ fontFamily: F.body, fontSize: "0.8rem", color: "rgba(252,251,248,0.5)", lineHeight: 1.5, maxWidth: 280 }}>Medically supervised teen detox. Orange County.</p>
                 <div style={{ marginTop: 24 }}>
-                  <img src={LOCKUP_LIGHT} alt="Flightpath" style={{ height: 22, objectFit: "contain", opacity: 0.9 }} />
+                  <img src={LOCKUP_LIGHT} alt="Flight Path" style={{ height: 22, objectFit: "contain", opacity: 0.9 }} />
                 </div>
               </div>
             </div>
-            <IGCaption label="Brand Awareness" labelColor={C.teal} text={"Recovery is not a fall from grace.\n\nIt is a flight path. A departure, a climb, and a safe place to land.\n\n#FlightpathTeen #TeenRecovery #OrangeCounty"} />
+            <IGCaption label="Brand Awareness" labelColor={C.teal} text={"Recovery is not a fall from grace.\n\nIt is a flight path. A departure, a climb, and a safe place to land.\n\n#FlightPathTeen #TeenRecovery #OrangeCounty"} />
           </div>
 
           {/* POST 2 — Vertical Reel */}
@@ -800,11 +800,11 @@ function ContentDirection() {
                 <div style={{ width: 28, height: 2, background: "rgba(20,32,40,0.5)", borderRadius: 2, marginBottom: 10 }} />
                 <p style={{ fontFamily: F.body, fontSize: "0.75rem", color: "rgba(20,32,40,0.7)", lineHeight: 1.5 }}>A program built for them, not adapted from adults.</p>
                 <div style={{ marginTop: 16 }}>
-                  <img src={LOCKUP_DARK} alt="Flightpath" style={{ height: 18, objectFit: "contain", opacity: 0.85 }} />
+                  <img src={LOCKUP_DARK} alt="Flight Path" style={{ height: 18, objectFit: "contain", opacity: 0.85 }} />
                 </div>
               </div>
             </div>
-            <IGCaption label="Reels" labelColor={C.coral} text={"For the parents up at 3am.\n\nYou are not alone. The path forward exists.\n\n#FlightpathTeen #ForFamilies #TeenDetox"} />
+            <IGCaption label="Reels" labelColor={C.coral} text={"For the parents up at 3am.\n\nYou are not alone. The path forward exists.\n\n#FlightPathTeen #ForFamilies #TeenDetox"} />
           </div>
         </div>
 
@@ -824,11 +824,11 @@ function ContentDirection() {
                 <div style={{ width: 28, height: 2, background: "rgba(20,32,40,0.4)", borderRadius: 2, marginBottom: 10 }} />
                 <p style={{ fontFamily: F.body, fontSize: "0.78rem", color: "rgba(20,32,40,0.65)", lineHeight: 1.5 }}>Adolescent physiology is different. So is the approach.</p>
                 <div style={{ marginTop: 20 }}>
-                  <img src={LOCKUP_DARK} alt="Flightpath" style={{ height: 18, objectFit: "contain", opacity: 0.75 }} />
+                  <img src={LOCKUP_DARK} alt="Flight Path" style={{ height: 18, objectFit: "contain", opacity: 0.75 }} />
                 </div>
               </div>
             </div>
-            <IGCaption label="Education" labelColor={C.tangerine} text={"Withdrawal looks different for every teenager.\n\nFlightpath Teen uses individualized protocols, not a one-size approach. 24/7 medical supervision. Comfort-first care.\n\n#FlightpathTeen #AdolescentDetox"} />
+            <IGCaption label="Education" labelColor={C.tangerine} text={"Withdrawal looks different for every teenager.\n\nFlight Path Teen uses individualized protocols, not a one-size approach. 24/7 medical supervision. Comfort-first care.\n\n#FlightPathTeen #AdolescentDetox"} />
           </div>
 
           {/* POST 4 — Quote */}
@@ -844,11 +844,11 @@ function ContentDirection() {
                 <h3 style={{ fontFamily: F.serif, fontSize: "1.7rem", lineHeight: 1.1, color: C.paper, marginBottom: 16, fontStyle: "italic" }}>"Every step forward is a waypoint."</h3>
                 <p style={{ fontFamily: F.body, fontSize: "0.78rem", color: "rgba(252,251,248,0.45)", lineHeight: 1.5 }}>Recovery is navigation, not punishment.</p>
                 <div style={{ marginTop: 28 }}>
-                  <img src={LOCKUP_LIGHT} alt="Flightpath" style={{ height: 18, objectFit: "contain", opacity: 0.7 }} />
+                  <img src={LOCKUP_LIGHT} alt="Flight Path" style={{ height: 18, objectFit: "contain", opacity: 0.7 }} />
                 </div>
               </div>
             </div>
-            <IGCaption label="Brand Voice" labelColor={C.gold} text={"Recovery is not a destination. It is a direction.\n\nEvery step forward is a waypoint on the path.\n\n#FlightpathTeen #TeenRecovery #OrangeCounty"} />
+            <IGCaption label="Brand Voice" labelColor={C.gold} text={"Recovery is not a destination. It is a direction.\n\nEvery step forward is a waypoint on the path.\n\n#FlightPathTeen #TeenRecovery #OrangeCounty"} />
           </div>
 
           {/* POST 5 — Stats */}
@@ -873,10 +873,10 @@ function ContentDirection() {
                     </div>
                   ))}
                 </div>
-                <img src={LOCKUP_LIGHT} alt="Flightpath" style={{ height: 18, objectFit: "contain", opacity: 0.7 }} />
+                <img src={LOCKUP_LIGHT} alt="Flight Path" style={{ height: 18, objectFit: "contain", opacity: 0.7 }} />
               </div>
             </div>
-            <IGCaption label="Program" labelColor={C.teal} text={"Orange County's proposed dedicated adolescent program.\n\nBuilt for teens. Family-integrated from day one.\n\n#FlightpathTeen #OrangeCounty #TeenDetox"} />
+            <IGCaption label="Program" labelColor={C.teal} text={"Orange County's proposed dedicated adolescent program.\n\nBuilt for teens. Family-integrated from day one.\n\n#FlightPathTeen #OrangeCounty #TeenDetox"} />
           </div>
         </div>
 
@@ -894,13 +894,13 @@ function ContentDirection() {
                 <p style={{ fontFamily: F.ui, fontSize: "0.6rem", letterSpacing: "0.2em", color: C.teal, fontWeight: 700, marginBottom: 12, textTransform: "uppercase" }}>For Clinicians and Referral Partners</p>
                 <h3 style={{ fontFamily: F.serif, fontSize: "clamp(1.4rem,3vw,2.2rem)", lineHeight: 1.1, color: C.paper, marginBottom: 14 }}>Your adolescent patients need a dedicated program. <em style={{ color: C.gold }}>This is the concept.</em></h3>
                 <div style={{ width: 36, height: 2, background: C.coral, borderRadius: 2, marginBottom: 14 }} />
-                <p style={{ fontFamily: F.body, fontSize: "0.82rem", color: "rgba(252,251,248,0.5)", lineHeight: 1.6, maxWidth: 420 }}>Flightpath Teen is proposed as Orange County's first adolescent-specific program. Direct clinical communication. Family-integrated care. A referral partner you can trust.</p>
+                <p style={{ fontFamily: F.body, fontSize: "0.82rem", color: "rgba(252,251,248,0.5)", lineHeight: 1.6, maxWidth: 420 }}>Flight Path Teen is proposed as Orange County's first adolescent-specific program. Direct clinical communication. Family-integrated care. A referral partner you can trust.</p>
                 <div style={{ marginTop: 24 }}>
-                  <img src={LOCKUP_LIGHT} alt="Flightpath" style={{ height: 20, objectFit: "contain", opacity: 0.85 }} />
+                  <img src={LOCKUP_LIGHT} alt="Flight Path" style={{ height: 20, objectFit: "contain", opacity: 0.85 }} />
                 </div>
               </div>
             </div>
-            <IGCaption label="Referral Partners" labelColor={C.teal} text={"Therapists, pediatricians, school counselors: the adolescent referral gap in Orange County is real.\n\nFlightpath Teen is designed to fill it.\n\n#FlightpathTeen #AdolescentCare #ReferralPartners"} />
+            <IGCaption label="Referral Partners" labelColor={C.teal} text={"Therapists, pediatricians, school counselors: the adolescent referral gap in Orange County is real.\n\nFlight Path Teen is designed to fill it.\n\n#FlightPathTeen #AdolescentCare #ReferralPartners"} />
           </div>
 
           {/* POST 7 — Family */}
@@ -916,11 +916,11 @@ function ContentDirection() {
                 <div style={{ width: 28, height: 2, background: C.coral, borderRadius: 2, marginBottom: 12 }} />
                 <p style={{ fontFamily: F.body, fontSize: "0.78rem", color: "rgba(252,251,248,0.5)", lineHeight: 1.5 }}>We take it from there.</p>
                 <div style={{ marginTop: 20 }}>
-                  <img src={LOCKUP_LIGHT} alt="Flightpath" style={{ height: 18, objectFit: "contain", opacity: 0.8 }} />
+                  <img src={LOCKUP_LIGHT} alt="Flight Path" style={{ height: 18, objectFit: "contain", opacity: 0.8 }} />
                 </div>
               </div>
             </div>
-            <IGCaption label="Family" labelColor={C.tangerine} text={"You have been carrying this for a long time.\n\nThe path forward exists. Flightpath Teen is designed to help your family find it.\n\n#FlightpathTeen #ForFamilies"} />
+            <IGCaption label="Family" labelColor={C.tangerine} text={"You have been carrying this for a long time.\n\nThe path forward exists. Flight Path Teen is designed to help your family find it.\n\n#FlightPathTeen #ForFamilies"} />
           </div>
         </div>
       </div>
@@ -940,7 +940,7 @@ function WhyItWorks() {
     {
       num: "02",
       title: "The brand positioning is differentiated.",
-      body: "Most teen treatment brands either look like adult rehab programs with smaller fonts, or they overcorrect into a youth-marketing aesthetic that feels condescending. Flightpath Teen occupies a distinct middle ground: premium, calm, and genuinely adolescent-aware.",
+      body: "Most teen treatment brands either look like adult rehab programs with smaller fonts, or they overcorrect into a youth-marketing aesthetic that feels condescending. Flight Path Teen occupies a distinct middle ground: premium, calm, and genuinely adolescent-aware.",
       color: C.tangerine,
     },
     {
@@ -1014,7 +1014,7 @@ function WhyItWorks() {
                 <H2 light>This is the concept.<br /><em style={{ color: C.gold }}>This is the direction.</em></H2>
                 <div className="mt-6 space-y-4">
                   <Body light>
-                    Flightpath Teen is proposed as a premium, clinically grounded adolescent program for Orange County. The brand is built. The model is defined. The audience is identified. The market gap is real.
+                    Flight Path Teen is proposed as a premium, clinically grounded adolescent program for Orange County. The brand is built. The model is defined. The audience is identified. The market gap is real.
                   </Body>
                   <Body light>
                     This site exists to show what the program would look like, how it would feel, and why it would work. The next step is yours.
@@ -1062,7 +1062,7 @@ function Footer() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div>
-            <img src={LOCKUP_LIGHT} alt="Flightpath Teen" style={{ height: 36, objectFit: "contain", marginBottom: 10 }} />
+            <img src={LOCKUP_LIGHT} alt="Flight Path Teen" style={{ height: 36, objectFit: "contain", marginBottom: 10 }} />
             <p style={{ fontFamily: F.body, fontSize: "0.78rem", color: "rgba(252,251,248,0.3)", maxWidth: 320, lineHeight: 1.6 }}>
               A proposed brand and program concept for adolescent behavioral health in Orange County, California. This site is a concept prototype, not a live clinical program.
             </p>
@@ -1081,7 +1081,7 @@ function Footer() {
             This is a brand concept prototype. All program descriptions are proposed, not operational.
           </p>
           <p style={{ fontFamily: F.body, fontSize: "0.72rem", color: "rgba(252,251,248,0.15)" }}>
-            Flightpath Teen · Brand Concept · 2026
+            Flight Path Teen · Brand Concept · 2026
           </p>
         </div>
       </div>
